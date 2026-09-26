@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
 
-<title>Trailer • Movie Finder</title>
+<title>Trailer Film • Movie Finder</title>
 
 <style>
 *{
@@ -23,8 +23,12 @@ body{
     color:#172033;
 }
 
-button{
+button,
+input{
     font:inherit;
+}
+
+button{
     cursor:pointer;
 }
 
@@ -33,23 +37,23 @@ a{
     color:inherit;
 }
 
-/* =========================
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
-.header{
+header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(255,255,255,.96);
+    background:rgba(255,255,255,.97);
     backdrop-filter:blur(14px);
-    border-bottom:1px solid #e3e7ef;
+    border-bottom:1px solid #e2e7ef;
 }
 
 .header-inner{
-    max-width:1400px;
-    margin:auto;
+    max-width:1250px;
     min-height:70px;
+    margin:auto;
     padding:10px 20px;
     display:flex;
     align-items:center;
@@ -62,165 +66,242 @@ a{
     align-items:center;
     gap:10px;
     color:#2859e6;
+    font-size:20px;
     font-weight:900;
-    font-size:21px;
 }
 
 .logo-icon{
     width:40px;
     height:40px;
     border-radius:12px;
-    background:linear-gradient(135deg,#4169ff,#7655ff);
     display:grid;
     place-items:center;
     color:#fff;
+    background:linear-gradient(135deg,#4169ff,#7855ff);
 }
 
 .back-btn{
     border:0;
-    background:#eef2f8;
-    color:#3d4960;
+    background:#edf1f7;
+    color:#435067;
     border-radius:11px;
     padding:10px 15px;
     font-weight:800;
 }
 
 .back-btn:hover{
-    background:#e4ebff;
+    background:#e6edff;
     color:#2859e6;
 }
 
-/* =========================
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
-.container{
+main{
     max-width:1250px;
     margin:auto;
-    padding:30px 20px 60px;
+    padding:25px 20px 60px;
 }
 
-.page-title{
-    margin:0 0 8px;
-    font-size:clamp(27px,5vw,42px);
+.top-title{
+    margin-bottom:20px;
 }
 
-.page-subtitle{
-    margin:0 0 25px;
-    color:#6d778b;
-}
-
-/* =========================
-   MOVIE HEADER
-========================= */
-
-.movie-header{
-    display:grid;
-    grid-template-columns:180px 1fr;
-    gap:25px;
-    padding:25px;
-    background:#fff;
-    border:1px solid #e1e6ef;
-    border-radius:22px;
-    box-shadow:0 10px 35px rgba(25,40,70,.06);
-    margin-bottom:25px;
-}
-
-.poster{
-    width:100%;
-    aspect-ratio:2/3;
-    object-fit:cover;
-    border-radius:15px;
-    background:#edf0f5;
-}
-
-.movie-info h2{
-    margin:0 0 8px;
-    font-size:30px;
-}
-
-.meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin:12px 0 15px;
-}
-
-.meta span{
-    background:#f0f3f8;
-    color:#4b566b;
-    padding:7px 10px;
-    border-radius:9px;
-    font-size:13px;
-    font-weight:700;
-}
-
-.overview{
-    color:#596479;
-    line-height:1.65;
+.top-title h1{
     margin:0;
+    font-size:clamp(27px,5vw,43px);
 }
 
-/* =========================
-   VIDEO
-========================= */
-
-.video-card{
-    background:white;
-    border:1px solid #e1e6ef;
-    border-radius:22px;
-    padding:20px;
-    box-shadow:0 10px 35px rgba(25,40,70,.06);
-    margin-bottom:25px;
+.top-title p{
+    margin:8px 0 0;
+    color:#778296;
 }
 
-.video-title{
+/* =========================================================
+   MOVIE INFO
+========================================================= */
+
+.movie-info{
     display:flex;
-    justify-content:space-between;
+    gap:20px;
     align-items:center;
-    gap:10px;
-    margin-bottom:15px;
+    background:#fff;
+    border:1px solid #e0e5ee;
+    border-radius:19px;
+    padding:16px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(30,45,80,.05);
 }
 
-.video-title h2{
+.movie-poster{
+    width:90px;
+    height:135px;
+    object-fit:cover;
+    border-radius:11px;
+    background:#edf0f5;
+    flex-shrink:0;
+}
+
+.movie-name{
     margin:0;
-    font-size:21px;
+    font-size:24px;
 }
 
-.youtube-link{
-    background:#fff0f0;
-    color:#d63f4e;
-    padding:8px 11px;
-    border-radius:9px;
-    font-size:12px;
-    font-weight:800;
+.movie-meta{
+    color:#778296;
+    margin-top:7px;
+    line-height:1.5;
 }
 
-.video-frame{
+.movie-overview{
+    margin-top:10px;
+    color:#586377;
+    line-height:1.55;
+}
+
+/* =========================================================
+   YOUTUBE SEARCH
+========================================================= */
+
+.youtube-search{
+    background:linear-gradient(
+        135deg,
+        #fff,
+        #fff5f5
+    );
+    border:1px solid #f1dcdc;
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.youtube-search h2{
+    margin:0 0 7px;
+    font-size:20px;
+}
+
+.youtube-search p{
+    color:#778296;
+    margin:0 0 15px;
+    line-height:1.5;
+}
+
+.search-preview{
+    display:flex;
+    gap:9px;
+}
+
+.search-query{
+    flex:1;
+    min-width:0;
+    height:45px;
+    border:1px solid #dedfe5;
+    border-radius:10px;
+    padding:0 12px;
+    background:#fff;
+    outline:none;
+}
+
+.search-query:focus{
+    border-color:#d83d4e;
+    box-shadow:0 0 0 4px rgba(216,61,78,.08);
+}
+
+.youtube-btn{
+    height:45px;
+    border:0;
+    border-radius:10px;
+    padding:0 16px;
+    background:#e5394f;
+    color:#fff;
+    font-weight:900;
+}
+
+.youtube-btn:hover{
+    background:#ce2d42;
+}
+
+/* =========================================================
+   MAIN TRAILER
+========================================================= */
+
+.video-section{
+    background:#fff;
+    border:1px solid #e0e5ee;
+    border-radius:19px;
+    padding:18px;
+    box-shadow:0 8px 25px rgba(30,45,80,.05);
+}
+
+.video-section h2{
+    margin:0 0 15px;
+}
+
+.video-container{
     width:100%;
     aspect-ratio:16/9;
-    border:0;
-    border-radius:15px;
-    display:block;
-    background:#edf0f5;
+    background:#10141d;
+    border-radius:14px;
+    overflow:hidden;
 }
 
-/* =========================
-   VIDEO GRID
-========================= */
+.video-container iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+.no-video{
+    width:100%;
+    height:100%;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:30px;
+    color:#fff;
+}
+
+.no-video-icon{
+    font-size:50px;
+}
+
+.no-video h3{
+    margin:10px 0 6px;
+}
+
+.no-video p{
+    color:#c7ccd5;
+    max-width:500px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   VIDEO LIST
+========================================================= */
+
+.video-list-section{
+    margin-top:22px;
+}
 
 .video-grid{
     display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:16px;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
 }
 
-.video-item{
-    background:#fff;
-    border:1px solid #e1e6ef;
-    border-radius:17px;
+.video-card{
     overflow:hidden;
-    box-shadow:0 8px 25px rgba(25,40,70,.05);
+    background:#fff;
+    border:1px solid #e0e5ee;
+    border-radius:15px;
+    box-shadow:0 6px 20px rgba(30,45,80,.05);
+    transition:.2s;
+}
+
+.video-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(30,45,80,.1);
 }
 
 .video-thumb{
@@ -237,59 +318,71 @@ a{
     display:block;
 }
 
-.play{
+.play-icon{
     position:absolute;
     inset:0;
     display:grid;
     place-items:center;
-    font-size:40px;
-    background:rgba(20,25,40,.08);
 }
 
-.video-item-info{
+.play-circle{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:rgba(229,57,79,.94);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:23px;
+    padding-left:3px;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+}
+
+.video-card-body{
     padding:12px;
 }
 
-.video-item-info h3{
-    margin:0 0 5px;
+.video-card-title{
+    margin:0;
     font-size:14px;
     line-height:1.4;
 }
 
-.video-item-info p{
-    margin:0;
-    color:#7a8497;
-    font-size:12px;
+.video-type{
+    color:#7b8598;
+    font-size:11px;
+    margin-top:6px;
 }
 
-.watch-btn{
+.video-open{
     width:100%;
-    margin-top:10px;
+    margin-top:9px;
+    height:36px;
     border:0;
     border-radius:9px;
-    padding:9px;
     background:#edf2ff;
     color:#315bd9;
-    font-weight:800;
+    font-size:12px;
+    font-weight:900;
 }
 
-/* =========================
-   EMPTY / LOADING
-========================= */
+/* =========================================================
+   LOADING
+========================================================= */
 
-.center{
-    text-align:center;
-    padding:80px 20px;
+.loading{
+    min-height:350px;
+    display:grid;
+    place-items:center;
 }
 
-.spinner{
-    width:35px;
-    height:35px;
-    border:4px solid #dfe5ef;
+.loader{
+    width:40px;
+    height:40px;
+    border:4px solid #dfe5f1;
     border-top-color:#4169ff;
     border-radius:50%;
-    animation:spin .7s linear infinite;
-    margin:0 auto 15px;
+    animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
@@ -298,32 +391,75 @@ a{
     }
 }
 
-.error-box{
+/* =========================================================
+   MODAL PLAYER
+========================================================= */
+
+.player-modal{
+    position:fixed;
+    inset:0;
+    z-index:4000;
+    background:rgba(12,18,30,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.player-modal.show{
+    display:flex;
+}
+
+.player-box{
+    width:min(1000px,100%);
     background:#fff;
-    border:1px solid #f0d8dc;
-    padding:25px;
     border-radius:18px;
-    text-align:center;
+    overflow:hidden;
 }
 
-.error-box button{
-    border:0;
-    background:#4169ff;
-    color:#fff;
+.player-header{
+    min-height:55px;
     padding:10px 15px;
-    border-radius:10px;
-    font-weight:800;
-    margin-top:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
 }
 
-/* =========================
+.player-header h3{
+    margin:0;
+    font-size:15px;
+}
+
+.close-btn{
+    width:36px;
+    height:36px;
+    border:0;
+    border-radius:50%;
+    background:#edf1f6;
+    font-size:20px;
+}
+
+.player-frame{
+    aspect-ratio:16/9;
+    background:#111;
+}
+
+.player-frame iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast{
     position:fixed;
     left:50%;
-    bottom:22px;
+    bottom:20px;
+    z-index:5000;
     transform:translate(-50%,20px);
     background:#172033;
     color:#fff;
@@ -332,7 +468,6 @@ a{
     opacity:0;
     pointer-events:none;
     transition:.25s;
-    z-index:3000;
     text-align:center;
     max-width:calc(100% - 30px);
 }
@@ -342,14 +477,14 @@ a{
     transform:translate(-50%,0);
 }
 
-/* =========================
+/* =========================================================
    RESPONSIVE
-========================= */
+========================================================= */
 
-@media(max-width:800px){
+@media(max-width:850px){
 
     .video-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
@@ -357,7 +492,7 @@ a{
 @media(max-width:600px){
 
     .header-inner{
-        padding:9px 14px;
+        padding:9px 13px;
     }
 
     .logo{
@@ -369,43 +504,37 @@ a{
         height:36px;
     }
 
-    .back-btn{
-        padding:8px 10px;
-        font-size:12px;
+    main{
+        padding:18px 13px 45px;
     }
 
-    .container{
-        padding:20px 14px 45px;
+    .movie-info{
+        align-items:flex-start;
     }
 
-    .movie-header{
-        grid-template-columns:105px 1fr;
-        gap:15px;
-        padding:17px;
-        border-radius:18px;
+    .movie-poster{
+        width:75px;
+        height:112px;
     }
 
-    .movie-info h2{
-        font-size:20px;
+    .movie-name{
+        font-size:19px;
     }
 
-    .overview{
-        grid-column:1/-1;
-        font-size:14px;
+    .movie-overview{
+        font-size:13px;
     }
 
-    .video-card{
-        padding:13px;
-        border-radius:17px;
+    .search-preview{
+        flex-direction:column;
+    }
+
+    .youtube-btn{
+        width:100%;
     }
 
     .video-grid{
         grid-template-columns:1fr;
-    }
-
-    .video-title{
-        align-items:flex-start;
-        flex-direction:column;
     }
 
 }
@@ -414,54 +543,196 @@ a{
 
 <body>
 
-<header class="header">
+<header>
 
-    <div class="header-inner">
+<div class="header-inner">
 
-        <div class="logo">
-            <div class="logo-icon">🎬</div>
-            Movie Finder
+    <div class="logo">
+
+        <div class="logo-icon">
+            ▶
         </div>
 
-        <button class="back-btn" onclick="goBack()">
-            ← Kembali
-        </button>
+        Movie Finder
 
     </div>
 
+    <button
+        class="back-btn"
+        onclick="goBack()">
+
+        ← Kembali
+
+    </button>
+
+</div>
+
 </header>
 
-<main class="container">
+<main>
 
-    <h1 class="page-title">
-        🎞️ Trailer Film
-    </h1>
+    <div
+        id="loading"
+        class="loading">
 
-    <p class="page-subtitle">
-        Trailer dan video resmi dari film yang dipilih.
-    </p>
+        <div class="loader"></div>
 
-    <div id="app">
+    </div>
 
-        <div class="center">
+    <div id="page" style="display:none">
 
-            <div class="spinner"></div>
+        <section class="top-title">
 
-            <div>Memuat trailer...</div>
+            <h1>
+                🎬 Trailer Film
+            </h1>
 
-        </div>
+            <p>
+                Temukan trailer film melalui TMDB
+                atau cari langsung berdasarkan judul film
+                di YouTube.
+            </p>
+
+        </section>
+
+        <!-- MOVIE INFO -->
+
+        <section
+            id="movieInfo"
+            class="movie-info">
+        </section>
+
+        <!-- YOUTUBE SEARCH -->
+
+        <section class="youtube-search">
+
+            <h2>
+                ▶️ Cari Trailer di YouTube
+            </h2>
+
+            <p>
+                Pencarian otomatis menggunakan judul film.
+                Kamu juga bisa mengubah kata pencarian.
+            </p>
+
+            <div class="search-preview">
+
+                <input
+                    id="youtubeQuery"
+                    class="search-query"
+                    type="text"
+                    placeholder="Judul film official trailer"
+                >
+
+                <button
+                    class="youtube-btn"
+                    onclick="searchYouTube()">
+
+                    🔎 Cari di YouTube
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- MAIN TRAILER -->
+
+        <section class="video-section">
+
+            <h2>
+                🎞️ Trailer Utama
+            </h2>
+
+            <div
+                id="mainVideo"
+                class="video-container">
+            </div>
+
+        </section>
+
+        <!-- OTHER VIDEOS -->
+
+        <section class="video-list-section">
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    gap:10px;
+                    margin-bottom:14px;
+                ">
+
+                <h2 style="margin:0">
+                    📺 Video Lainnya
+                </h2>
+
+                <span
+                    id="videoCount"
+                    style="
+                        color:#7b8598;
+                        font-size:12px;
+                    ">
+                </span>
+
+            </div>
+
+            <div
+                id="videoGrid"
+                class="video-grid">
+            </div>
+
+        </section>
 
     </div>
 
 </main>
 
-<div id="toast" class="toast"></div>
+<!-- =====================================================
+     PLAYER MODAL
+===================================================== -->
+
+<div
+    id="playerModal"
+    class="player-modal"
+    onclick="closePlayerOutside(event)">
+
+    <div class="player-box">
+
+        <div class="player-header">
+
+            <h3 id="playerTitle">
+                Video
+            </h3>
+
+            <button
+                class="close-btn"
+                onclick="closePlayer()">
+                ×
+            </button>
+
+        </div>
+
+        <div
+            id="playerFrame"
+            class="player-frame">
+        </div>
+
+    </div>
+
+</div>
+
+<div
+    id="toast"
+    class="toast">
+</div>
 
 <script>
 
-/* ============================================================
-   CONFIG
-============================================================ */
+/* =========================================================
+   TMDB
+========================================================= */
 
 const TMDB_BASE =
     "https://api.themoviedb.org/3";
@@ -472,84 +743,111 @@ const IMG =
 const STORAGE_API =
     "movie_finder_tmdb_key";
 
-const apiKey =
-    localStorage.getItem(STORAGE_API) || "";
+/* =========================================================
+   STATE
+========================================================= */
 
-/* ============================================================
-   MOVIE ID
-============================================================ */
+let movieId = null;
 
-const params =
-    new URLSearchParams(location.search);
+let movieTitle = "";
 
-const movieId =
-    params.get("id");
+let movieData = null;
 
-/* ============================================================
-   API
-============================================================ */
+let videos = [];
+
+/* =========================================================
+   GET API
+========================================================= */
+
+function getAPI(){
+
+    return localStorage.getItem(
+        STORAGE_API
+    ) || "";
+
+}
+
+/* =========================================================
+   TMDB API
+========================================================= */
 
 async function api(path,params={}){
 
-    if(!apiKey){
+    const key =
+        getAPI();
+
+    if(!key){
 
         throw new Error(
-            "API belum tersimpan. Kembali ke halaman utama dan atur API."
+            "TMDB API belum disimpan."
         );
 
     }
 
     const url =
-        new URL(TMDB_BASE + path);
-
-    Object.entries(params).forEach(([key,value])=>{
-
-        if(
-            value !== undefined &&
-            value !== null &&
-            value !== ""
-        ){
-
-            url.searchParams.set(key,value);
-
-        }
-
-    });
-
-    const options = {
-
-        method:"GET",
-
-        headers:{
-            accept:"application/json"
-        }
-
-    };
-
-    if(apiKey.startsWith("eyJ")){
-
-        options.headers.Authorization =
-            "Bearer " + apiKey;
-
-    }else{
-
-        url.searchParams.set(
-            "api_key",
-            apiKey
+        new URL(
+            TMDB_BASE + path
         );
+
+    Object.entries(params)
+        .forEach(
+            ([k,v]) => {
+
+                if(
+                    v !== undefined &&
+                    v !== null &&
+                    v !== ""
+                ){
+
+                    url.searchParams.set(
+                        k,
+                        v
+                    );
+
+                }
+
+            }
+        );
+
+    if(key.startsWith("eyJ")){
+
+        const response =
+            await fetch(
+                url.toString(),
+                {
+                    headers:{
+                        Authorization:
+                            `Bearer ${key}`
+                    }
+                }
+            );
+
+        if(!response.ok){
+
+            throw new Error(
+                `TMDB ${response.status}`
+            );
+
+        }
+
+        return response.json();
 
     }
 
+    url.searchParams.set(
+        "api_key",
+        key
+    );
+
     const response =
         await fetch(
-            url.toString(),
-            options
+            url.toString()
         );
 
     if(!response.ok){
 
         throw new Error(
-            "TMDB error " + response.status
+            `TMDB ${response.status}`
         );
 
     }
@@ -558,9 +856,633 @@ async function api(path,params={}){
 
 }
 
-/* ============================================================
-   ESCAPE
-============================================================ */
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadPage
+);
+
+async function loadPage(){
+
+    const params =
+        new URLSearchParams(
+            location.search
+        );
+
+    movieId =
+        params.get("id");
+
+    movieTitle =
+        params.get("title") || "";
+
+    if(!movieId){
+
+        showError(
+            "ID film tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+    try{
+
+        movieData =
+            await api(
+                `/movie/${movieId}`,
+                {
+                    language:"id-ID",
+                    append_to_response:
+                        "videos"
+                }
+            );
+
+        movieTitle =
+            movieData.title ||
+            movieData.original_title ||
+            movieTitle ||
+            "Film";
+
+        renderMovieInfo();
+
+        document.getElementById(
+            "youtubeQuery"
+        ).value =
+            `${movieTitle} official trailer`;
+
+        processVideos();
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+        document.getElementById(
+            "page"
+        ).style.display =
+            "block";
+
+    }catch(error){
+
+        showError(
+            error.message
+        );
+
+    }
+
+}
+
+/* =========================================================
+   MOVIE INFO
+========================================================= */
+
+function renderMovieInfo(){
+
+    const poster =
+        movieData.poster_path
+        ?
+        `${IMG}${movieData.poster_path}`
+        :
+        "";
+
+    const year =
+        movieData.release_date
+        ?
+        movieData.release_date.slice(0,4)
+        :
+        "—";
+
+    const rating =
+        Number(
+            movieData.vote_average || 0
+        ).toFixed(1);
+
+    document.getElementById(
+        "movieInfo"
+    ).innerHTML = `
+
+        ${
+            poster
+            ?
+            `
+            <img
+                class="movie-poster"
+                src="${poster}"
+                alt="">
+            `
+            :
+            `
+            <div
+                class="movie-poster"
+                style="
+                    display:grid;
+                    place-items:center;
+                    color:#8993a5;
+                ">
+                🎬
+            </div>
+            `
+        }
+
+        <div>
+
+            <h2 class="movie-name">
+                ${escapeHTML(movieTitle)}
+            </h2>
+
+            <div class="movie-meta">
+
+                📅 ${year}
+
+                &nbsp; • &nbsp;
+
+                ⭐ ${rating}
+
+                ${
+                    movieData.runtime
+                    ?
+                    `&nbsp; • &nbsp;⏱️ ${movieData.runtime} menit`
+                    :
+                    ""
+                }
+
+            </div>
+
+            <div class="movie-overview">
+
+                ${
+                    escapeHTML(
+                        movieData.overview ||
+                        "Sinopsis tidak tersedia."
+                    )
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+/* =========================================================
+   PROCESS VIDEOS
+========================================================= */
+
+function processVideos(){
+
+    const all =
+        movieData.videos?.results || [];
+
+    videos =
+        all.filter(
+            video =>
+                video.site === "YouTube" &&
+                video.key
+        );
+
+    const best =
+        findBestTrailer(
+            videos
+        );
+
+    renderMainVideo(
+        best
+    );
+
+    renderOtherVideos(
+        videos
+    );
+
+}
+
+/* =========================================================
+   FIND BEST TRAILER
+========================================================= */
+
+function findBestTrailer(list){
+
+    if(!list.length){
+
+        return null;
+
+    }
+
+    const officialTrailer =
+        list.find(
+            video =>
+                video.type === "Trailer" &&
+                video.official === true
+        );
+
+    if(officialTrailer){
+
+        return officialTrailer;
+
+    }
+
+    const trailer =
+        list.find(
+            video =>
+                video.type === "Trailer"
+        );
+
+    if(trailer){
+
+        return trailer;
+
+    }
+
+    const teaser =
+        list.find(
+            video =>
+                video.type === "Teaser"
+        );
+
+    if(teaser){
+
+        return teaser;
+
+    }
+
+    return list[0];
+
+}
+
+/* =========================================================
+   MAIN VIDEO
+========================================================= */
+
+function renderMainVideo(video){
+
+    const container =
+        document.getElementById(
+            "mainVideo"
+        );
+
+    if(!video){
+
+        container.innerHTML = `
+
+            <div class="no-video">
+
+                <div>
+
+                    <div class="no-video-icon">
+                        🎬
+                    </div>
+
+                    <h3>
+                        Trailer TMDB tidak tersedia
+                    </h3>
+
+                    <p>
+                        Gunakan tombol
+                        <b>Cari di YouTube</b>
+                        untuk mencari trailer berdasarkan
+                        judul film.
+                    </p>
+
+                    <button
+                        class="youtube-btn"
+                        onclick="searchYouTube()">
+
+                        ▶️ Cari Trailer YouTube
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML = `
+
+        <iframe
+            src="https://www.youtube.com/embed/${encodeURIComponent(video.key)}"
+            title="${escapeHTML(video.name || movieTitle)}"
+            allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+                web-share
+            "
+            allowfullscreen>
+        </iframe>
+
+    `;
+
+}
+
+/* =========================================================
+   OTHER VIDEOS
+========================================================= */
+
+function renderOtherVideos(list){
+
+    const grid =
+        document.getElementById(
+            "videoGrid"
+        );
+
+    document.getElementById(
+        "videoCount"
+    ).textContent =
+        `${list.length} video`;
+
+    if(!list.length){
+
+        grid.innerHTML = `
+
+            <div
+                style="
+                    grid-column:1/-1;
+                    background:#fff;
+                    border:1px solid #e0e5ee;
+                    border-radius:15px;
+                    padding:35px;
+                    text-align:center;
+                    color:#7b8598;
+                ">
+
+                Belum ada video YouTube
+                dari TMDB untuk film ini.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    grid.innerHTML =
+        list
+        .map(
+            (video,index) =>
+                renderVideoCard(
+                    video,
+                    index
+                )
+        )
+        .join("");
+
+}
+
+/* =========================================================
+   VIDEO CARD
+========================================================= */
+
+function renderVideoCard(video,index){
+
+    const thumbnail =
+        `https://i.ytimg.com/vi/${encodeURIComponent(video.key)}/hqdefault.jpg`;
+
+    return `
+
+        <article class="video-card">
+
+            <div class="video-thumb">
+
+                <img
+                    src="${thumbnail}"
+                    loading="lazy"
+                    alt="">
+
+                <div class="play-icon">
+
+                    <div class="play-circle">
+                        ▶
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="video-card-body">
+
+                <h3 class="video-card-title">
+                    ${escapeHTML(
+                        video.name ||
+                        "Video"
+                    )}
+                </h3>
+
+                <div class="video-type">
+
+                    ${
+                        video.type ||
+                        "Video"
+                    }
+
+                    ${
+                        video.official
+                        ?
+                        " • Official"
+                        :
+                        ""
+                    }
+
+                </div>
+
+                <button
+                    class="video-open"
+                    onclick="playVideo(
+                        '${escapeJS(video.key)}',
+                        '${escapeJS(video.name || "Video")}'
+                    )">
+
+                    ▶ Putar
+
+                </button>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+/* =========================================================
+   PLAY VIDEO
+========================================================= */
+
+function playVideo(key,title){
+
+    document.getElementById(
+        "playerTitle"
+    ).textContent =
+        title;
+
+    document.getElementById(
+        "playerFrame"
+    ).innerHTML = `
+
+        <iframe
+            src="https://www.youtube.com/embed/${encodeURIComponent(key)}?autoplay=1"
+            title="${escapeHTML(title)}"
+            allow="
+                autoplay;
+                encrypted-media;
+                picture-in-picture;
+                web-share
+            "
+            allowfullscreen>
+        </iframe>
+
+    `;
+
+    document
+        .getElementById("playerModal")
+        .classList.add("show");
+
+}
+
+/* =========================================================
+   CLOSE PLAYER
+========================================================= */
+
+function closePlayer(){
+
+    document.getElementById(
+        "playerFrame"
+    ).innerHTML = "";
+
+    document
+        .getElementById("playerModal")
+        .classList.remove("show");
+
+}
+
+function closePlayerOutside(event){
+
+    if(
+        event.target.id ===
+        "playerModal"
+    ){
+
+        closePlayer();
+
+    }
+
+}
+
+/* =========================================================
+   SEARCH YOUTUBE
+========================================================= */
+
+function searchYouTube(){
+
+    const input =
+        document.getElementById(
+            "youtubeQuery"
+        );
+
+    const query =
+        input.value.trim();
+
+    if(!query){
+
+        toast(
+            "Masukkan judul film terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+    const url =
+        `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+}
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer &&
+        document.referrer.includes(
+            location.host
+        )
+    ){
+
+        history.back();
+
+    }else{
+
+        window.location.href =
+            `index.html?movie=${encodeURIComponent(movieId)}`;
+
+    }
+
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message){
+
+    document.getElementById(
+        "loading"
+    ).innerHTML = `
+
+        <div
+            style="
+                text-align:center;
+                padding:25px;
+            ">
+
+            <div style="font-size:50px">
+                ⚠️
+            </div>
+
+            <h2>
+                Gagal membuka trailer
+            </h2>
+
+            <p style="color:#778296">
+                ${escapeHTML(message)}
+            </p>
+
+            <button
+                class="back-btn"
+                onclick="goBack()">
+
+                ← Kembali
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHTML(value){
 
@@ -573,458 +1495,9 @@ function escapeHTML(value){
 
 }
 
-/* ============================================================
-   FIND BEST TRAILER
-============================================================ */
-
-function findBestTrailer(videos){
-
-    const youtube =
-        videos.filter(
-            video => video.site === "YouTube"
-        );
-
-    if(!youtube.length){
-
-        return null;
-
-    }
-
-    return (
-
-        youtube.find(
-            video =>
-                video.type === "Trailer" &&
-                video.official === true
-        )
-
-        ||
-
-        youtube.find(
-            video =>
-                video.type === "Trailer"
-        )
-
-        ||
-
-        youtube.find(
-            video =>
-                video.type === "Teaser"
-        )
-
-        ||
-
-        youtube[0]
-
-    );
-
-}
-
-/* ============================================================
-   LOAD MOVIE
-============================================================ */
-
-async function loadMovie(){
-
-    if(!movieId){
-
-        showError(
-            "ID film tidak ditemukan.",
-            "Buka trailer dari tombol Trailer pada kartu film."
-        );
-
-        return;
-
-    }
-
-    if(!apiKey){
-
-        showError(
-            "API belum tersimpan.",
-            "Kembali ke index.html lalu masukkan API TMDB."
-        );
-
-        return;
-
-    }
-
-    try{
-
-        const movie =
-            await api(
-                `/movie/${movieId}`,
-                {
-                    language:"id-ID",
-                    append_to_response:"videos"
-                }
-            );
-
-        renderMovie(movie);
-
-    }catch(error){
-
-        console.error(error);
-
-        showError(
-            "Film tidak dapat dimuat.",
-            "Periksa API atau coba kembali dari halaman utama."
-        );
-
-    }
-
-}
-
-/* ============================================================
-   RENDER MOVIE
-============================================================ */
-
-function renderMovie(movie){
-
-    const videos =
-        movie.videos?.results || [];
-
-    const youtube =
-        videos.filter(
-            video => video.site === "YouTube"
-        );
-
-    const mainTrailer =
-        findBestTrailer(videos);
-
-    let html = "";
-
-    /* =========================
-       MOVIE HEADER
-    ========================= */
-
-    html += `
-
-        <section class="movie-header">
-
-            ${
-                movie.poster_path
-                ? `
-                    <img
-                        class="poster"
-                        src="${IMG}${movie.poster_path}"
-                        alt="${escapeHTML(movie.title)}">
-                  `
-                :
-                  `
-                    <div
-                        class="poster"
-                        style="
-                            display:grid;
-                            place-items:center;
-                            color:#8791a4;
-                        ">
-                        No Poster
-                    </div>
-                  `
-            }
-
-            <div class="movie-info">
-
-                <h2>
-                    ${escapeHTML(movie.title || "Tanpa judul")}
-                </h2>
-
-                <div class="meta">
-
-                    <span>
-                        ⭐ ${Number(
-                            movie.vote_average || 0
-                        ).toFixed(1)}
-                    </span>
-
-                    <span>
-                        📅 ${
-                            movie.release_date || "—"
-                        }
-                    </span>
-
-                    <span>
-                        ⏱️ ${
-                            movie.runtime
-                            ? movie.runtime + " menit"
-                            : "—"
-                        }
-                    </span>
-
-                </div>
-
-                <p class="overview">
-
-                    ${
-                        escapeHTML(
-                            movie.overview ||
-                            "Tidak ada sinopsis."
-                        )
-                    }
-
-                </p>
-
-            </div>
-
-        </section>
-
-    `;
-
-    /* =========================
-       MAIN TRAILER
-    ========================= */
-
-    if(mainTrailer){
-
-        html += `
-
-            <section class="video-card">
-
-                <div class="video-title">
-
-                    <h2>
-                        ▶ Trailer Utama
-                    </h2>
-
-                    <a
-                        class="youtube-link"
-                        href="https://www.youtube.com/watch?v=${encodeURIComponent(mainTrailer.key)}"
-                        target="_blank"
-                        rel="noopener">
-                        Buka YouTube ↗
-                    </a>
-
-                </div>
-
-                <iframe
-                    class="video-frame"
-                    src="https://www.youtube.com/embed/${encodeURIComponent(mainTrailer.key)}"
-                    title="${escapeHTML(mainTrailer.name || "Trailer")}"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
-
-            </section>
-
-        `;
-
-    }else{
-
-        html += `
-
-            <section class="video-card">
-
-                <div class="center">
-
-                    <div style="font-size:45px">
-                        🎞️
-                    </div>
-
-                    <h3>
-                        Trailer tidak tersedia
-                    </h3>
-
-                    <p style="color:#778196">
-                        TMDB tidak menyediakan video YouTube
-                        untuk film ini.
-                    </p>
-
-                </div>
-
-            </section>
-
-        `;
-
-    }
-
-    /* =========================
-       ALL VIDEOS
-    ========================= */
-
-    const otherVideos =
-        youtube.filter(
-            video =>
-                !mainTrailer ||
-                video.id !== mainTrailer.id
-        );
-
-    if(otherVideos.length){
-
-        html += `
-
-            <section>
-
-                <div class="video-title">
-
-                    <h2>
-                        🎬 Video Lain
-                    </h2>
-
-                </div>
-
-                <div class="video-grid">
-
-                    ${
-                        otherVideos
-                        .map(renderVideo)
-                        .join("")
-                    }
-
-                </div>
-
-            </section>
-
-        `;
-
-    }
-
-    document.getElementById("app")
-        .innerHTML = html;
-
-}
-
-/* ============================================================
-   RENDER VIDEO
-============================================================ */
-
-function renderVideo(video){
-
-    const thumbnail =
-        `https://i.ytimg.com/vi/${encodeURIComponent(video.key)}/hqdefault.jpg`;
-
-    return `
-
-        <article class="video-item">
-
-            <div class="video-thumb">
-
-                <img
-                    src="${thumbnail}"
-                    loading="lazy"
-                    alt="${escapeHTML(video.name || "")}">
-
-                <div class="play">
-                    ▶️
-                </div>
-
-            </div>
-
-            <div class="video-item-info">
-
-                <h3>
-                    ${escapeHTML(
-                        video.name || "Video"
-                    )}
-                </h3>
-
-                <p>
-                    ${escapeHTML(
-                        video.type || "Video"
-                    )}
-                    ${
-                        video.official
-                        ? " · Resmi"
-                        : ""
-                    }
-                </p>
-
-                <button
-                    class="watch-btn"
-                    onclick="playVideo('${escapeJS(video.key)}')">
-                    ▶ Tonton
-                </button>
-
-            </div>
-
-        </article>
-
-    `;
-
-}
-
-/* ============================================================
-   PLAY OTHER VIDEO
-============================================================ */
-
-function playVideo(key){
-
-    const existing =
-        document.getElementById("playerModal");
-
-    if(existing){
-
-        existing.remove();
-
-    }
-
-    const modal =
-        document.createElement("div");
-
-    modal.id = "playerModal";
-
-    modal.style.cssText = `
-        position:fixed;
-        inset:0;
-        z-index:5000;
-        background:rgba(15,20,35,.72);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:15px;
-    `;
-
-    modal.innerHTML = `
-
-        <div style="
-            width:min(950px,100%);
-            background:#fff;
-            border-radius:18px;
-            padding:15px;
-            position:relative;
-        ">
-
-            <button
-                onclick="document.getElementById('playerModal').remove()"
-                style="
-                    position:absolute;
-                    right:10px;
-                    top:10px;
-                    z-index:5;
-                    width:38px;
-                    height:38px;
-                    border:0;
-                    border-radius:50%;
-                    background:#fff;
-                    font-size:22px;
-                    cursor:pointer;
-                ">
-                ×
-            </button>
-
-            <iframe
-                src="https://www.youtube.com/embed/${encodeURIComponent(key)}"
-                style="
-                    width:100%;
-                    aspect-ratio:16/9;
-                    border:0;
-                    border-radius:12px;
-                    display:block;
-                "
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-    `;
-
-    document.body.appendChild(modal);
-
-}
-
-/* ============================================================
+/* =========================================================
    ESCAPE JS
-============================================================ */
+========================================================= */
 
 function escapeJS(value){
 
@@ -1036,114 +1509,62 @@ function escapeJS(value){
 
 }
 
-/* ============================================================
-   ERROR
-============================================================ */
-
-function showError(title,message){
-
-    document.getElementById("app")
-        .innerHTML = `
-
-            <div class="error-box">
-
-                <div style="font-size:45px">
-                    ⚠️
-                </div>
-
-                <h2>
-                    ${escapeHTML(title)}
-                </h2>
-
-                <p>
-                    ${escapeHTML(message)}
-                </p>
-
-                <button onclick="goBack()">
-                    ← Kembali ke Movie Finder
-                </button>
-
-            </div>
-
-        `;
-
-}
-
-/* ============================================================
-   BACK
-============================================================ */
-
-function goBack(){
-
-    if(document.referrer){
-
-        history.back();
-
-    }else{
-
-        window.location.href =
-            "index.html";
-
-    }
-
-}
-
-/* ============================================================
+/* =========================================================
    TOAST
-============================================================ */
+========================================================= */
 
 let toastTimer;
 
 function toast(message){
 
     const element =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
 
-    element.textContent = message;
+    element.textContent =
+        message;
 
-    element.classList.add("show");
+    element.classList.add(
+        "show"
+    );
 
-    clearTimeout(toastTimer);
+    clearTimeout(
+        toastTimer
+    );
 
     toastTimer =
         setTimeout(
-            ()=>element.classList.remove("show"),
+            () => {
+
+                element.classList.remove(
+                    "show"
+                );
+
+            },
             2500
         );
 
 }
 
-/* ============================================================
+/* =========================================================
    ESC KEY
-============================================================ */
+========================================================= */
 
 document.addEventListener(
     "keydown",
     event => {
 
-        if(event.key === "Escape"){
+        if(
+            event.key === "Escape"
+        ){
 
-            const modal =
-                document.getElementById(
-                    "playerModal"
-                );
-
-            if(modal){
-
-                modal.remove();
-
-            }
+            closePlayer();
 
         }
 
     }
 );
-
-/* ============================================================
-   START
-============================================================ */
-
-loadMovie();
 
 </script>
 
