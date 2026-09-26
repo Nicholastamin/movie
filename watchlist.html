@@ -2,547 +2,1677 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
-<title>Saved Movies</title>
+
+<title>Film Tersimpan • Movie Finder</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
- margin:0;font-family:Arial,Helvetica,sans-serif;
- background:#f4f7ff;color:#172033
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+    overflow-x:hidden;
 }
-header{
- position:sticky;top:0;z-index:20;background:white;
- border-bottom:1px solid #e2e6ee
+
+button,
+input{
+    font:inherit;
 }
-.nav{
- max-width:1200px;margin:auto;padding:13px 16px;
- display:flex;justify-content:space-between;align-items:center
+
+button{
+    cursor:pointer;
 }
-.logo{font-size:20px;font-weight:800}
-.nav a{
- text-decoration:none;background:#eeeeff;color:#554bd9;
- padding:9px 13px;border-radius:10px;font-weight:700
+
+a{
+    text-decoration:none;
+    color:inherit;
 }
-main{max-width:1200px;margin:auto;padding:25px 15px 60px}
-h1{margin:0}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(255,255,255,.97);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid #e2e7ef;
+}
+
+.header-inner{
+    max-width:1400px;
+    min-height:70px;
+    margin:auto;
+    padding:10px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#2859e6;
+    font-size:21px;
+    font-weight:900;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#4169ff,#7655ff);
+    color:#fff;
+}
+
+.back-btn{
+    border:0;
+    background:#eef2f8;
+    color:#3e4960;
+    border-radius:11px;
+    padding:10px 15px;
+    font-weight:800;
+}
+
+.back-btn:hover{
+    background:#e6edff;
+    color:#2859e6;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:30px 20px 60px;
+}
+
+.page-title{
+    margin:0;
+    font-size:clamp(28px,5vw,43px);
+}
+
+.page-subtitle{
+    color:#737d90;
+    margin:8px 0 25px;
+}
+
+/* =========================================================
+   TABS
+========================================================= */
+
 .tabs{
- display:flex;gap:8px;overflow:auto;margin:20px 0
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    margin-bottom:18px;
 }
+
+.tabs::-webkit-scrollbar{
+    display:none;
+}
+
 .tab{
- white-space:nowrap;border:0;background:white;border:1px solid #dfe4ed;
- padding:11px 15px;border-radius:11px;font-weight:700;color:#626b7d
+    flex:0 0 auto;
+    border:1px solid #dfe4ed;
+    background:#fff;
+    color:#4a556b;
+    border-radius:12px;
+    padding:11px 15px;
+    font-weight:800;
 }
-.tab.active{background:#655cf6;color:white;border-color:#655cf6}
-.tools{
- display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px
+
+.tab.active{
+    background:#eaf0ff;
+    border-color:#c1ceff;
+    color:#2859e6;
 }
-.tools input{
- flex:1;min-width:180px;border:1px solid #dce2ec;
- border-radius:11px;padding:11px;outline:0
+
+.count{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:21px;
+    height:21px;
+    margin-left:5px;
+    padding:0 5px;
+    border-radius:8px;
+    background:#dfe7ff;
+    color:#3159d9;
+    font-size:11px;
 }
-.tools button{
- border:0;border-radius:11px;padding:11px 14px;
- background:#eeeeff;color:#554bd9;font-weight:700
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:22px;
 }
-.grid{
- display:grid;grid-template-columns:repeat(5,1fr);gap:16px
+
+.search{
+    flex:1;
+    min-width:0;
+    height:48px;
+    border:1px solid #dfe4ed;
+    background:#fff;
+    border-radius:12px;
+    padding:0 14px;
+    outline:none;
 }
-.card{
- background:white;border:1px solid #e1e5ed;border-radius:16px;
- overflow:hidden;box-shadow:0 7px 20px #2430520b
+
+.search:focus{
+    border-color:#5275ff;
+    box-shadow:0 0 0 4px rgba(82,117,255,.09);
 }
+
+.export-btn,
+.import-btn{
+    height:48px;
+    border:0;
+    border-radius:12px;
+    padding:0 14px;
+    font-weight:800;
+}
+
+.export-btn{
+    background:#edf2ff;
+    color:#315bd9;
+}
+
+.import-btn{
+    background:#edf8f1;
+    color:#25804c;
+}
+
+.file-input{
+    display:none;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.movie-grid{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:18px;
+}
+
+.movie-card{
+    min-width:0;
+    background:#fff;
+    border:1px solid #e1e6ef;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(30,45,80,.06);
+    transition:.2s;
+}
+
+.movie-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(30,45,80,.12);
+}
+
+.poster-wrap{
+    position:relative;
+    aspect-ratio:2/3;
+    background:#edf0f5;
+    overflow:hidden;
+}
+
 .poster{
- aspect-ratio:2/3;position:relative;background:#e8ebf2
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
-.poster img{width:100%;height:100%;object-fit:cover}
-.info{padding:10px}
-.title{font-weight:800;line-height:1.35;min-height:40px}
-.meta{font-size:12px;color:#788193;margin-top:5px}
-.actions{display:flex;gap:5px;margin-top:9px}
-.actions button{
- flex:1;border:0;border-radius:8px;padding:7px 3px;
- background:#f0f2f7;font-size:11px
+
+.rating-badge{
+    position:absolute;
+    top:9px;
+    left:9px;
+    padding:5px 8px;
+    border-radius:9px;
+    background:rgba(255,255,255,.95);
+    color:#d98a00;
+    font-size:12px;
+    font-weight:900;
 }
-.actions button:hover{background:#eeeeff;color:#554bd9}
+
+.delete-btn{
+    position:absolute;
+    right:9px;
+    top:9px;
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.95);
+    color:#d7465b;
+    font-size:17px;
+}
+
+.movie-info{
+    padding:12px;
+}
+
+.movie-title{
+    margin:0;
+    font-size:15px;
+    line-height:1.35;
+    min-height:40px;
+}
+
+.movie-year{
+    color:#7d8799;
+    font-size:13px;
+    margin-top:6px;
+}
+
+.personal-rating{
+    margin-top:8px;
+    font-size:12px;
+    color:#d98a00;
+    font-weight:800;
+}
+
+.card-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:11px;
+}
+
+.card-actions button,
+.card-actions a{
+    min-height:36px;
+    border:0;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:800;
+}
+
+.detail-btn{
+    background:#edf2ff;
+    color:#315bd9;
+}
+
+.trailer-btn{
+    background:#fff0ef;
+    color:#d84655;
+}
+
+.note-btn{
+    grid-column:1/-1;
+    background:#f2f4f8;
+    color:#4d586d;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
 .empty{
- background:white;border-radius:17px;padding:60px 20px;
- text-align:center;color:#737d90
+    display:none;
+    text-align:center;
+    padding:75px 20px;
 }
-.stats{
- display:grid;grid-template-columns:repeat(4,1fr);
- gap:10px;margin:20px 0
+
+.empty.show{
+    display:block;
 }
-.stat{
- background:white;border:1px solid #e1e5ed;
- border-radius:15px;padding:17px
+
+.empty-icon{
+    font-size:55px;
 }
-.stat b{font-size:25px;display:block;margin-top:5px}
+
+.empty h2{
+    margin:12px 0 5px;
+}
+
+.empty p{
+    color:#778196;
+}
+
+/* =========================================================
+   NOTE MODAL
+========================================================= */
+
 .modal{
- position:fixed;inset:0;background:#17203988;
- display:none;align-items:center;justify-content:center;
- padding:15px;z-index:100
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    background:rgba(20,28,45,.45);
+    padding:15px;
+    align-items:center;
+    justify-content:center;
 }
-.modal.show{display:flex}
-.box{
- width:min(550px,100%);max-height:90vh;overflow:auto;
- background:white;border-radius:20px;padding:22px;position:relative
+
+.modal.show{
+    display:flex;
 }
+
+.modal-box{
+    width:min(550px,100%);
+    max-height:calc(100vh - 30px);
+    overflow:auto;
+    background:#fff;
+    border-radius:21px;
+    box-shadow:0 25px 70px rgba(10,20,50,.25);
+    padding:25px;
+}
+
+.modal-box h2{
+    margin-top:0;
+}
+
 .close{
- position:absolute;right:12px;top:12px;
- border:0;background:#f0f2f6;width:37px;height:37px;border-radius:10px
+    float:right;
+    width:38px;
+    height:38px;
+    border:0;
+    border-radius:50%;
+    background:#f0f3f8;
+    font-size:21px;
 }
-.box textarea,.box select,.box input{
- width:100%;padding:11px;border:1px solid #dce2eb;
- border-radius:10px;margin:7px 0;outline:0
+
+.note-movie{
+    display:flex;
+    gap:13px;
+    align-items:center;
+    margin:15px 0;
 }
-.save{
- border:0;background:#655cf6;color:white;
- padding:11px 15px;border-radius:10px;font-weight:700
+
+.note-movie img{
+    width:60px;
+    height:85px;
+    object-fit:cover;
+    border-radius:9px;
+    background:#edf0f5;
 }
+
+.note-movie-title{
+    font-weight:900;
+}
+
+.note-label{
+    display:block;
+    margin:18px 0 7px;
+    font-size:13px;
+    font-weight:800;
+    color:#586378;
+}
+
+.rating-select{
+    width:100%;
+    height:45px;
+    border:1px solid #dfe4ed;
+    border-radius:11px;
+    padding:0 11px;
+    background:#fff;
+}
+
+.notes{
+    width:100%;
+    min-height:130px;
+    resize:vertical;
+    border:1px solid #dfe4ed;
+    border-radius:11px;
+    padding:12px;
+    outline:none;
+}
+
+.save-note{
+    width:100%;
+    height:46px;
+    border:0;
+    border-radius:11px;
+    margin-top:15px;
+    background:#4169ff;
+    color:#fff;
+    font-weight:900;
+}
+
+/* =========================================================
+   CONFIRM
+========================================================= */
+
+.danger-zone{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid #e7eaf0;
+}
+
+.clear-btn{
+    border:0;
+    border-radius:11px;
+    padding:10px 14px;
+    background:#fff0f0;
+    color:#d33f52;
+    font-weight:800;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
 .toast{
- position:fixed;bottom:20px;left:50%;z-index:200;
- transform:translate(-50%,100px);opacity:0;
- background:#172033;color:white;padding:12px 17px;
- border-radius:11px;transition:.25s
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translate(-50%,20px);
+    z-index:5000;
+    max-width:calc(100% - 30px);
+    background:#172033;
+    color:white;
+    padding:12px 17px;
+    border-radius:11px;
+    text-align:center;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
 }
-.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:1000px){
- .grid{grid-template-columns:repeat(4,1fr)}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
 }
-@media(max-width:650px){
- .grid{grid-template-columns:repeat(2,1fr);gap:11px}
- .stats{grid-template-columns:1fr 1fr}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1200px){
+
+    .movie-grid{
+        grid-template-columns:repeat(5,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:950px){
+
+    .movie-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+        padding:9px 14px;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .logo-icon{
+        width:36px;
+        height:36px;
+    }
+
+    .back-btn{
+        padding:8px 10px;
+        font-size:12px;
+    }
+
+    .container{
+        padding:20px 14px 45px;
+    }
+
+    .toolbar{
+        flex-wrap:wrap;
+    }
+
+    .search{
+        flex-basis:100%;
+        order:1;
+    }
+
+    .export-btn,
+    .import-btn{
+        flex:1;
+        order:2;
+    }
+
+    .movie-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+    }
+
+    .movie-info{
+        padding:10px;
+    }
+
+    .movie-title{
+        font-size:14px;
+    }
+
+}
+
+@media(max-width:380px){
+
+    .card-actions{
+        grid-template-columns:1fr;
+    }
+
+    .note-btn{
+        grid-column:auto;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="nav">
- <div class="logo">🎬 Movie Finder</div>
- <a href="index.html">← Home</a>
-</div>
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="logo">
+            <div class="logo-icon">🎬</div>
+            Movie Finder
+        </div>
+
+        <button class="back-btn" onclick="goHome()">
+            ← Movie Finder
+        </button>
+
+    </div>
+
 </header>
 
-<main>
+<main class="container">
 
-<h1>❤️ My Movies</h1>
-<p style="color:#737d90">
-Kelola film favorit, watchlist, dan riwayat tontonanmu.
-</p>
+    <h1 class="page-title">
+        ❤️ Film Tersimpan
+    </h1>
 
-<div class="stats">
- <div class="stat">❤️ Favorites<b id="favCount">0</b></div>
- <div class="stat">📌 Watchlist<b id="watchCount">0</b></div>
- <div class="stat">👀 History<b id="historyCount">0</b></div>
- <div class="stat">🎬 Total<b id="totalCount">0</b></div>
-</div>
+    <p class="page-subtitle">
+        Kelola favorite, watchlist, riwayat tontonan,
+        rating pribadi, dan catatanmu.
+    </p>
 
-<div class="tabs">
- <button class="tab active" onclick="setTab('favorites',this)">❤️ Favorites</button>
- <button class="tab" onclick="setTab('watchlist',this)">📌 Watchlist</button>
- <button class="tab" onclick="setTab('history',this)">👀 History</button>
-</div>
+    <!-- TABS -->
 
-<div class="tools">
- <input id="search" placeholder="Cari di daftar...">
- <button onclick="exportData()">📤 Export</button>
- <button onclick="importFile()">📥 Import</button>
- <button onclick="clearCurrent()">🗑️ Hapus</button>
- <input id="file" type="file" accept=".json" style="display:none">
-</div>
+    <div class="tabs">
 
-<div id="grid" class="grid"></div>
+        <button
+            id="tabFavorites"
+            class="tab active"
+            onclick="changeTab('favorites')">
+
+            ❤️ Favorite
+
+            <span id="countFavorites" class="count">
+                0
+            </span>
+
+        </button>
+
+        <button
+            id="tabWatchlist"
+            class="tab"
+            onclick="changeTab('watchlist')">
+
+            📌 Watchlist
+
+            <span id="countWatchlist" class="count">
+                0
+            </span>
+
+        </button>
+
+        <button
+            id="tabHistory"
+            class="tab"
+            onclick="changeTab('history')">
+
+            🕘 History
+
+            <span id="countHistory" class="count">
+                0
+            </span>
+
+        </button>
+
+    </div>
+
+    <!-- TOOLBAR -->
+
+    <div class="toolbar">
+
+        <input
+            id="searchInput"
+            class="search"
+            type="search"
+            placeholder="Cari di daftar tersimpan..."
+        >
+
+        <button
+            class="export-btn"
+            onclick="exportData()">
+            📤 Export
+        </button>
+
+        <button
+            class="import-btn"
+            onclick="document.getElementById('importFile').click()">
+            📥 Import
+        </button>
+
+        <input
+            id="importFile"
+            class="file-input"
+            type="file"
+            accept=".json,application/json"
+            onchange="importData(event)"
+        >
+
+    </div>
+
+    <!-- GRID -->
+
+    <div id="movieGrid" class="movie-grid"></div>
+
+    <div id="empty" class="empty">
+
+        <div class="empty-icon">
+            🎬
+        </div>
+
+        <h2>
+            Belum ada film
+        </h2>
+
+        <p>
+            Film yang kamu simpan akan muncul di sini.
+        </p>
+
+        <button
+            class="detail-btn"
+            style="
+                border:0;
+                border-radius:11px;
+                padding:11px 16px;
+                font-weight:800;
+                margin-top:8px;
+            "
+            onclick="goHome()">
+            🔎 Cari Film
+        </button>
+
+    </div>
+
+    <!-- DANGER -->
+
+    <div class="danger-zone">
+
+        <button
+            class="clear-btn"
+            onclick="clearCurrentList()">
+            🗑️ Hapus Daftar Ini
+        </button>
+
+    </div>
 
 </main>
 
-<div id="modal" class="modal">
-<div class="box">
-<button class="close" onclick="closeModal()">✕</button>
-<h2 id="modalTitle">📝 Catatan</h2>
+<!-- =========================================================
+     NOTE MODAL
+========================================================= -->
 
-<label>⭐ Rating pribadi</label>
-<select id="personalRating">
- <option value="">Belum dinilai</option>
- <option value="1">⭐</option>
- <option value="2">⭐⭐</option>
- <option value="3">⭐⭐⭐</option>
- <option value="4">⭐⭐⭐⭐</option>
- <option value="5">⭐⭐⭐⭐⭐</option>
-</select>
+<div
+    id="noteModal"
+    class="modal"
+    onclick="outsideClose(event)">
 
-<label>📝 Catatan</label>
-<textarea id="note" rows="6" placeholder="Tulis catatan..."></textarea>
+    <div class="modal-box">
 
-<button class="save" onclick="savePersonal()">Simpan</button>
-</div>
+        <button
+            class="close"
+            onclick="closeNote()">
+            ×
+        </button>
+
+        <h2>
+            📝 Rating & Catatan
+        </h2>
+
+        <div id="noteMovie" class="note-movie"></div>
+
+        <label class="note-label">
+            Rating pribadimu
+        </label>
+
+        <select
+            id="personalRating"
+            class="rating-select">
+
+            <option value="">
+                Belum memberi rating
+            </option>
+
+            <option value="1">⭐ 1/10</option>
+            <option value="2">⭐ 2/10</option>
+            <option value="3">⭐ 3/10</option>
+            <option value="4">⭐ 4/10</option>
+            <option value="5">⭐ 5/10</option>
+            <option value="6">⭐ 6/10</option>
+            <option value="7">⭐ 7/10</option>
+            <option value="8">⭐ 8/10</option>
+            <option value="9">⭐ 9/10</option>
+            <option value="10">⭐ 10/10</option>
+
+        </select>
+
+        <label class="note-label">
+            Catatan
+        </label>
+
+        <textarea
+            id="notes"
+            class="notes"
+            placeholder="Tulis catatan tentang film ini..."></textarea>
+
+        <button
+            class="save-note"
+            onclick="savePersonalData()">
+            💾 Simpan
+        </button>
+
+    </div>
+
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
-const IMAGE="https://image.tmdb.org/t/p/w500";
 
-let currentTab="favorites";
-let currentMovie=null;
+/* =========================================================
+   STORAGE KEYS
+========================================================= */
 
-function getData(name){
- try{return JSON.parse(localStorage.getItem(name)||"[]")}catch{return[]}
-}
-function setData(name,data){
- localStorage.setItem(name,JSON.stringify(data))
+const STORAGE_FAVORITES =
+    "movie_finder_favorites";
+
+const STORAGE_WATCHLIST =
+    "movie_finder_watchlist";
+
+const STORAGE_HISTORY =
+    "movie_finder_history";
+
+const STORAGE_PERSONAL =
+    "movie_finder_personal";
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentTab = "favorites";
+
+let currentMovies = [];
+
+let editingMovie = null;
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function readArray(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key) || "[]"
+            );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
 }
 
-function esc(x){
- return String(x||"").replace(/[&<>"']/g,m=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",
- '"':"&quot;","'":"&#039;"
- }[m]));
+function writeArray(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
 }
 
-function poster(path){
- return path?IMAGE+path:
- "data:image/svg+xml;charset=UTF-8,"+
- encodeURIComponent(`
- <svg xmlns="http://www.w3.org/2000/svg" width="500" height="750">
- <rect width="100%" height="100%" fill="#e8ebf2"/>
- <text x="50%" y="50%" text-anchor="middle" font-size="60">🎬</text>
- </svg>`);
+function readPersonal(){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(STORAGE_PERSONAL) || "{}"
+            );
+
+        return data && typeof data === "object"
+            ? data
+            : {};
+
+    }catch(error){
+
+        return {};
+
+    }
+
 }
 
-function toast(t){
- $("toast").textContent=t;
- $("toast").classList.add("show");
- clearTimeout(window.timer);
- window.timer=setTimeout(()=>$("toast").classList.remove("show"),2500);
+function writePersonal(data){
+
+    localStorage.setItem(
+        STORAGE_PERSONAL,
+        JSON.stringify(data)
+    );
+
 }
 
-function setTab(tab,button){
- currentTab=tab;
- document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
- button.classList.add("active");
- render();
+/* =========================================================
+   TAB KEY
+========================================================= */
+
+function getTabKey(){
+
+    if(currentTab === "favorites"){
+
+        return STORAGE_FAVORITES;
+
+    }
+
+    if(currentTab === "watchlist"){
+
+        return STORAGE_WATCHLIST;
+
+    }
+
+    return STORAGE_HISTORY;
+
 }
+
+/* =========================================================
+   CHANGE TAB
+========================================================= */
+
+function changeTab(tab){
+
+    currentTab = tab;
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    if(tab === "favorites"){
+
+        document
+            .getElementById("tabFavorites")
+            .classList.add("active");
+
+    }
+
+    if(tab === "watchlist"){
+
+        document
+            .getElementById("tabWatchlist")
+            .classList.add("active");
+
+    }
+
+    if(tab === "history"){
+
+        document
+            .getElementById("tabHistory")
+            .classList.add("active");
+
+    }
+
+    document.getElementById("searchInput").value = "";
+
+    render();
+
+}
+
+/* =========================================================
+   UPDATE COUNTS
+========================================================= */
+
+function updateCounts(){
+
+    document.getElementById("countFavorites")
+        .textContent =
+        readArray(STORAGE_FAVORITES).length;
+
+    document.getElementById("countWatchlist")
+        .textContent =
+        readArray(STORAGE_WATCHLIST).length;
+
+    document.getElementById("countHistory")
+        .textContent =
+        readArray(STORAGE_HISTORY).length;
+
+}
+
+/* =========================================================
+   RENDER
+========================================================= */
 
 function render(){
 
- let data=getData(currentTab);
- let q=$("search").value.trim().toLowerCase();
+    updateCounts();
 
- if(q){
-  data=data.filter(m=>
-   String(m.title||"").toLowerCase().includes(q)
-  );
- }
+    const key =
+        getTabKey();
 
- updateStats();
+    let movies =
+        readArray(key);
 
- if(!data.length){
-  $("grid").innerHTML=`
-   <div class="empty" style="grid-column:1/-1">
-    <div style="font-size:45px">
-     ${currentTab==="favorites"?"❤️":
-       currentTab==="watchlist"?"📌":"👀"}
-    </div>
-    <h2>Belum ada film</h2>
-    <p>Film yang kamu simpan akan muncul di sini.</p>
-    <a href="index.html">← Cari film</a>
-   </div>`;
-  return;
- }
+    const search =
+        document.getElementById("searchInput")
+            .value
+            .trim()
+            .toLowerCase();
 
- $("grid").innerHTML="";
+    if(search){
 
- data.forEach(m=>{
+        movies =
+            movies.filter(movie => {
 
-  let personal=
-   JSON.parse(localStorage.getItem("personal_"+m.id)||"{}");
+                const title =
+                    String(
+                        movie.title ||
+                        ""
+                    ).toLowerCase();
 
-  let card=document.createElement("div");
-  card.className="card";
+                const original =
+                    String(
+                        movie.original_title ||
+                        ""
+                    ).toLowerCase();
 
-  card.innerHTML=`
-   <div class="poster">
-    <img src="${poster(m.poster_path)}"
-         loading="lazy"
-         alt="${esc(m.title)}">
-   </div>
+                return (
+                    title.includes(search) ||
+                    original.includes(search)
+                );
 
-   <div class="info">
+            });
 
-    <div class="title">${esc(m.title)}</div>
-
-    <div class="meta">
-     ${m.release_date?.slice(0,4)||"—"}
-     • ⭐ ${(m.vote_average||0).toFixed(1)}
-    </div>
-
-    ${
-     personal.rating
-      ? `<div style="margin-top:6px">
-          Rating saya: ${"⭐".repeat(Number(personal.rating))}
-         </div>`
-      :""
     }
 
-    <div class="actions">
+    currentMovies = movies;
 
-     <button onclick="openMovie(${m.id})">
-      🎬 Detail
-     </button>
+    const grid =
+        document.getElementById("movieGrid");
 
-     <button onclick="openNote(${m.id})">
-      📝 Catatan
-     </button>
+    const empty =
+        document.getElementById("empty");
 
-     <button onclick="removeMovie(${m.id})">
-      🗑️
-     </button>
+    if(!movies.length){
 
-    </div>
+        grid.innerHTML = "";
 
-   </div>
-  `;
+        empty.classList.add("show");
 
-  $("grid").appendChild(card);
+        return;
 
- });
+    }
+
+    empty.classList.remove("show");
+
+    grid.innerHTML =
+        movies
+        .map(renderCard)
+        .join("");
 
 }
 
-function updateStats(){
- let f=getData("favorites");
- let w=getData("watchlist");
- let h=getData("history");
+/* =========================================================
+   RENDER CARD
+========================================================= */
 
- $("favCount").textContent=f.length;
- $("watchCount").textContent=w.length;
- $("historyCount").textContent=h.length;
+function renderCard(movie){
 
- let ids=new Set([
-  ...f.map(x=>x.id),
-  ...w.map(x=>x.id)
- ]);
+    const personal =
+        readPersonal()[movie.id] || {};
 
- $("totalCount").textContent=ids.size;
+    const personalRating =
+        personal.rating
+        ? `⭐ Rating kamu: ${personal.rating}/10`
+        : "";
+
+    const poster =
+        movie.poster_path
+        ? `
+            <img
+                class="poster"
+                src="https://image.tmdb.org/t/p/w500${movie.poster_path}"
+                loading="lazy"
+                alt="">
+          `
+        :
+          `
+            <div
+                class="poster"
+                style="
+                    display:grid;
+                    place-items:center;
+                    color:#8791a4;
+                ">
+                No Poster
+            </div>
+          `;
+
+    return `
+
+        <article
+            class="movie-card"
+            data-id="${movie.id}">
+
+            <div class="poster-wrap">
+
+                ${poster}
+
+                <div class="rating-badge">
+                    ⭐ ${Number(
+                        movie.vote_average || 0
+                    ).toFixed(1)}
+                </div>
+
+                <button
+                    class="delete-btn"
+                    title="Hapus"
+                    onclick="removeMovie(${movie.id})">
+                    🗑️
+                </button>
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3 class="movie-title">
+                    ${escapeHTML(
+                        movie.title ||
+                        movie.original_title ||
+                        "Tanpa judul"
+                    )}
+                </h3>
+
+                <div class="movie-year">
+
+                    ${
+                        movie.release_date
+                        ? movie.release_date.slice(0,4)
+                        : "Tahun —"
+                    }
+
+                </div>
+
+                ${
+                    personalRating
+                    ? `
+                        <div class="personal-rating">
+                            ${personalRating}
+                        </div>
+                      `
+                    : ""
+                }
+
+                <div class="card-actions">
+
+                    <button
+                        class="detail-btn"
+                        onclick="openDetail(${movie.id})">
+                        🎬 Detail
+                    </button>
+
+                    <a
+                        class="trailer-btn"
+                        href="trailer.html?id=${encodeURIComponent(movie.id)}">
+                        ▶ Trailer
+                    </a>
+
+                    <button
+                        class="note-btn"
+                        onclick="openNote(${movie.id})">
+                        📝 Rating & Catatan
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
 }
+
+/* =========================================================
+   REMOVE MOVIE
+========================================================= */
 
 function removeMovie(id){
 
- let data=getData(currentTab)
-  .filter(x=>x.id!==id);
+    const key =
+        getTabKey();
 
- setData(currentTab,data);
+    let movies =
+        readArray(key);
 
- render();
+    const before =
+        movies.length;
 
- toast("Film dihapus.");
+    movies =
+        movies.filter(
+            movie =>
+                Number(movie.id) !== Number(id)
+        );
+
+    if(movies.length === before){
+
+        toast("Film tidak ditemukan.");
+
+        return;
+
+    }
+
+    writeArray(key,movies);
+
+    render();
+
+    toast(
+        currentTab === "favorites"
+        ? "Dihapus dari Favorite ❤️"
+        : currentTab === "watchlist"
+            ? "Dihapus dari Watchlist 📌"
+            : "Dihapus dari History 🕘"
+    );
 
 }
+
+/* =========================================================
+   OPEN DETAIL
+========================================================= */
+
+function openDetail(id){
+
+    window.location.href =
+        `index.html?movie=${encodeURIComponent(id)}`;
+
+}
+
+/* =========================================================
+   OPEN NOTE
+========================================================= */
 
 function openNote(id){
 
- let all=[
-  ...getData("favorites"),
-  ...getData("watchlist"),
-  ...getData("history")
- ];
+    const movie =
+        currentMovies.find(
+            m => Number(m.id) === Number(id)
+        );
 
- currentMovie=all.find(x=>x.id===id);
+    if(!movie){
 
- if(!currentMovie)return;
+        toast("Film tidak ditemukan.");
 
- let data=
-  JSON.parse(
-   localStorage.getItem(
-    "personal_"+id
-   )||"{}"
-  );
+        return;
 
- $("personalRating").value=
-  data.rating||"";
+    }
 
- $("note").value=
-  data.note||"";
+    editingMovie = movie;
 
- $("modal").classList.add("show");
+    const personal =
+        readPersonal()[id] || {};
+
+    const poster =
+        movie.poster_path
+        ? `
+            <img
+                src="https://image.tmdb.org/t/p/w200${movie.poster_path}"
+                alt="">
+          `
+        :
+          `
+            <div
+                style="
+                    width:60px;
+                    height:85px;
+                    background:#edf0f5;
+                    border-radius:9px;
+                    display:grid;
+                    place-items:center;
+                ">
+                🎬
+            </div>
+          `;
+
+    document.getElementById("noteMovie")
+        .innerHTML = `
+
+            ${poster}
+
+            <div class="note-movie-title">
+                ${escapeHTML(
+                    movie.title || "Tanpa judul"
+                )}
+            </div>
+
+        `;
+
+    document.getElementById("personalRating")
+        .value =
+        personal.rating || "";
+
+    document.getElementById("notes")
+        .value =
+        personal.notes || "";
+
+    document.getElementById("noteModal")
+        .classList.add("show");
 
 }
 
-function savePersonal(){
+/* =========================================================
+   SAVE PERSONAL DATA
+========================================================= */
 
- if(!currentMovie)return;
+function savePersonalData(){
 
- let data={
-  rating:$("personalRating").value,
-  note:$("note").value,
-  updatedAt:Date.now()
- };
+    if(!editingMovie){
 
- localStorage.setItem(
-  "personal_"+currentMovie.id,
-  JSON.stringify(data)
- );
+        return;
 
- closeModal();
- render();
+    }
 
- toast("⭐ Data pribadi disimpan.");
+    const data =
+        readPersonal();
+
+    const rating =
+        document.getElementById("personalRating")
+            .value;
+
+    const notes =
+        document.getElementById("notes")
+            .value;
+
+    data[editingMovie.id] = {
+
+        rating:rating
+            ? Number(rating)
+            : "",
+
+        notes:notes,
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+    writePersonal(data);
+
+    closeNote();
+
+    render();
+
+    toast("Rating dan catatan berhasil disimpan.");
 
 }
 
-function closeModal(){
- $("modal").classList.remove("show");
+/* =========================================================
+   CLOSE NOTE
+========================================================= */
+
+function closeNote(){
+
+    document.getElementById("noteModal")
+        .classList.remove("show");
+
+    editingMovie = null;
+
 }
 
-function openMovie(id){
+/* =========================================================
+   OUTSIDE CLOSE
+========================================================= */
 
- location.href=
-  "index.html?movie="+id;
+function outsideClose(event){
+
+    if(event.target.id === "noteModal"){
+
+        closeNote();
+
+    }
 
 }
+
+/* =========================================================
+   CLEAR CURRENT LIST
+========================================================= */
+
+function clearCurrentList(){
+
+    const names = {
+
+        favorites:"Favorite",
+
+        watchlist:"Watchlist",
+
+        history:"History"
+
+    };
+
+    const name =
+        names[currentTab];
+
+    if(!confirm(
+        `Hapus semua isi ${name}?`
+    )){
+
+        return;
+
+    }
+
+    writeArray(
+        getTabKey(),
+        []
+    );
+
+    render();
+
+    toast(`${name} berhasil dikosongkan.`);
+
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        render
+    );
+
+/* =========================================================
+   EXPORT
+========================================================= */
 
 function exportData(){
 
- let data={
+    const data = {
 
-  favorites:getData("favorites"),
+        favorites:
+            readArray(STORAGE_FAVORITES),
 
-  watchlist:getData("watchlist"),
+        watchlist:
+            readArray(STORAGE_WATCHLIST),
 
-  history:getData("history"),
+        history:
+            readArray(STORAGE_HISTORY),
 
-  personal:{}
+        personal:
+            readPersonal(),
 
- };
+        exportedAt:
+            new Date().toISOString()
 
- [
-  ...data.favorites,
-  ...data.watchlist,
-  ...data.history
- ].forEach(m=>{
+    };
 
-  let p=
-   localStorage.getItem(
-    "personal_"+m.id
-   );
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:"application/json"
+            }
+        );
 
-  if(p)data.personal[m.id]=JSON.parse(p);
+    const url =
+        URL.createObjectURL(blob);
 
- });
+    const a =
+        document.createElement("a");
 
- let blob=
-  new Blob(
-   [JSON.stringify(data,null,2)],
-   {type:"application/json"}
-  );
+    a.href = url;
 
- let url=
-  URL.createObjectURL(blob);
+    a.download =
+        "movie-finder-backup.json";
 
- let a=
-  document.createElement("a");
+    document.body.appendChild(a);
 
- a.href=url;
- a.download="movie-finder-backup.json";
- a.click();
+    a.click();
 
- URL.revokeObjectURL(url);
+    a.remove();
 
- toast("📤 Data berhasil diekspor.");
+    URL.revokeObjectURL(url);
 
-}
-
-function importFile(){
-
- $("file").click();
-
-}
-
-$("file").addEventListener(
- "change",
- async e=>{
-
-  let file=e.target.files[0];
-
-  if(!file)return;
-
-  try{
-
-   let data=
-    JSON.parse(
-     await file.text()
-    );
-
-   if(data.favorites)
-    setData("favorites",data.favorites);
-
-   if(data.watchlist)
-    setData("watchlist",data.watchlist);
-
-   if(data.history)
-    setData("history",data.history);
-
-   if(data.personal){
-
-    Object.entries(
-     data.personal
-    ).forEach(([id,value])=>{
-
-     localStorage.setItem(
-      "personal_"+id,
-      JSON.stringify(value)
-     );
-
-    });
-
-   }
-
-   render();
-
-   toast("📥 Data berhasil diimpor.");
-
-  }catch{
-
-   toast("File backup tidak valid.");
-
-  }
-
- });
+    toast("Data berhasil diekspor.");
 
 }
 
-function clearCurrent(){
+/* =========================================================
+   IMPORT
+========================================================= */
 
- if(!confirm(
-  "Hapus semua data pada bagian ini?"
- ))return;
+function importData(event){
 
- getData(currentTab).forEach(m=>{
-  localStorage.removeItem(
-   "personal_"+m.id
-  );
- });
+    const file =
+        event.target.files[0];
 
- localStorage.removeItem(
-  currentTab
- );
+    if(!file){
 
- render();
+        return;
 
- toast("Data dihapus.");
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.onload = function(){
+
+        try{
+
+            const data =
+                JSON.parse(
+                    reader.result
+                );
+
+            if(
+                data.favorites &&
+                Array.isArray(data.favorites)
+            ){
+
+                writeArray(
+                    STORAGE_FAVORITES,
+                    data.favorites
+                );
+
+            }
+
+            if(
+                data.watchlist &&
+                Array.isArray(data.watchlist)
+            ){
+
+                writeArray(
+                    STORAGE_WATCHLIST,
+                    data.watchlist
+                );
+
+            }
+
+            if(
+                data.history &&
+                Array.isArray(data.history)
+            ){
+
+                writeArray(
+                    STORAGE_HISTORY,
+                    data.history
+                );
+
+            }
+
+            if(
+                data.personal &&
+                typeof data.personal === "object"
+            ){
+
+                writePersonal(
+                    data.personal
+                );
+
+            }
+
+            render();
+
+            toast(
+                "Data berhasil diimpor."
+            );
+
+        }catch(error){
+
+            console.error(error);
+
+            toast(
+                "File JSON tidak valid."
+            );
+
+        }
+
+        event.target.value = "";
+
+    };
+
+    reader.readAsText(file);
 
 }
 
-$("search").addEventListener(
- "input",
- render
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goHome(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function toast(message){
+
+    const element =
+        document.getElementById("toast");
+
+    element.textContent =
+        message;
+
+    element.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            () => {
+                element.classList.remove("show");
+            },
+            2500
+        );
+
+}
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Escape"){
+
+            closeNote();
+
+        }
+
+    }
 );
 
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
 render();
+
 </script>
 
 </body>
