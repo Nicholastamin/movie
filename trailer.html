@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Movie Trailer</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,Helvetica,sans-serif;
+ background:#f4f7ff;color:#172033
+}
+header{
+ position:sticky;top:0;z-index:20;background:white;
+ border-bottom:1px solid #e3e7ef
+}
+.nav{
+ max-width:1100px;margin:auto;padding:13px 16px;
+ display:flex;align-items:center;justify-content:space-between
+}
+.logo{font-size:20px;font-weight:800}
+.back{
+ text-decoration:none;background:#eeeeff;color:#554bd9;
+ padding:9px 13px;border-radius:10px;font-weight:700
+}
+main{max-width:1100px;margin:auto;padding:25px 15px 60px}
+.title{text-align:center}
+.title h1{margin:0;font-size:32px}
+.title p{color:#727c8e}
+.player{
+ background:#111;border-radius:18px;overflow:hidden;
+ margin:25px auto;max-width:950px;
+ box-shadow:0 15px 40px #0002
+}
+.video{
+ position:relative;padding-top:56.25%
+}
+.video iframe{
+ position:absolute;inset:0;width:100%;height:100%;border:0
+}
+.noTrailer{
+ background:white;border-radius:18px;padding:60px 20px;
+ text-align:center;color:#737d90
+}
+.info{
+ background:white;border:1px solid #e1e5ed;border-radius:18px;
+ padding:20px;display:flex;gap:18px
+}
+.poster{width:150px;height:225px;object-fit:cover;border-radius:13px}
+.info h2{margin:0 0 7px}
+.meta{color:#747e90}
+.overview{line-height:1.7;color:#555f70}
+.trailers{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:15px
+}
+.trailerCard{
+ background:white;border:1px solid #e1e5ed;border-radius:15px;
+ overflow:hidden;cursor:pointer
+}
+.thumb{
+ aspect-ratio:16/9;background:#ddd;
+ display:grid;place-items:center;font-size:40px
+}
+.trailerCard div:last-child{padding:12px;font-weight:700}
+.loading{text-align:center;padding:60px;color:#737d90}
+@media(max-width:650px){
+ .info{flex-direction:column}
+ .poster{width:140px;height:210px}
+ .trailers{grid-template-columns:1fr}
+ .title h1{font-size:26px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+ <div class="logo">🎬 Movie Finder</div>
+ <a class="back" href="index.html">← Kembali</a>
+</div>
+</header>
+
+<main>
+
+<div id="content" class="loading">
+ Memuat trailer...
+</div>
+
+</main>
+
+<script>
+const STORAGE="movie_finder_tmdb_key";
+const IMAGE="https://image.tmdb.org/t/p/w500";
+
+const apiKey=localStorage.getItem(STORAGE)||"";
+const id=new URLSearchParams(location.search).get("id");
+
+function esc(x){
+ return String(x||"").replace(/[&<>"']/g,m=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#039;"
+ }[m]));
+}
+
+function request(endpoint,params={}){
+ let u=new URL("https://api.themoviedb.org/3"+endpoint);
+ Object.entries(params).forEach(([k,v])=>{
+  if(v!==undefined&&v!==null&&v!=="")u.searchParams.set(k,v);
+ });
+ let options={headers:{accept:"application/json"}};
+ if(apiKey.startsWith("eyJ")){
+  options.headers.Authorization="Bearer "+apiKey;
+ }else{
+  u.searchParams.set("api_key",apiKey);
+ }
+ return {url:u.toString(),options};
+}
+
+async function api(endpoint,params={}){
+ let r=request(endpoint,params);
+ let res=await fetch(r.url,r.options);
+ let d=await res.json();
+ if(!res.ok)throw new Error(d.status_message||"TMDB Error");
+ return d;
+}
+
+function poster(path){
+ return path?IMAGE+path:
+ "data:image/svg+xml;charset=UTF-8,"+
+ encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750">
+ <rect width="100%" height="100%" fill="#e8ebf2"/>
+ <text x="50%" y="50%" text-anchor="middle" font-size="60">🎬</text>
+ </svg>`);
+}
+
+async function init(){
+
+ if(!apiKey){
+  document.getElementById("content").innerHTML=`
+   <div class="noTrailer">
+    <h2>🔑 API belum diatur</h2>
+    <p>Kembali ke halaman utama dan masukkan API TMDB.</p>
+    <a class="back" href="index.html">← Kembali</a>
+   </div>`;
+  return;
+ }
+
+ if(!id){
+  document.getElementById("content").innerHTML=`
+   <div class="noTrailer">
+    <h2>Film tidak ditemukan</h2>
+   </div>`;
+  return;
+ }
+
+ try{
+
+  const movie=await api("/movie/"+id,{
+   language:"id-ID",
+   append_to_response:"videos"
+  });
+
+  const videos=(movie.videos?.results||[])
+   .filter(v=>v.site==="YouTube");
+
+  const usable=videos.filter(v=>
+   ["Trailer","Teaser","Featurette","Behind the Scenes"].includes(v.type)
+  );
+
+  const main=usable.find(v=>v.type==="Trailer")||usable[0];
+
+  let html=`
+   <div class="title">
+    <h1>▶️ Trailer</h1>
+    <p>${esc(movie.title)}</p>
+   </div>
+  `;
+
+  if(main){
+
+   html+=`
+    <div class="player">
+     <div class="video">
+      <iframe
+       src="https://www.youtube.com/embed/${encodeURIComponent(main.key)}"
+       title="${esc(main.name)}"
+       allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"
+       allowfullscreen>
+      </iframe>
+     </div>
+    </div>
+   `;
+
+  }else{
+
+   html+=`
+    <div class="noTrailer">
+     <div style="font-size:50px">🎬</div>
+     <h2>Trailer tidak tersedia</h2>
+     <p>TMDB tidak menyediakan video YouTube untuk film ini.</p>
+    </div>
+   `;
+
+  }
+
+  html+=`
+   <div class="info">
+    <img class="poster" src="${poster(movie.poster_path)}">
+    <div>
+     <h2>${esc(movie.title)}</h2>
+     <div class="meta">
+      ${movie.release_date||"—"}
+      • ⭐ ${(movie.vote_average||0).toFixed(1)}
+      • ${movie.runtime?movie.runtime+" menit":"—"}
+     </div>
+     <p class="overview">${esc(movie.overview||"Sinopsis tidak tersedia.")}</p>
+    </div>
+   </div>
+  `;
+
+  if(usable.length){
+
+   html+=`
+    <h2 style="margin-top:30px">🎬 Video Lainnya</h2>
+    <div class="trailers">
+   `;
+
+   usable.forEach(v=>{
+
+    html+=`
+     <div class="trailerCard"
+      onclick="playVideo('${encodeURIComponent(v.key)}','${esc(v.name)}')">
+
+      <div class="thumb">▶️</div>
+
+      <div>
+       ${esc(v.name)}
+       <br>
+       <small style="color:#777">${esc(v.type)}</small>
+      </div>
+
+     </div>
+    `;
+
+   });
+
+   html+="</div>";
+
+  }
+
+  document.getElementById("content").innerHTML=html;
+
+ }catch(e){
+
+  document.getElementById("content").innerHTML=`
+   <div class="noTrailer">
+    <h2>⚠️ Gagal memuat trailer</h2>
+    <p>${esc(e.message)}</p>
+    <a class="back" href="index.html">← Kembali</a>
+   </div>
+  `;
+
+ }
+
+}
+
+function playVideo(key,name){
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+ const player=document.querySelector(".player");
+
+ if(player){
+
+  player.innerHTML=`
+   <div class="video">
+    <iframe
+     src="https://www.youtube.com/embed/${key}"
+     title="${name}"
+     allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"
+     allowfullscreen>
+    </iframe>
+   </div>
+  `;
+
+ }
+
+}
+
+init();
+</script>
+
+</body>
+</html>
