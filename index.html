@@ -2,639 +2,223 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-
 <title>Movie Finder</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f4f7ff;
-    color:#172033;
+ margin:0;font-family:Arial,Helvetica,sans-serif;
+ background:#f4f7ff;color:#172033
 }
-
-/* ================= HEADER ================= */
-
+button,select,input{font:inherit}
+button{cursor:pointer}
 header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid #e6eaf3;
+ position:sticky;top:0;z-index:100;
+ background:rgba(255,255,255,.96);
+ backdrop-filter:blur(12px);
+ border-bottom:1px solid #e5e8f0
 }
-
-.header-inner{
-    max-width:1250px;
-    margin:auto;
-    padding:15px 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
+.nav{
+ max-width:1250px;margin:auto;padding:12px 16px;
+ display:flex;align-items:center;justify-content:space-between;gap:10px
 }
-
 .logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:21px;
-    font-weight:800;
+ display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px
 }
-
-.logo-icon{
-    width:42px;
-    height:42px;
-    border-radius:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#6c63ff,#8d7cff);
-    color:white;
-    font-size:21px;
-    box-shadow:0 7px 18px rgba(108,99,255,.25);
+.logoIcon{
+ width:40px;height:40px;border-radius:12px;
+ display:grid;place-items:center;color:#fff;
+ background:linear-gradient(135deg,#655cf6,#9b7cff)
 }
-
-.settings-btn{
-    border:0;
-    background:#eef0ff;
-    color:#5148d9;
-    width:42px;
-    height:42px;
-    border-radius:13px;
-    cursor:pointer;
-    font-size:19px;
+.navlinks{display:flex;gap:7px;flex-wrap:wrap}
+.navlinks a{
+ text-decoration:none;color:#596276;padding:9px 11px;
+ border-radius:10px;font-size:13px;font-weight:700
 }
-
-.settings-btn:hover{
-    background:#e2e4ff;
+.navlinks a:hover,.navlinks a.active{background:#eeeeff;color:#554bd9}
+main{max-width:1250px;margin:auto;padding:25px 16px 70px}
+.hero{text-align:center;padding:20px 0 25px}
+.hero h1{font-size:clamp(30px,6vw,50px);margin:0}
+.hero p{color:#737d90;line-height:1.6}
+.searchArea{max-width:850px;margin:auto;position:relative}
+.searchBox{
+ display:flex;align-items:center;gap:8px;background:white;
+ border:1px solid #dfe4ef;border-radius:17px;padding:7px;
+ box-shadow:0 12px 30px #24305212
 }
-
-/* ================= MAIN ================= */
-
-main{
-    max-width:1250px;
-    margin:auto;
-    padding:28px 18px 60px;
+.searchBox input{
+ flex:1;border:0;outline:0;padding:13px 4px;min-width:0
 }
-
-.hero{
-    text-align:center;
-    padding:20px 0 25px;
+.searchBtn{
+ border:0;background:#655cf6;color:white;padding:12px 19px;
+ border-radius:12px;font-weight:700
 }
-
-.hero h1{
-    margin:0;
-    font-size:clamp(30px,6vw,50px);
-    line-height:1.1;
+.clearBtn{
+ border:0;background:#eef0f6;width:38px;height:38px;border-radius:10px
 }
-
-.hero p{
-    margin:12px auto 0;
-    color:#697386;
-    max-width:650px;
-    line-height:1.6;
-}
-
-/* ================= SEARCH ================= */
-
-.search-area{
-    max-width:850px;
-    margin:15px auto 25px;
-    position:relative;
-}
-
-.search-box{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:white;
-    border:1px solid #dfe4f0;
-    border-radius:18px;
-    padding:7px;
-    box-shadow:0 12px 30px rgba(36,46,80,.08);
-}
-
-.search-icon{
-    margin-left:12px;
-    color:#7b8497;
-    font-size:19px;
-}
-
-#searchInput{
-    flex:1;
-    border:0;
-    outline:0;
-    background:transparent;
-    padding:13px 5px;
-    font-size:16px;
-    min-width:0;
-}
-
-.search-btn{
-    border:0;
-    border-radius:13px;
-    padding:12px 20px;
-    background:#655cf6;
-    color:white;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.search-btn:hover{
-    background:#5148dc;
-}
-
-.clear-btn{
-    border:0;
-    background:#f0f2f7;
-    width:38px;
-    height:38px;
-    border-radius:11px;
-    cursor:pointer;
-    color:#687186;
-}
-
-/* ================= LIVE PREVIEW ================= */
-
 .preview{
-    position:absolute;
-    top:67px;
-    left:0;
-    right:0;
-    background:white;
-    border:1px solid #e0e5ef;
-    border-radius:17px;
-    box-shadow:0 20px 45px rgba(31,42,70,.16);
-    overflow:hidden;
-    z-index:50;
-    display:none;
+ display:none;position:absolute;top:65px;left:0;right:0;
+ background:white;border:1px solid #e1e5ef;border-radius:16px;
+ overflow:hidden;z-index:30;box-shadow:0 20px 45px #1d28451c
 }
-
-.preview.show{
-    display:block;
+.preview.show{display:block}
+.previewItem{
+ display:flex;gap:10px;padding:9px;border-bottom:1px solid #edf0f5
 }
-
-.preview-item{
-    display:flex;
-    gap:12px;
-    padding:10px;
-    cursor:pointer;
-    border-bottom:1px solid #edf0f5;
-}
-
-.preview-item:last-child{
-    border-bottom:0;
-}
-
-.preview-item:hover{
-    background:#f7f8ff;
-}
-
-.preview-item img{
-    width:45px;
-    height:65px;
-    object-fit:cover;
-    border-radius:8px;
-}
-
-.preview-info{
-    min-width:0;
-}
-
-.preview-title{
-    font-weight:700;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.preview-meta{
-    color:#7c8495;
-    font-size:13px;
-    margin-top:5px;
-}
-
-/* ================= FILTERS ================= */
-
+.previewItem img{width:42px;height:60px;object-fit:cover;border-radius:7px}
+.previewTitle{font-weight:700}
+.previewMeta{font-size:12px;color:#7c8494;margin-top:5px}
 .filters{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:10px;
-    margin-bottom:25px;
+ display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:22px 0
 }
-
-.filter{
-    background:white;
-    border:1px solid #dfe4ee;
-    border-radius:13px;
-    padding:11px 12px;
-    outline:none;
-    color:#293247;
-    font-size:14px;
-    cursor:pointer;
+select,.filterBtn{
+ border:1px solid #dce2ed;background:white;border-radius:11px;
+ padding:11px;color:#30394c;outline:0
 }
-
-.filter:focus{
-    border-color:#766cff;
-    box-shadow:0 0 0 3px rgba(118,108,255,.1);
+.filterBtn{background:#eeeeff;color:#554bd9;font-weight:700}
+.sectionHead{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:10px;margin:25px 0 14px
 }
-
-.reset-filter{
-    border:0;
-    border-radius:13px;
-    background:#eeeefe;
-    color:#554bd9;
-    font-weight:700;
-    cursor:pointer;
+.sectionTitle{font-size:23px;font-weight:800}
+.resultInfo{font-size:13px;color:#788194}
+.grid{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:17px
 }
-
-/* ================= SECTION ================= */
-
-.section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    margin:20px 0 15px;
+.card{
+ background:white;border:1px solid #e3e7ef;border-radius:16px;
+ overflow:hidden;box-shadow:0 7px 20px #2430520b;
+ transition:.2s
 }
-
-.section-title{
-    font-size:23px;
-    font-weight:800;
-}
-
-.result-info{
-    color:#7a8395;
-    font-size:14px;
-}
-
-/* ================= MOVIE GRID ================= */
-
-.movie-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:18px;
-}
-
-.movie-card{
-    background:white;
-    border-radius:17px;
-    overflow:hidden;
-    border:1px solid #e4e7ef;
-    cursor:pointer;
-    transition:.22s ease;
-    box-shadow:0 8px 22px rgba(35,45,70,.06);
-}
-
-.movie-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 30px rgba(35,45,70,.13);
-}
-
-.poster-wrap{
-    aspect-ratio:2/3;
-    background:#e9ecf4;
-    overflow:hidden;
-    position:relative;
-}
-
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px #24305217}
 .poster{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+ aspect-ratio:2/3;background:#e8ebf2;position:relative;overflow:hidden
 }
-
-.rating{
-    position:absolute;
-    top:9px;
-    right:9px;
-    background:rgba(255,255,255,.94);
-    color:#e68a00;
-    padding:6px 8px;
-    border-radius:9px;
-    font-size:12px;
-    font-weight:800;
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.rate{
+ position:absolute;right:8px;top:8px;background:#fff;padding:6px 8px;
+ border-radius:8px;font-size:12px;font-weight:800;color:#dc8a00
 }
-
-.movie-info{
-    padding:12px;
+.cardInfo{padding:10px}
+.cardTitle{font-weight:800;line-height:1.35;min-height:39px}
+.cardYear{font-size:12px;color:#7b8496;margin-top:5px}
+.cardActions{display:flex;gap:6px;margin-top:9px}
+.smallBtn{
+ flex:1;border:0;border-radius:9px;padding:8px 3px;
+ background:#f0f1f8;color:#4e5870;font-size:11px;font-weight:700
 }
-
-.movie-title{
-    font-weight:800;
-    line-height:1.35;
-    min-height:42px;
-}
-
-.movie-year{
-    color:#7b8496;
-    font-size:13px;
-    margin-top:7px;
-}
-
-/* ================= LOADING ================= */
-
+.smallBtn.active{background:#eeeefe;color:#554bd9}
 .loading{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:9px;
-    padding:28px;
-    color:#6d7689;
+ padding:30px;text-align:center;color:#747e90
 }
-
 .spinner{
-    width:21px;
-    height:21px;
-    border:3px solid #dfe2ff;
-    border-top-color:#655cf6;
-    border-radius:50%;
-    animation:spin .8s linear infinite;
+ display:inline-block;width:20px;height:20px;border:3px solid #dddffb;
+ border-top-color:#655cf6;border-radius:50%;animation:spin .8s linear infinite;
+ vertical-align:middle;margin-right:8px
 }
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-#loadMoreTrigger{
-    height:20px;
-}
-
-/* ================= EMPTY ================= */
-
+@keyframes spin{to{transform:rotate(360deg)}}
 .empty{
-    text-align:center;
-    padding:60px 20px;
-    background:white;
-    border-radius:18px;
-    border:1px solid #e5e8ef;
-    color:#70798c;
+ background:white;border:1px solid #e3e7ef;border-radius:17px;
+ padding:45px 20px;text-align:center;color:#737d90
 }
-
-.empty-icon{
-    font-size:45px;
-    margin-bottom:10px;
-}
-
-/* ================= MODAL ================= */
-
+.emptyIcon{font-size:43px}
 .modal{
-    position:fixed;
-    inset:0;
-    background:rgba(20,27,45,.55);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:18px;
-    z-index:300;
+ position:fixed;inset:0;background:#1821398c;z-index:300;
+ display:none;align-items:center;justify-content:center;padding:15px
 }
-
-.modal.show{
-    display:flex;
+.modal.show{display:flex}
+.modalBox{
+ width:min(900px,100%);max-height:92vh;overflow:auto;
+ background:white;border-radius:23px;position:relative
 }
-
-.modal-box{
-    width:min(900px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:white;
-    border-radius:24px;
-    box-shadow:0 30px 80px rgba(0,0,0,.25);
-    position:relative;
-}
-
 .close{
-    position:absolute;
-    top:13px;
-    right:13px;
-    width:40px;
-    height:40px;
-    border:0;
-    border-radius:12px;
-    background:white;
-    box-shadow:0 5px 20px rgba(0,0,0,.12);
-    cursor:pointer;
-    z-index:5;
-    font-size:18px;
+ position:absolute;right:12px;top:12px;width:39px;height:39px;
+ border:0;border-radius:11px;background:white;box-shadow:0 4px 15px #0002;
+ z-index:5
 }
-
-.detail{
-    display:grid;
-    grid-template-columns:280px 1fr;
-    gap:25px;
-    padding:25px;
-}
-
-.detail-poster{
-    width:100%;
-    border-radius:17px;
-}
-
-.detail-content h2{
-    font-size:30px;
-    margin:0 45px 8px 0;
-}
-
-.detail-meta{
-    color:#727b8d;
-    margin-bottom:15px;
-}
-
-.genres{
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px;
-    margin:12px 0;
-}
-
+.detail{display:grid;grid-template-columns:270px 1fr;gap:23px;padding:25px}
+.detailPoster{width:100%;border-radius:16px}
+.detail h2{font-size:29px;margin:0 45px 8px 0}
+.meta{color:#747e90;font-size:14px}
+.genres{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
 .genre{
-    background:#eeeefe;
-    color:#554bd9;
-    padding:6px 9px;
-    border-radius:9px;
-    font-size:12px;
-    font-weight:700;
+ padding:6px 9px;border-radius:8px;background:#eeeeff;
+ color:#554bd9;font-size:12px;font-weight:700
 }
-
-.overview{
-    line-height:1.7;
-    color:#50596b;
+.overview{line-height:1.7;color:#515b6d}
+.detailBtns{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.actionBtn{
+ border:0;border-radius:11px;padding:10px 13px;
+ background:#eeeeff;color:#554bd9;font-weight:700
 }
-
-.info-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin-top:18px;
+.actionBtn.primary{background:#655cf6;color:white}
+.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info{
+ background:#f6f7fb;padding:10px;border-radius:10px
 }
-
-.info-box{
-    background:#f6f7fb;
-    border-radius:12px;
-    padding:11px;
+.info small{display:block;color:#7b8495}
+.cast{
+ display:flex;gap:9px;overflow:auto;padding-bottom:5px
 }
-
-.info-label{
-    color:#7c8494;
-    font-size:12px;
+.person{min-width:80px;text-align:center}
+.person img{
+ width:65px;height:65px;border-radius:50%;object-fit:cover;background:#e9ebf2
 }
-
-.info-value{
-    font-weight:700;
-    margin-top:4px;
+.person div{font-size:11px;margin-top:5px}
+.settings{padding:27px}
+.settings input{
+ width:100%;padding:13px;border:1px solid #dce2ec;
+ border-radius:11px;margin:10px 0;outline:0
 }
-
-/* ================= SETTINGS ================= */
-
-.settings-box{
-    max-width:520px;
-    padding:28px;
+.save{
+ width:100%;padding:13px;border:0;border-radius:11px;
+ background:#655cf6;color:white;font-weight:700
 }
-
-.settings-box h2{
-    margin-top:0;
+.delete{
+ width:100%;padding:12px;border:0;border-radius:11px;
+ background:#fff0f0;color:#d64d4d;font-weight:700;margin-top:8px
 }
-
-.settings-box p{
-    color:#6e7789;
-    line-height:1.6;
+.quick{
+ display:flex;gap:8px;overflow:auto;padding-bottom:5px
 }
-
-#apiInput{
-    width:100%;
-    padding:13px;
-    border:1px solid #dce1ec;
-    border-radius:12px;
-    outline:none;
-    margin:10px 0;
+.quick button{
+ white-space:nowrap;border:0;background:white;border:1px solid #e1e5ed;
+ border-radius:11px;padding:10px 13px;color:#596276
 }
-
-.save-api{
-    width:100%;
-    border:0;
-    background:#655cf6;
-    color:white;
-    padding:13px;
-    border-radius:12px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.delete-api{
-    width:100%;
-    border:0;
-    background:#fff0f0;
-    color:#d44b4b;
-    padding:12px;
-    border-radius:12px;
-    font-weight:700;
-    cursor:pointer;
-    margin-top:9px;
-}
-
-/* ================= TOAST ================= */
-
 .toast{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%) translateY(100px);
-    background:#172033;
-    color:white;
-    padding:12px 17px;
-    border-radius:12px;
-    opacity:0;
-    transition:.25s;
-    z-index:500;
-    max-width:90%;
-    text-align:center;
+ position:fixed;bottom:20px;left:50%;z-index:500;
+ transform:translate(-50%,100px);opacity:0;
+ background:#172033;color:white;padding:12px 17px;border-radius:11px;
+ transition:.25s;max-width:90%;text-align:center
 }
-
-.toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.comparePanel{
+ position:fixed;bottom:15px;left:50%;transform:translateX(-50%);
+ z-index:200;background:white;border:1px solid #ddd;
+ border-radius:15px;padding:10px;box-shadow:0 12px 35px #0002;
+ display:none;max-width:95%
 }
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:1000px){
-    .movie-grid{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-    .filters{
-        grid-template-columns:repeat(3,1fr);
-    }
+.comparePanel.show{display:flex;gap:8px;align-items:center}
+.comparePanel button{
+ border:0;border-radius:9px;padding:9px;background:#655cf6;color:#fff
 }
-
+@media(max-width:1050px){
+ .grid{grid-template-columns:repeat(4,1fr)}
+ .filters{grid-template-columns:repeat(3,1fr)}
+}
 @media(max-width:700px){
-    main{
-        padding:20px 12px 45px;
-    }
-
-    .header-inner{
-        padding:12px;
-    }
-
-    .movie-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
-
-    .filters{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .search-box{
-        padding:6px;
-    }
-
-    .search-btn{
-        padding:11px 13px;
-    }
-
-    .detail{
-        grid-template-columns:1fr;
-        padding:18px;
-    }
-
-    .detail-poster{
-        width:180px;
-        display:block;
-        margin:auto;
-    }
-
-    .detail-content h2{
-        font-size:25px;
-    }
-}
-
-@media(max-width:420px){
-    .filters{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .movie-title{
-        font-size:14px;
-    }
-
-    .movie-info{
-        padding:9px;
-    }
+ .navlinks a{font-size:11px;padding:7px}
+ .logo span{display:none}
+ main{padding:17px 11px 60px}
+ .grid{grid-template-columns:repeat(2,1fr);gap:11px}
+ .filters{grid-template-columns:1fr 1fr}
+ .detail{grid-template-columns:1fr;padding:18px}
+ .detailPoster{width:180px;display:block;margin:auto}
+ .detail h2{font-size:24px}
+ .infoGrid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -642,1840 +226,609 @@ main{
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">
-            <div class="logo-icon">🎬</div>
-            <span>Movie Finder</span>
-        </div>
+<div class="nav">
+ <div class="logo">
+  <div class="logoIcon">🎬</div>
+  <span>Movie Finder</span>
+ </div>
 
-        <button class="settings-btn" onclick="openSettings()">⚙️</button>
-    </div>
+ <nav class="navlinks">
+  <a class="active" href="index.html">🏠 Home</a>
+  <a href="watchlist.html">❤️ Saved</a>
+  <button onclick="openSettings()" style="border:0;background:transparent;font-size:18px">⚙️</button>
+ </nav>
+</div>
 </header>
 
 <main>
 
-    <section class="hero">
-        <h1>Find Your Next Movie 🍿</h1>
-        <p>
-            Cari film berdasarkan judul, genre, tahun, rating,
-            popularitas, dan lainnya.
-        </p>
-    </section>
+<section class="hero">
+ <h1>Find Your Next Movie 🍿</h1>
+ <p>Cari, filter, simpan, bandingkan, dan temukan film favoritmu.</p>
+</section>
 
-    <div class="search-area">
+<div class="searchArea">
+ <div class="searchBox">
+  <span>🔎</span>
+  <input id="search" placeholder="Cari judul film atau aktor..." autocomplete="off">
+  <button class="clearBtn" id="clear" onclick="clearSearch()" style="display:none">✕</button>
+  <button class="searchBtn" onclick="searchMovies()">Cari</button>
+ </div>
+ <div id="preview" class="preview"></div>
+</div>
 
-        <div class="search-box">
+<div class="quick" style="margin-top:15px">
+ <button onclick="loadCategory('trending')">🔥 Trending</button>
+ <button onclick="loadCategory('now')">🎬 Now Playing</button>
+ <button onclick="loadCategory('upcoming')">🆕 Upcoming</button>
+ <button onclick="loadCategory('top')">⭐ Top Rated</button>
+ <button onclick="randomMovie()">🎲 Surprise Me</button>
+ <button onclick="openRoulette()">🎰 Roulette</button>
+</div>
 
-            <span class="search-icon">🔎</span>
+<div class="filters">
 
-            <input
-                id="searchInput"
-                type="text"
-                autocomplete="off"
-                placeholder="Cari judul film..."
-            >
+ <select id="genre">
+  <option value="">🎭 Semua Genre</option>
+ </select>
 
-            <button
-                class="clear-btn"
-                id="clearBtn"
-                onclick="clearSearch()"
-                style="display:none"
-            >
-                ✕
-            </button>
+ <select id="year">
+  <option value="">📅 Semua Tahun</option>
+ </select>
 
-            <button
-                class="search-btn"
-                onclick="performSearch()"
-            >
-                Cari
-            </button>
+ <select id="rating">
+  <option value="">⭐ Semua Rating</option>
+  <option value="9">9+</option>
+  <option value="8">8+</option>
+  <option value="7">7+</option>
+  <option value="6">6+</option>
+  <option value="5">5+</option>
+ </select>
 
-        </div>
+ <select id="language">
+  <option value="">🗣️ Semua Bahasa</option>
+  <option value="en">English</option>
+  <option value="id">Indonesia</option>
+  <option value="ko">Korea</option>
+  <option value="ja">Jepang</option>
+  <option value="zh">Mandarin</option>
+  <option value="fr">Prancis</option>
+  <option value="es">Spanyol</option>
+  <option value="de">Jerman</option>
+ </select>
 
-        <div id="preview" class="preview"></div>
+ <select id="sort">
+  <option value="popularity.desc">🔥 Terpopuler</option>
+  <option value="vote_average.desc">⭐ Rating Tertinggi</option>
+  <option value="primary_release_date.desc">🆕 Terbaru</option>
+  <option value="revenue.desc">💰 Revenue</option>
+  <option value="vote_count.desc">👥 Vote Terbanyak</option>
+ </select>
 
-    </div>
-
-    <!-- FILTER -->
-
-    <div class="filters">
-
-        <select id="genreFilter" class="filter">
-            <option value="">🎭 Semua Genre</option>
-        </select>
-
-        <select id="yearFilter" class="filter">
-            <option value="">📅 Semua Tahun</option>
-        </select>
-
-        <select id="ratingFilter" class="filter">
-            <option value="">⭐ Semua Rating</option>
-            <option value="9">9+</option>
-            <option value="8">8+</option>
-            <option value="7">7+</option>
-            <option value="6">6+</option>
-            <option value="5">5+</option>
-        </select>
-
-        <select id="sortFilter" class="filter">
-
-            <option value="popularity.desc">
-                🔥 Terpopuler
-            </option>
-
-            <option value="vote_average.desc">
-                ⭐ Rating Tertinggi
-            </option>
-
-            <option value="primary_release_date.desc">
-                🆕 Terbaru
-            </option>
-
-            <option value="revenue.desc">
-                💰 Pendapatan
-            </option>
-
-            <option value="vote_count.desc">
-                👥 Paling Banyak Dinilai
-            </option>
-
-        </select>
-
-        <button
-            class="reset-filter"
-            onclick="resetFilters()"
-        >
-            Reset Filter
-        </button>
-
-    </div>
-
-    <div class="section-head">
-
-        <div id="sectionTitle" class="section-title">
-            Film Populer
-        </div>
-
-        <div id="resultInfo" class="result-info"></div>
-
-    </div>
-
-    <div id="movieGrid" class="movie-grid"></div>
-
-    <div id="loading" class="loading" style="display:none">
-        <div class="spinner"></div>
-        <span>Memuat film...</span>
-    </div>
-
-    <div id="loadMoreTrigger"></div>
-
-</main>
-
-
-<!-- MOVIE DETAIL -->
-
-<div id="movieModal" class="modal" onclick="closeModalOutside(event)">
-
-    <div class="modal-box">
-
-        <button class="close" onclick="closeMovieModal()">✕</button>
-
-        <div id="movieDetail"></div>
-
-    </div>
+ <button class="filterBtn" onclick="resetFilters()">Reset Filter</button>
 
 </div>
 
+<div class="sectionHead">
+ <div id="title" class="sectionTitle">🔥 Film Populer</div>
+ <div id="resultInfo" class="resultInfo"></div>
+</div>
+
+<div id="grid" class="grid"></div>
+<div id="loading" class="loading" style="display:none">
+ <span class="spinner"></span> Memuat film...
+</div>
+<div id="trigger" style="height:20px"></div>
+
+</main>
+
+<div id="comparePanel" class="comparePanel">
+ <span id="compareCount">0/3</span>
+ <button onclick="compareMovies()">⚖️ Compare</button>
+ <button onclick="clearCompare()">✕</button>
+</div>
+
+<!-- DETAIL -->
+<div id="detailModal" class="modal" onclick="outsideClose(event,'detailModal')">
+<div class="modalBox">
+<button class="close" onclick="closeModal('detailModal')">✕</button>
+<div id="detailContent"></div>
+</div>
+</div>
 
 <!-- SETTINGS -->
-
 <div id="settingsModal" class="modal">
-
-    <div class="modal-box settings-box">
-
-        <button class="close" onclick="closeSettings()">✕</button>
-
-        <h2>⚙️ TMDB API</h2>
-
-        <p>
-            API disimpan di browser perangkat ini sehingga kamu
-            tidak perlu memasukkannya setiap kali membuka website.
-        </p>
-
-        <input
-            id="apiInput"
-            type="password"
-            placeholder="Masukkan TMDB API Key / Read Access Token"
-        >
-
-        <button
-            class="save-api"
-            onclick="saveAPI()"
-        >
-            Simpan API
-        </button>
-
-        <button
-            class="delete-api"
-            onclick="deleteAPI()"
-        >
-            Hapus API dari perangkat
-        </button>
-
-    </div>
-
+<div class="modalBox settings">
+<button class="close" onclick="closeModal('settingsModal')">✕</button>
+<h2>⚙️ Pengaturan TMDB</h2>
+<p style="color:#727c8e;line-height:1.6">
+Masukkan API Key atau Read Access Token TMDB sekali.
+Data akan disimpan pada browser perangkat ini.
+</p>
+<input id="apiInput" type="password" placeholder="TMDB API Key / Read Access Token">
+<button class="save" onclick="saveAPI()">Simpan API</button>
+<button class="delete" onclick="deleteAPI()">Hapus API</button>
+</div>
 </div>
 
 <div id="toast" class="toast"></div>
 
-
 <script>
-
-/* =========================================================
-   CONFIG
-========================================================= */
-
-const API_STORAGE = "movie_finder_tmdb_key";
-
-const IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
-
-let apiKey = localStorage.getItem(API_STORAGE) || "";
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let currentPage = 0;
-let totalPages = 1;
-
-let isLoading = false;
-
-let currentMode = "discover";
-
-let currentQuery = "";
-
-let currentResults = [];
-
-let genreMap = {};
-
-
-/* =========================================================
-   DOM
-========================================================= */
-
-const movieGrid =
-    document.getElementById("movieGrid");
-
-const loading =
-    document.getElementById("loading");
-
-const loadMoreTrigger =
-    document.getElementById("loadMoreTrigger");
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const preview =
-    document.getElementById("preview");
-
-const clearBtn =
-    document.getElementById("clearBtn");
-
-const genreFilter =
-    document.getElementById("genreFilter");
-
-const yearFilter =
-    document.getElementById("yearFilter");
-
-const ratingFilter =
-    document.getElementById("ratingFilter");
-
-const sortFilter =
-    document.getElementById("sortFilter");
-
-const sectionTitle =
-    document.getElementById("sectionTitle");
-
-const resultInfo =
-    document.getElementById("resultInfo");
-
-
-/* =========================================================
-   API
-========================================================= */
-
-function apiURL(endpoint, params = {}){
-
-    const url =
-        new URL("https://api.themoviedb.org/3" + endpoint);
-
-    Object.entries(params).forEach(([key,value])=>{
-
-        if(
-            value !== undefined &&
-            value !== null &&
-            value !== ""
-        ){
-            url.searchParams.set(key,value);
-        }
-
-    });
-
-    if(apiKey.startsWith("eyJ")){
-
-        return {
-            url:url.toString(),
-            options:{
-                headers:{
-                    Authorization:"Bearer " + apiKey,
-                    accept:"application/json"
-                }
-            }
-        };
-
-    }else{
-
-        url.searchParams.set(
-            "api_key",
-            apiKey
-        );
-
-        return {
-            url:url.toString(),
-            options:{
-                headers:{
-                    accept:"application/json"
-                }
-            }
-        };
-
-    }
-
-}
-
-
-async function tmdb(endpoint,params={}){
-
-    const request =
-        apiURL(endpoint,params);
-
-    const response =
-        await fetch(
-            request.url,
-            request.options
-        );
-
-    if(!response.ok){
-
-        let message =
-            "TMDB API error";
-
-        try{
-
-            const data =
-                await response.json();
-
-            if(data.status_message){
-                message =
-                    data.status_message;
-            }
-
-        }catch(e){}
-
-        throw new Error(message);
-
-    }
-
-    return await response.json();
-
-}
-
-
-/* =========================================================
-   PLACEHOLDER
-========================================================= */
-
-function placeholderPoster(title="No Poster"){
-
-    const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg"
-         width="500"
-         height="750"
-         viewBox="0 0 500 750">
-
-        <rect width="500" height="750"
-              fill="#e9ecf4"/>
-
-        <text
-            x="250"
-            y="350"
-            text-anchor="middle"
-            font-family="Arial"
-            font-size="28"
-            font-weight="bold"
-            fill="#747d91">
-            🎬
-        </text>
-
-        <text
-            x="250"
-            y="400"
-            text-anchor="middle"
-            font-family="Arial"
-            font-size="20"
-            fill="#747d91">
-            ${escapeHTML(title).substring(0,25)}
-        </text>
-
-    </svg>
-    `;
-
-    return "data:image/svg+xml;charset=UTF-8," +
-        encodeURIComponent(svg);
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(text){
-
-    return String(text || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
-   LOAD GENRES
-========================================================= */
-
-async function loadGenres(){
-
-    if(!apiKey) return;
-
-    try{
-
-        const data =
-            await tmdb(
-                "/genre/movie/list",
-                {
-                    language:"id-ID"
-                }
-            );
-
-        genreMap = {};
-
-        data.genres.forEach(genre=>{
-
-            genreMap[genre.id] =
-                genre.name;
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                genre.id;
-
-            option.textContent =
-                "🎭 " + genre.name;
-
-            genreFilter.appendChild(option);
-
-        });
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD YEARS
-========================================================= */
-
-function loadYears(){
-
-    const currentYear =
-        new Date().getFullYear();
-
-    for(
-        let year=currentYear;
-        year>=1900;
-        year--
-    ){
-
-        const option =
-            document.createElement("option");
-
-        option.value = year;
-
-        option.textContent =
-            "📅 " + year;
-
-        yearFilter.appendChild(option);
-
-    }
-
-}
-
-
-/* =========================================================
-   DISCOVER FILTER
-========================================================= */
-
-/*
-   INI BAGIAN UTAMA PERBAIKANNYA.
-
-   Filter tidak lagi memfilter currentResults.
-
-   Sebaliknya:
-   browser mengirim genre/tahun/rating/sort
-   langsung ke TMDB /discover/movie.
-
-   Jadi halaman 1, 2, 3, dst semuanya
-   berasal dari hasil filter TMDB.
-*/
-
-function getDiscoverParams(){
-
-    const params = {
-
-        language:"id-ID",
-
-        include_adult:false,
-
-        include_video:false,
-
-        sort_by:
-            sortFilter.value || "popularity.desc",
-
-        page:
-            currentPage
-
-    };
-
-
-    /* GENRE */
-
-    if(genreFilter.value){
-
-        params.with_genres =
-            genreFilter.value;
-
-    }
-
-
-    /* TAHUN */
-
-    if(yearFilter.value){
-
-        params.primary_release_year =
-            yearFilter.value;
-
-    }
-
-
-    /* MINIMUM RATING */
-
-    if(ratingFilter.value){
-
-        params.vote_average_gte =
-            ratingFilter.value;
-
-    }
-
-
-    /*
-       Agar hasil rating tidak dipenuhi film
-       dengan hanya sedikit vote.
-    */
-
-    if(
-        ratingFilter.value ||
-        sortFilter.value === "vote_average.desc"
-    ){
-
-        params.vote_count_gte = 50;
-
-    }
-
-
-    return params;
-
-}
-
-
-/* =========================================================
-   RESET / START NEW RESULT
-========================================================= */
-
-async function startDiscover(){
-
-    if(!apiKey){
-
-        openSettings();
-
-        return;
-
-    }
-
-    currentMode =
-        "discover";
-
-    currentQuery =
-        "";
-
-    currentPage =
-        0;
-
-    totalPages =
-        1;
-
-    currentResults =
-        [];
-
-    movieGrid.innerHTML = "";
-
-    sectionTitle.textContent =
-        "Film Populer";
-
-    resultInfo.textContent = "";
-
-    await loadNextPage();
-
-}
-
-
-/* =========================================================
-   LOAD DISCOVER PAGE
-========================================================= */
-
-async function loadNextPage(){
-
-    if(isLoading) return;
-
-    if(currentPage >= totalPages) return;
-
-    isLoading = true;
-
-    loading.style.display =
-        "flex";
-
-    try{
-
-        const nextPage =
-            currentPage + 1;
-
-        const params =
-            getDiscoverParams();
-
-        params.page =
-            nextPage;
-
-        const data =
-            await tmdb(
-                "/discover/movie",
-                params
-            );
-
-        currentPage =
-            data.page;
-
-        totalPages =
-            Math.min(
-                data.total_pages || 1,
-                500
-            );
-
-        appendMovies(
-            data.results || []
-        );
-
-        updateResultInfo(
-            data.total_results || 0
-        );
-
-    }catch(error){
-
-        showToast(
-            "Gagal memuat film: " +
-            error.message
-        );
-
-    }finally{
-
-        isLoading = false;
-
-        loading.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-async function performSearch(){
-
-    if(!apiKey){
-
-        openSettings();
-
-        return;
-
-    }
-
-    const query =
-        searchInput.value.trim();
-
-    preview.classList.remove("show");
-
-    if(!query){
-
-        await startDiscover();
-
-        return;
-
-    }
-
-    currentMode =
-        "search";
-
-    currentQuery =
-        query;
-
-    currentPage =
-        0;
-
-    totalPages =
-        1;
-
-    currentResults =
-        [];
-
-    movieGrid.innerHTML = "";
-
-    sectionTitle.textContent =
-        'Hasil pencarian: "' +
-        query +
-        '"';
-
-    resultInfo.textContent = "";
-
-    await loadNextSearchPage();
-
-}
-
-
-/* =========================================================
-   LOAD SEARCH PAGE
-========================================================= */
-
-async function loadNextSearchPage(){
-
-    if(isLoading) return;
-
-    if(currentPage >= totalPages) return;
-
-    isLoading = true;
-
-    loading.style.display =
-        "flex";
-
-    try{
-
-        const nextPage =
-            currentPage + 1;
-
-        const data =
-            await tmdb(
-                "/search/movie",
-                {
-                    query:currentQuery,
-                    language:"id-ID",
-                    include_adult:false,
-                    page:nextPage
-                }
-            );
-
-        currentPage =
-            data.page;
-
-        totalPages =
-            Math.min(
-                data.total_pages || 1,
-                500
-            );
-
-        appendMovies(
-            data.results || []
-        );
-
-        updateResultInfo(
-            data.total_results || 0
-        );
-
-    }catch(error){
-
-        showToast(
-            "Gagal mencari: " +
-            error.message
-        );
-
-    }finally{
-
-        isLoading = false;
-
-        loading.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   APPEND MOVIES
-========================================================= */
-
-function appendMovies(movies){
-
-    if(!movies.length){
-
-        if(currentPage === 1){
-
-            movieGrid.innerHTML = `
-                <div class="empty"
-                     style="grid-column:1/-1">
-
-                    <div class="empty-icon">🎬</div>
-
-                    <h3>Tidak ada film ditemukan</h3>
-
-                    <p>
-                        Coba ubah filter atau kata pencarian.
-                    </p>
-
-                </div>
-            `;
-
-        }
-
-        return;
-
-    }
-
-
-    movies.forEach(movie=>{
-
-        currentResults.push(movie);
-
-        const card =
-            createMovieCard(movie);
-
-        movieGrid.appendChild(card);
-
-    });
-
-}
-
-
-/* =========================================================
-   MOVIE CARD
-========================================================= */
-
-function createMovieCard(movie){
-
-    const card =
-        document.createElement("div");
-
-    card.className =
-        "movie-card";
-
-    card.onclick =
-        ()=>openMovie(movie.id);
-
-    const poster =
-        movie.poster_path
-            ? IMAGE_BASE + movie.poster_path
-            : placeholderPoster(movie.title);
-
-
-    const year =
-        movie.release_date
-            ? movie.release_date.substring(0,4)
-            : "—";
-
-
-    const rating =
-        movie.vote_average
-            ? movie.vote_average.toFixed(1)
-            : "—";
-
-
-    card.innerHTML = `
-
-        <div class="poster-wrap">
-
-            <img
-                class="poster"
-                src="${poster}"
-                alt="${escapeHTML(movie.title)}"
-                loading="lazy"
-            >
-
-            <div class="rating">
-                ⭐ ${rating}
-            </div>
-
-        </div>
-
-        <div class="movie-info">
-
-            <div class="movie-title">
-                ${escapeHTML(movie.title)}
-            </div>
-
-            <div class="movie-year">
-                ${year}
-            </div>
-
-        </div>
-    `;
-
-    return card;
-
-}
-
-
-/* =========================================================
-   RESULT INFO
-========================================================= */
-
-function updateResultInfo(total){
-
-    if(!total){
-
-        resultInfo.textContent = "";
-
-        return;
-
-    }
-
-    resultInfo.textContent =
-        total.toLocaleString("id-ID") +
-        " hasil";
-
-}
-
-
-/* =========================================================
-   FILTER CHANGE
-========================================================= */
-
-genreFilter.addEventListener(
-    "change",
-    applyFilters
-);
-
-yearFilter.addEventListener(
-    "change",
-    applyFilters
-);
-
-ratingFilter.addEventListener(
-    "change",
-    applyFilters
-);
-
-sortFilter.addEventListener(
-    "change",
-    applyFilters
-);
-
-
-async function applyFilters(){
-
-    preview.classList.remove("show");
-
-    /*
-       Filter selalu memulai kembali
-       dari halaman 1.
-
-       TMDB yang melakukan filtering.
-    */
-
-    currentMode =
-        "discover";
-
-    currentQuery =
-        "";
-
-    currentPage =
-        0;
-
-    totalPages =
-        1;
-
-    currentResults =
-        [];
-
-    movieGrid.innerHTML = "";
-
-    sectionTitle.textContent =
-        buildFilterTitle();
-
-    resultInfo.textContent = "";
-
-    await loadNextPage();
-
-}
-
-
-/* =========================================================
-   FILTER TITLE
-========================================================= */
-
-function buildFilterTitle(){
-
-    const parts = [];
-
-    if(genreFilter.value){
-
-        parts.push(
-            genreFilter.options[
-                genreFilter.selectedIndex
-            ].text.replace("🎭 ","")
-        );
-
-    }
-
-    if(yearFilter.value){
-
-        parts.push(
-            yearFilter.value
-        );
-
-    }
-
-    if(ratingFilter.value){
-
-        parts.push(
-            "⭐ " +
-            ratingFilter.value +
-            "+"
-        );
-
-    }
-
-    if(!parts.length){
-
-        return "Film Populer";
-
-    }
-
-    return parts.join(" • ");
-
-}
-
-
-/* =========================================================
-   RESET FILTERS
-========================================================= */
-
-async function resetFilters(){
-
-    genreFilter.value = "";
-
-    yearFilter.value = "";
-
-    ratingFilter.value = "";
-
-    sortFilter.value =
-        "popularity.desc";
-
-    searchInput.value = "";
-
-    clearBtn.style.display =
-        "none";
-
-    preview.classList.remove("show");
-
-    await startDiscover();
-
-}
-
-
-/* =========================================================
-   LIVE SEARCH PREVIEW
-========================================================= */
-
+const API_KEY_STORAGE="movie_finder_tmdb_key";
+const IMAGE="https://image.tmdb.org/t/p/w500";
+const PROFILE="https://image.tmdb.org/t/p/w185";
+
+let apiKey=localStorage.getItem(API_KEY_STORAGE)||"";
+let page=0,totalPages=1,loading=false;
+let mode="discover",query="";
+let compareList=[];
 let previewTimer;
 
-searchInput.addEventListener(
-    "input",
-    ()=>{
+const $=id=>document.getElementById(id);
 
-        clearTimeout(previewTimer);
-
-        const query =
-            searchInput.value.trim();
-
-        clearBtn.style.display =
-            query ? "block" : "none";
-
-        if(!query){
-
-            preview.classList.remove(
-                "show"
-            );
-
-            return;
-
-        }
-
-        previewTimer =
-            setTimeout(
-                ()=>loadPreview(query),
-                350
-            );
-
-    }
-);
-
-
-async function loadPreview(query){
-
-    if(!apiKey) return;
-
-    try{
-
-        const data =
-            await tmdb(
-                "/search/movie",
-                {
-                    query:query,
-                    language:"id-ID",
-                    include_adult:false,
-                    page:1
-                }
-            );
-
-        const results =
-            (data.results || [])
-            .slice(0,7);
-
-
-        if(!results.length){
-
-            preview.innerHTML = `
-                <div style="
-                    padding:16px;
-                    color:#777f90;
-                ">
-                    Film tidak ditemukan
-                </div>
-            `;
-
-            preview.classList.add("show");
-
-            return;
-
-        }
-
-
-        preview.innerHTML = "";
-
-        results.forEach(movie=>{
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "preview-item";
-
-            const poster =
-                movie.poster_path
-                    ? IMAGE_BASE +
-                      movie.poster_path
-                    : placeholderPoster(
-                        movie.title
-                    );
-
-            const year =
-                movie.release_date
-                    ? movie.release_date
-                      .substring(0,4)
-                    : "—";
-
-
-            item.innerHTML = `
-
-                <img
-                    src="${poster}"
-                    alt=""
-                >
-
-                <div class="preview-info">
-
-                    <div class="preview-title">
-                        ${escapeHTML(movie.title)}
-                    </div>
-
-                    <div class="preview-meta">
-                        ${year}
-                        •
-                        ⭐ ${
-                            movie.vote_average
-                                ? movie.vote_average.toFixed(1)
-                                : "—"
-                        }
-                    </div>
-
-                </div>
-            `;
-
-
-            item.onclick =
-                ()=>{
-                    preview.classList.remove(
-                        "show"
-                    );
-
-                    openMovie(movie.id);
-                };
-
-
-            preview.appendChild(item);
-
-        });
-
-
-        preview.classList.add("show");
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
+function esc(x){
+ return String(x||"").replace(/[&<>"']/g,m=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#039;"
+ }[m]));
 }
 
-
-/* =========================================================
-   CLEAR SEARCH
-========================================================= */
-
-async function clearSearch(){
-
-    searchInput.value = "";
-
-    clearBtn.style.display =
-        "none";
-
-    preview.classList.remove(
-        "show"
-    );
-
-    await startDiscover();
-
+function poster(path,title="No Poster"){
+ if(path)return IMAGE+path;
+ return "data:image/svg+xml;charset=UTF-8,"+
+ encodeURIComponent(`
+ <svg xmlns="http://www.w3.org/2000/svg" width="500" height="750">
+ <rect width="100%" height="100%" fill="#e9ecf3"/>
+ <text x="50%" y="46%" text-anchor="middle" font-size="55">🎬</text>
+ <text x="50%" y="55%" text-anchor="middle"
+ font-family="Arial" font-size="20" fill="#777">
+ ${esc(title).slice(0,25)}</text></svg>`);
 }
 
+function request(endpoint,params={}){
+ let u=new URL("https://api.themoviedb.org/3"+endpoint);
+ Object.entries(params).forEach(([k,v])=>{
+  if(v!==""&&v!==null&&v!==undefined)u.searchParams.set(k,v);
+ });
+ let opt={headers:{accept:"application/json"}};
+ if(apiKey.startsWith("eyJ")){
+  opt.headers.Authorization="Bearer "+apiKey;
+ }else u.searchParams.set("api_key",apiKey);
+ return {url:u.toString(),opt};
+}
 
-/* =========================================================
-   ENTER SEARCH
-========================================================= */
+async function api(endpoint,params={}){
+ if(!apiKey)throw new Error("API belum diatur.");
+ let r=request(endpoint,params);
+ let res=await fetch(r.url,r.opt);
+ let data=await res.json();
+ if(!res.ok)throw new Error(data.status_message||"TMDB Error");
+ return data;
+}
 
-searchInput.addEventListener(
-    "keydown",
-    event=>{
+function showToast(t){
+ $("toast").textContent=t;
+ $("toast").classList.add("show");
+ clearTimeout(window.tt);
+ window.tt=setTimeout(()=>$("toast").classList.remove("show"),2800);
+}
 
-        if(event.key === "Enter"){
+function getData(name){
+ try{return JSON.parse(localStorage.getItem(name)||"[]")}catch{return[]}
+}
+function setData(name,data){
+ localStorage.setItem(name,JSON.stringify(data));
+}
 
-            performSearch();
+function isSaved(type,id){
+ return getData(type).some(x=>x.id===id);
+}
 
-        }
+function saveMovie(type,movie){
+ let data=getData(type);
+ if(!data.some(x=>x.id===movie.id)){
+  data.unshift(movie);setData(type,data);
+  showToast(type==="favorites"?"❤️ Ditambahkan ke Favorite":"📌 Ditambahkan ke Watchlist");
+ }else{
+  data=data.filter(x=>x.id!==movie.id);setData(type,data);
+  showToast("Dihapus");
+ }
+ renderCardStates();
+}
 
-        if(event.key === "Escape"){
+function renderCardStates(){
+ document.querySelectorAll("[data-id]").forEach(card=>{
+  let id=Number(card.dataset.id);
+  let f=card.querySelector(".favBtn");
+  let w=card.querySelector(".watchBtn");
+  if(f)f.classList.toggle("active",isSaved("favorites",id));
+  if(w)w.classList.toggle("active",isSaved("watchlist",id));
+ });
+}
 
-            preview.classList.remove(
-                "show"
-            );
+function addHistory(movie){
+ let data=getData("history").filter(x=>x.id!==movie.id);
+ data.unshift({...movie,openedAt:Date.now()});
+ setData("history",data.slice(0,100));
+}
 
-        }
+function createCard(m){
+ const el=document.createElement("div");
+ el.className="card";el.dataset.id=m.id;
+ el.innerHTML=`
+ <div class="poster" onclick="openMovie(${m.id})">
+  <img src="${poster(m.poster_path,m.title)}" loading="lazy" alt="${esc(m.title)}">
+  <span class="rate">⭐ ${(m.vote_average||0).toFixed(1)}</span>
+ </div>
+ <div class="cardInfo">
+  <div class="cardTitle">${esc(m.title)}</div>
+  <div class="cardYear">${m.release_date?m.release_date.slice(0,4):"—"}</div>
+  <div class="cardActions">
+   <button class="smallBtn favBtn ${isSaved("favorites",m.id)?"active":""}"
+    onclick="event.stopPropagation();saveMovie('favorites',movieObject(${JSON.stringify(m)}))">❤️</button>
+   <button class="smallBtn watchBtn ${isSaved("watchlist",m.id)?"active":""}"
+    onclick="event.stopPropagation();saveMovie('watchlist',movieObject(${JSON.stringify(m)}))">📌</button>
+   <button class="smallBtn" onclick="event.stopPropagation();toggleCompare(${m.id},movieObject(${JSON.stringify(m)}))">⚖️</button>
+  </div>
+ </div>`;
+ return el;
+}
 
-    }
-);
+function movieObject(x){return x}
 
+function appendMovies(list){
+ list.forEach(m=>$("grid").appendChild(createCard(m)));
+ renderCardStates();
+}
 
-/* =========================================================
-   MOVIE DETAIL
-========================================================= */
+function discoverParams(){
+ let p={
+  language:"id-ID",
+  include_adult:false,
+  include_video:false,
+  sort_by:$("sort").value,
+  page:page+1
+ };
+ if($("genre").value)p.with_genres=$("genre").value;
+ if($("year").value)p.primary_release_year=$("year").value;
+ if($("rating").value)p.vote_average_gte=$("rating").value;
+ if($("language").value)p.with_original_language=$("language").value;
+ if($("rating").value||$("sort").value==="vote_average.desc")
+  p.vote_count_gte=50;
+ return p;
+}
+
+async function loadNext(){
+ if(loading||page>=totalPages)return;
+ loading=true;$("loading").style.display="block";
+ try{
+  let d;
+  if(mode==="search"){
+   d=await api("/search/movie",{
+    query:query,language:"id-ID",include_adult:false,page:page+1
+   });
+  }else if(mode==="category"){
+   d=await api("/movie/"+window.category,{
+    language:"id-ID",page:page+1
+   });
+  }else{
+   d=await api("/discover/movie",discoverParams());
+  }
+  page=d.page;totalPages=Math.min(d.total_pages||1,500);
+  appendMovies(d.results||[]);
+  $("resultInfo").textContent=(d.total_results||0).toLocaleString("id-ID")+" hasil";
+ }catch(e){showToast(e.message)}
+ loading=false;$("loading").style.display="none";
+}
+
+async function newDiscover(){
+ if(!apiKey){openSettings();return}
+ mode="discover";query="";page=0;totalPages=1;
+ $("grid").innerHTML="";
+ $("title").textContent=filterTitle();
+ await loadNext();
+}
+
+function filterTitle(){
+ let a=[];
+ if($("genre").value)a.push($("genre").selectedOptions[0].text);
+ if($("year").value)a.push($("year").value);
+ if($("rating").value)a.push("⭐ "+$("rating").value+"+");
+ if($("language").value)a.push($("language").selectedOptions[0].text);
+ return a.length?a.join(" • "):"🔥 Film Populer";
+}
+
+async function searchMovies(){
+ let q=$("search").value.trim();
+ $("preview").classList.remove("show");
+ if(!q){return newDiscover()}
+ if(!apiKey){openSettings();return}
+ query=q;mode="search";page=0;totalPages=1;
+ $("grid").innerHTML="";
+ $("title").textContent='🔎 "'+q+'"';
+ await loadNext();
+}
+
+function clearSearch(){
+ $("search").value="";$("clear").style.display="none";
+ $("preview").classList.remove("show");newDiscover();
+}
+
+async function loadCategory(type){
+ if(!apiKey){openSettings();return}
+ mode="category";page=0;totalPages=1;
+ window.category=
+ type==="trending"?"popular":
+ type==="now"?"now_playing":
+ type==="upcoming"?"upcoming":"top_rated";
+ $("grid").innerHTML="";
+ $("title").textContent={
+ trending:"🔥 Trending / Popular",
+ now:"🎬 Now Playing",
+ upcoming:"🆕 Upcoming",
+ top:"⭐ Top Rated"
+ }[type];
+ await loadNext();
+}
+
+async function randomMovie(){
+ if(!apiKey){openSettings();return}
+ try{
+  let d=await api("/discover/movie",{
+   language:"id-ID",sort_by:"popularity.desc",
+   page:Math.floor(Math.random()*10)+1
+  });
+  if(d.results.length){
+   openMovie(d.results[Math.floor(Math.random()*d.results.length)].id);
+  }
+ }catch(e){showToast(e.message)}
+}
+
+async function openRoulette(){
+ if(!apiKey){openSettings();return}
+ let genre=$("genre").value;
+ try{
+  let d=await api("/discover/movie",{
+   language:"id-ID",
+   sort_by:"popularity.desc",
+   with_genres:genre||undefined,
+   vote_average_gte:$("rating").value||undefined,
+   page:Math.floor(Math.random()*10)+1
+  });
+  if(!d.results.length){showToast("Tidak ada film");return}
+  let m=d.results[Math.floor(Math.random()*d.results.length)];
+  openMovie(m.id);
+ }catch(e){showToast(e.message)}
+}
 
 async function openMovie(id){
-
-    if(!apiKey){
-
-        openSettings();
-
-        return;
-
-    }
-
-    const modal =
-        document.getElementById(
-            "movieModal"
-        );
-
-    const detail =
-        document.getElementById(
-            "movieDetail"
-        );
-
-    modal.classList.add("show");
-
-    detail.innerHTML = `
-        <div class="loading">
-            <div class="spinner"></div>
-            <span>Memuat detail...</span>
-        </div>
-    `;
-
-
-    try{
-
-        const movie =
-            await tmdb(
-                "/movie/" + id,
-                {
-                    language:"id-ID",
-                    append_to_response:
-                        "credits"
-                }
-            );
-
-
-        const poster =
-            movie.poster_path
-                ? IMAGE_BASE +
-                  movie.poster_path
-                : placeholderPoster(
-                    movie.title
-                );
-
-
-        const genres =
-            movie.genres || [];
-
-
-        const director =
-            movie.credits &&
-            movie.credits.crew
-                ? movie.credits.crew.find(
-                    person =>
-                        person.job ===
-                        "Director"
-                )
-                : null;
-
-
-        const cast =
-            movie.credits &&
-            movie.credits.cast
-                ? movie.credits.cast
-                    .slice(0,8)
-                    .map(
-                        person =>
-                            person.name
-                    )
-                    .join(", ")
-                : "—";
-
-
-        const releaseYear =
-            movie.release_date
-                ? movie.release_date.substring(0,4)
-                : "—";
-
-
-        const runtime =
-            movie.runtime
-                ? movie.runtime +
-                  " menit"
-                : "—";
-
-
-        detail.innerHTML = `
-
-            <div class="detail">
-
-                <div>
-
-                    <img
-                        class="detail-poster"
-                        src="${poster}"
-                        alt="${escapeHTML(movie.title)}"
-                    >
-
-                </div>
-
-                <div class="detail-content">
-
-                    <h2>
-                        ${escapeHTML(movie.title)}
-                    </h2>
-
-                    ${
-                        movie.original_title &&
-                        movie.original_title !== movie.title
-                        ? `
-                            <div class="detail-meta">
-                                ${escapeHTML(
-                                    movie.original_title
-                                )}
-                            </div>
-                        `
-                        : ""
-                    }
-
-                    <div class="detail-meta">
-
-                        ${releaseYear}
-                        •
-                        ⭐ ${
-                            movie.vote_average
-                                ? movie.vote_average.toFixed(1)
-                                : "—"
-                        }
-                        •
-                        ${runtime}
-
-                    </div>
-
-
-                    <div class="genres">
-
-                        ${
-                            genres.map(
-                                genre =>
-                                `<span class="genre">
-                                    ${escapeHTML(
-                                        genre.name
-                                    )}
-                                </span>`
-                            ).join("")
-                        }
-
-                    </div>
-
-
-                    <p class="overview">
-
-                        ${
-                            movie.overview ||
-                            "Tidak ada sinopsis."
-                        }
-
-                    </p>
-
-
-                    <div class="info-list">
-
-                        <div class="info-box">
-
-                            <div class="info-label">
-                                Director
-                            </div>
-
-                            <div class="info-value">
-                                ${
-                                    director
-                                        ? escapeHTML(
-                                            director.name
-                                          )
-                                        : "—"
-                                }
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <div class="info-label">
-                                Bahasa
-                            </div>
-
-                            <div class="info-value">
-                                ${
-                                    movie.original_language
-                                        ? movie.original_language
-                                            .toUpperCase()
-                                        : "—"
-                                }
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <div class="info-label">
-                                Vote
-                            </div>
-
-                            <div class="info-value">
-                                ${
-                                    movie.vote_count
-                                        ? movie.vote_count
-                                            .toLocaleString(
-                                                "id-ID"
-                                            )
-                                        : "—"
-                                }
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <div class="info-label">
-                                Pemeran
-                            </div>
-
-                            <div class="info-value">
-                                ${escapeHTML(cast)}
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        `;
-
-
-    }catch(error){
-
-        detail.innerHTML = `
-            <div class="empty">
-                <div class="empty-icon">⚠️</div>
-                <h3>Gagal memuat detail</h3>
-                <p>${escapeHTML(error.message)}</p>
-            </div>
-        `;
-
-    }
-
+ if(!apiKey){openSettings();return}
+ $("detailModal").classList.add("show");
+ $("detailContent").innerHTML='<div class="loading"><span class="spinner"></span> Memuat detail...</div>';
+ try{
+  let m=await api("/movie/"+id,{
+   language:"id-ID",append_to_response:"credits,videos,similar,recommendations"
+  });
+  addHistory(m);
+  let director=(m.credits?.crew||[]).find(x=>x.job==="Director");
+  let cast=(m.credits?.cast||[]).slice(0,8);
+  let trailer=(m.videos?.results||[]).find(x=>x.site==="YouTube"&&(x.type==="Trailer"||x.type==="Teaser"));
+  let similar=(m.similar?.results||[]).slice(0,5);
+
+  $("detailContent").innerHTML=`
+  <div class="detail">
+   <div><img class="detailPoster" src="${poster(m.poster_path,m.title)}"></div>
+   <div>
+    <h2>${esc(m.title)}</h2>
+    <div class="meta">
+     ${m.release_date||"—"} • ⭐ ${(m.vote_average||0).toFixed(1)}
+     • ${m.runtime?m.runtime+" menit":"—"}
+    </div>
+
+    <div class="genres">
+     ${(m.genres||[]).map(g=>`<span class="genre">${esc(g.name)}</span>`).join("")}
+    </div>
+
+    <div class="detailBtns">
+     ${trailer?`<button class="actionBtn primary" onclick="location.href='trailer.html?id=${m.id}'">▶️ Trailer</button>`:""}
+     <button class="actionBtn" onclick='saveMovie("favorites",movieObject(${JSON.stringify(m)}))'>❤️ Favorite</button>
+     <button class="actionBtn" onclick='saveMovie("watchlist",movieObject(${JSON.stringify(m)}))'>📌 Watchlist</button>
+     <button class="actionBtn" onclick='toggleCompare(${m.id},movieObject(${JSON.stringify(m)}))'>⚖️ Compare</button>
+     <button class="actionBtn" onclick="shareMovie(${m.id})">↗️ Share</button>
+    </div>
+
+    <p class="overview">${esc(m.overview||"Sinopsis tidak tersedia.")}</p>
+
+    <div class="infoGrid">
+     <div class="info"><small>Director</small><b>${esc(director?.name||"—")}</b></div>
+     <div class="info"><small>Bahasa asli</small><b>${esc(m.original_language||"—").toUpperCase()}</b></div>
+     <div class="info"><small>Votes</small><b>${(m.vote_count||0).toLocaleString("id-ID")}</b></div>
+     <div class="info"><small>Budget</small><b>${money(m.budget)}</b></div>
+     <div class="info"><small>Revenue</small><b>${money(m.revenue)}</b></div>
+     <div class="info"><small>Negara</small><b>${esc((m.production_countries||[]).map(x=>x.name).join(", ")||"—")}</b></div>
+    </div>
+
+    <h3>👥 Cast</h3>
+    <div class="cast">
+     ${cast.map(p=>`
+      <div class="person">
+       <img src="${p.profile_path?PROFILE+p.profile_path:poster("",p.name)}">
+       <div>${esc(p.name)}</div>
+      </div>`).join("")}
+    </div>
+
+    <h3>🎬 Film Serupa</h3>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+     ${similar.map(x=>`
+      <div class="card" onclick="openMovie(${x.id})">
+       <div class="poster"><img src="${poster(x.poster_path,x.title)}"></div>
+       <div class="cardInfo"><div class="cardTitle">${esc(x.title)}</div></div>
+      </div>`).join("")}
+    </div>
+   </div>
+  </div>`;
+ }catch(e){
+  $("detailContent").innerHTML=`<div class="empty">⚠️ ${esc(e.message)}</div>`;
+ }
 }
 
-
-function closeMovieModal(){
-
-    document
-        .getElementById("movieModal")
-        .classList.remove("show");
-
+function money(n){
+ if(!n)return "—";
+ return "$"+Number(n).toLocaleString("en-US");
 }
 
-
-function closeModalOutside(event){
-
-    if(
-        event.target.id ===
-        "movieModal"
-    ){
-
-        closeMovieModal();
-
-    }
-
+async function shareMovie(id){
+ let url=location.origin+location.pathname+"?movie="+id;
+ try{
+  await navigator.clipboard.writeText(url);
+  showToast("Link film disalin.");
+ }catch{
+  showToast(url);
+ }
 }
 
+function closeModal(id){$(id).classList.remove("show")}
+function outsideClose(e,id){if(e.target.id===id)closeModal(id)}
 
-/* =========================================================
-   SETTINGS
-========================================================= */
+function toggleCompare(id,m){
+ let i=compareList.findIndex(x=>x.id===id);
+ if(i>=0)compareList.splice(i,1);
+ else{
+  if(compareList.length>=3){showToast("Maksimal 3 film.");return}
+  compareList.push(m);
+ }
+ $("comparePanel").classList.toggle("show",compareList.length>0);
+ $("compareCount").textContent=compareList.length+"/3";
+ renderCardStates();
+}
+
+function clearCompare(){
+ compareList=[];$("comparePanel").classList.remove("show");
+ renderCardStates();
+}
+
+function compareMovies(){
+ if(compareList.length<2){showToast("Pilih minimal 2 film.");return}
+ let rows=[
+ ["Rating","vote_average",x=>(x||0).toFixed(1)],
+ ["Tahun","release_date",x=>x?.slice(0,4)||"—"],
+ ["Durasi","runtime",x=>x?x+" menit":"—"],
+ ["Votes","vote_count",x=>(x||0).toLocaleString("id-ID")],
+ ["Budget","budget",money],
+ ["Revenue","revenue",money]
+ ];
+ let html=`<div class="settings"><h2>⚖️ Compare Movies</h2><div style="overflow:auto"><table style="width:100%;border-collapse:collapse"><tr><th>Data</th>${compareList.map(x=>`<th>${esc(x.title)}</th>`).join("")}</tr>`;
+ rows.forEach(r=>{
+  html+=`<tr><td style="padding:10px;font-weight:bold">${r[0]}</td>`;
+  compareList.forEach(x=>html+=`<td style="padding:10px;text-align:center">${r[2](x[r[1]])}</td>`);
+  html+="</tr>";
+ });
+ html+="</table></div></div>";
+ $("detailContent").innerHTML=html;
+ $("detailModal").classList.add("show");
+}
+
+function resetFilters(){
+ $("genre").value="";$("year").value="";$("rating").value="";
+ $("language").value="";$("sort").value="popularity.desc";
+ $("search").value="";$("clear").style.display="none";
+ newDiscover();
+}
+
+["genre","year","rating","language","sort"].forEach(id=>{
+ $(id).addEventListener("change",newDiscover);
+});
+
+$("search").addEventListener("input",()=>{
+ let q=$("search").value.trim();
+ $("clear").style.display=q?"block":"none";
+ clearTimeout(previewTimer);
+ if(!q){$("preview").classList.remove("show");return}
+ previewTimer=setTimeout(()=>loadPreview(q),350);
+});
+
+$("search").addEventListener("keydown",e=>{
+ if(e.key==="Enter")searchMovies();
+ if(e.key==="Escape")$("preview").classList.remove("show");
+});
+
+async function loadPreview(q){
+ if(!apiKey)return;
+ try{
+  let d=await api("/search/movie",{
+   query:q,language:"id-ID",page:1,include_adult:false
+  });
+  $("preview").innerHTML=(d.results||[]).slice(0,6).map(m=>`
+   <div class="previewItem" onclick="openMovie(${m.id})">
+    <img src="${poster(m.poster_path,m.title)}">
+    <div>
+     <div class="previewTitle">${esc(m.title)}</div>
+     <div class="previewMeta">${m.release_date?.slice(0,4)||"—"} • ⭐ ${(m.vote_average||0).toFixed(1)}</div>
+    </div>
+   </div>`).join("")||"<div style='padding:15px'>Tidak ditemukan.</div>";
+  $("preview").classList.add("show");
+ }catch{}
+}
 
 function openSettings(){
-
-    document
-        .getElementById(
-            "settingsModal"
-        )
-        .classList.add("show");
-
-    document
-        .getElementById(
-            "apiInput"
-        ).value = apiKey;
-
+ $("apiInput").value=apiKey;
+ $("settingsModal").classList.add("show");
 }
-
-
-function closeSettings(){
-
-    document
-        .getElementById(
-            "settingsModal"
-        )
-        .classList.remove("show");
-
-}
-
 
 async function saveAPI(){
-
-    const value =
-        document
-            .getElementById(
-                "apiInput"
-            )
-            .value.trim();
-
-    if(!value){
-
-        showToast(
-            "Masukkan API terlebih dahulu."
-        );
-
-        return;
-
-    }
-
-
-    apiKey =
-        value;
-
-    localStorage.setItem(
-        API_STORAGE,
-        apiKey
-    );
-
-
-    closeSettings();
-
-    showToast(
-        "API berhasil disimpan."
-    );
-
-
-    /*
-       Reload genre agar genre
-       tersedia setelah API baru dimasukkan.
-    */
-
-    genreFilter.innerHTML =
-        `<option value="">
-            🎭 Semua Genre
-        </option>`;
-
-    await loadGenres();
-
-    await startDiscover();
-
+ let v=$("apiInput").value.trim();
+ if(!v){showToast("Masukkan API.");return}
+ apiKey=v;localStorage.setItem(API_KEY_STORAGE,v);
+ closeModal("settingsModal");
+ await initialize();
+ showToast("API berhasil disimpan.");
 }
-
 
 function deleteAPI(){
-
-    localStorage.removeItem(
-        API_STORAGE
-    );
-
-    apiKey = "";
-
-    closeSettings();
-
-    movieGrid.innerHTML = `
-        <div class="empty"
-             style="grid-column:1/-1">
-
-            <div class="empty-icon">🔑</div>
-
-            <h3>API belum diatur</h3>
-
-            <p>
-                Masukkan TMDB API melalui
-                tombol ⚙️.
-            </p>
-
-        </div>
-    `;
-
-    showToast(
-        "API dihapus dari perangkat."
-    );
-
+ localStorage.removeItem(API_KEY_STORAGE);apiKey="";
+ closeModal("settingsModal");
+ $("grid").innerHTML=`<div class="empty" style="grid-column:1/-1">
+ <div class="emptyIcon">🔑</div><h3>API belum diatur</h3>
+ <p>Klik ⚙️ untuk memasukkan API TMDB.</p></div>`;
 }
 
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer;
-
-function showToast(message){
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-    toast.textContent =
-        message;
-
-    toast.classList.add(
-        "show"
-    );
-
-    clearTimeout(
-        toastTimer
-    );
-
-    toastTimer =
-        setTimeout(
-            ()=>{
-                toast.classList.remove(
-                    "show"
-                );
-            },
-            3000
-        );
-
+async function initialize(){
+ loadYears();
+ if(!apiKey){
+  $("grid").innerHTML=`<div class="empty" style="grid-column:1/-1">
+  <div class="emptyIcon">🎬</div><h3>Selamat datang!</h3>
+  <p>Masukkan TMDB API melalui ⚙️ untuk mulai.</p></div>`;
+  return;
+ }
+ try{
+  let d=await api("/genre/movie/list",{language:"id-ID"});
+  $("genre").innerHTML='<option value="">🎭 Semua Genre</option>'+
+   d.genres.map(g=>`<option value="${g.id}">🎭 ${esc(g.name)}</option>`).join("");
+ }catch{}
+ newDiscover();
 }
 
-
-/* =========================================================
-   INFINITE SCROLL
-========================================================= */
-
-const observer =
-    new IntersectionObserver(
-        entries=>{
-
-            if(!entries[0].isIntersecting)
-                return;
-
-            if(
-                currentMode ===
-                "search"
-            ){
-
-                loadNextSearchPage();
-
-            }else{
-
-                loadNextPage();
-
-            }
-
-        },
-        {
-            root:null,
-            rootMargin:"700px",
-            threshold:0
-        }
-    );
-
-
-observer.observe(
-    loadMoreTrigger
-);
-
-
-/* =========================================================
-   CLOSE PREVIEW
-========================================================= */
-
-document.addEventListener(
-    "click",
-    event=>{
-
-        const area =
-            document.querySelector(
-                ".search-area"
-            );
-
-        if(
-            area &&
-            !area.contains(event.target)
-        ){
-
-            preview.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-async function init(){
-
-    loadYears();
-
-    if(!apiKey){
-
-        movieGrid.innerHTML = `
-            <div class="empty"
-                 style="grid-column:1/-1">
-
-                <div class="empty-icon">
-                    🎬
-                </div>
-
-                <h3>
-                    Selamat datang di Movie Finder
-                </h3>
-
-                <p>
-                    Masukkan TMDB API melalui
-                    tombol ⚙️ untuk mulai mencari film.
-                </p>
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    await loadGenres();
-
-    await startDiscover();
-
+function loadYears(){
+ if($("year").options.length>1)return;
+ let y=new Date().getFullYear();
+ for(let i=y;i>=1900;i--){
+  let o=document.createElement("option");
+  o.value=i;o.textContent="📅 "+i;$("year").appendChild(o);
+ }
 }
 
+const observer=new IntersectionObserver(e=>{
+ if(e[0].isIntersecting){
+  if(mode==="search"||mode==="discover"||mode==="category")loadNext();
+ }
+},{rootMargin:"700px"});
+observer.observe($("trigger"));
 
-init();
+document.addEventListener("click",e=>{
+ if(!e.target.closest(".searchArea"))$("preview").classList.remove("show");
+});
 
+initialize();
 </script>
-
 </body>
 </html>
