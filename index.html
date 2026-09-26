@@ -2,2119 +2,2907 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#f7f9ff">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
 <title>Movie Finder</title>
+
 <style>
 *{
     box-sizing:border-box;
 }
+
 html{
     scroll-behavior:smooth;
 }
+
 body{
     margin:0;
     font-family:Inter,Arial,Helvetica,sans-serif;
-    background:#f5f7fc;
-    color:#182033;
+    background:#f5f7ff;
+    color:#172033;
 }
-/* HEADER */
-header{
-    background:linear-gradient(135deg,#ffffff,#edf3ff);
-    border-bottom:1px solid #e1e7f2;
-    padding:28px 18px 38px;
+
+button,
+input,
+select{
+    font:inherit;
 }
-.nav{
-    max-width:1250px;
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    background:linear-gradient(135deg,#625bf6 0%,#8267f7 45%,#ec63a8 100%);
+    color:white;
+    padding:25px 18px 75px;
+    position:relative;
+    overflow:hidden;
+}
+
+.header:before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    background:rgba(255,255,255,.09);
+    border-radius:50%;
+    right:-90px;
+    top:-100px;
+}
+
+.header:after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:rgba(255,255,255,.07);
+    border-radius:50%;
+    left:-80px;
+    bottom:-110px;
+}
+
+.header-inner{
+    max-width:1200px;
     margin:auto;
+    position:relative;
+    z-index:2;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+}
+
+.settings-btn{
+    width:43px;
+    height:43px;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+    color:white;
+    font-size:20px;
+    backdrop-filter:blur(10px);
+}
+
+.hero{
+    margin-top:40px;
+    max-width:800px;
+}
+
+.hero h1{
+    margin:0;
+    font-size:clamp(32px,7vw,58px);
+    line-height:1.05;
+}
+
+.hero p{
+    margin:14px 0 0;
+    font-size:16px;
+    line-height:1.6;
+    opacity:.93;
+}
+
+.container{
+    width:min(1200px,94%);
+    margin:-42px auto 50px;
+    position:relative;
+    z-index:5;
+}
+
+.search-card{
+    background:white;
+    border-radius:24px;
+    padding:16px;
+    box-shadow:0 18px 50px rgba(47,58,100,.15);
+}
+
+.search-box{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:15px;
+    gap:10px;
+    border:2px solid #e7eaf4;
+    border-radius:17px;
+    padding:0 12px;
+    background:#fff;
+    transition:.2s;
 }
-.logo{
-    font-size:25px;
-    font-weight:900;
-    color:#315efb;
+
+.search-box:focus-within{
+    border-color:#6c63ff;
+    box-shadow:0 0 0 4px rgba(108,99,255,.10);
 }
-.nav-right{
-    display:flex;
-    gap:8px;
+
+.search-icon{
+    font-size:22px;
 }
-.nav-btn{
-    border:0;
-    background:white;
-    color:#34415c;
-    padding:10px 14px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:700;
-    box-shadow:0 3px 12px rgba(30,50,90,.06);
-}
-.nav-btn.active{
-    background:#315efb;
-    color:white;
-}
-.hero{
-    max-width:950px;
-    margin:45px auto 0;
-    text-align:center;
-}
-.hero h1{
-    font-size:clamp(32px,6vw,58px);
-    margin:0;
-    letter-spacing:-2px;
-}
-.hero h1 span{
-    color:#315efb;
-}
-.hero p{
-    color:#6e7890;
-    font-size:16px;
-    margin:14px auto 25px;
-    max-width:650px;
-}
-/* SEARCH */
-.search-area{
-    max-width:850px;
-    margin:auto;
-}
-.search-box{
-    background:white;
-    padding:8px;
-    border-radius:18px;
-    display:flex;
-    gap:8px;
-    box-shadow:0 12px 35px rgba(35,65,120,.13);
-}
-.search-box input{
-    flex:1;
-    min-width:0;
+
+.search-input{
+    width:100%;
     border:0;
     outline:0;
-    padding:15px;
+    padding:16px 5px;
     font-size:16px;
     background:transparent;
+    color:#172033;
 }
-.search-btn{
+
+.clear-btn{
     border:0;
-    background:#315efb;
-    color:white;
-    border-radius:13px;
-    padding:0 24px;
-    font-size:15px;
-    font-weight:800;
-    cursor:pointer;
+    background:#eef0f6;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    display:none;
 }
-.search-btn:hover{
-    background:#244bd5;
+
+.search-status{
+    padding:10px 5px 0;
+    color:#70788b;
+    font-size:13px;
 }
-/* FILTER */
-.container{
-    max-width:1250px;
-    margin:auto;
-    padding:28px 18px 60px;
-}
-.filters{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:25px;
-}
-select{
-    border:1px solid #dce3ef;
+
+.preview{
+    display:none;
+    margin-top:13px;
+    border:1px solid #e7eaf2;
+    border-radius:18px;
+    overflow:hidden;
     background:white;
-    padding:12px 14px;
-    border-radius:12px;
-    color:#27334a;
-    outline:0;
-    cursor:pointer;
 }
-.result-info{
+
+.preview.show{
+    display:block;
+}
+
+.preview-title{
+    padding:13px 15px;
+    font-weight:800;
+    border-bottom:1px solid #edf0f5;
+}
+
+.preview-list{
+    max-height:430px;
+    overflow-y:auto;
+}
+
+.preview-item{
+    display:flex;
+    gap:13px;
+    padding:10px;
+    border-bottom:1px solid #f0f1f5;
+    transition:.15s;
+}
+
+.preview-item:last-child{
+    border-bottom:0;
+}
+
+.preview-item:hover,
+.preview-item.active{
+    background:#f5f4ff;
+}
+
+.preview-poster{
+    width:55px;
+    height:82px;
+    object-fit:cover;
+    border-radius:8px;
+    flex-shrink:0;
+    background:#e9ecf5;
+}
+
+.preview-info{
+    min-width:0;
+    padding:3px 0;
+}
+
+.preview-name{
+    font-weight:800;
+    line-height:1.3;
+}
+
+.preview-meta{
+    margin-top:7px;
+    color:#747c8d;
+    font-size:13px;
+}
+
+.preview-rating{
+    color:#df9600;
+    font-weight:800;
+}
+
+.content-section{
+    margin-top:30px;
+}
+
+.section-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.section-head h2{
+    margin:0;
+    font-size:24px;
+}
+
+.section-head span{
+    color:#7b8393;
+    font-size:13px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
     gap:10px;
     margin-bottom:18px;
 }
-.result-info h2{
-    margin:0;
-    font-size:21px;
-}
-.count{
-    color:#7b8497;
-    font-size:14px;
-}
-/* MOVIES */
-.movies{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fill,minmax(175px,1fr));
-    gap:20px;
-}
-.movie{
+
+.filter{
+    border:2px solid #e5e8f1;
     background:white;
-    border-radius:17px;
+    padding:11px 13px;
+    border-radius:13px;
+    outline:none;
+}
+
+.filter:focus{
+    border-color:#6c63ff;
+}
+
+.movie-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:17px;
+}
+
+.movie-card{
+    background:white;
+    border-radius:18px;
     overflow:hidden;
-    box-shadow:0 6px 22px rgba(35,55,95,.08);
+    box-shadow:0 8px 25px rgba(43,53,88,.09);
     cursor:pointer;
-    transition:transform .2s,box-shadow .2s;
-    position:relative;
+    transition:.2s;
 }
-.movie:hover{
-    transform:translateY(-7px);
-    box-shadow:0 14px 35px rgba(35,55,95,.15);
+
+.movie-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 16px 35px rgba(43,53,88,.15);
 }
+
 .poster-wrap{
     position:relative;
     aspect-ratio:2/3;
-    background:#e8edf6;
+    background:#e8ebf4;
 }
+
 .poster{
     width:100%;
     height:100%;
     object-fit:cover;
     display:block;
 }
-.rating{
+
+.poster-rating{
     position:absolute;
     left:9px;
     top:9px;
-    background:rgba(255,255,255,.94);
     padding:6px 8px;
     border-radius:9px;
+    background:rgba(255,255,255,.94);
+    color:#d48b00;
     font-size:12px;
     font-weight:900;
-    color:#8a6800;
 }
-.save{
-    position:absolute;
-    right:9px;
-    top:9px;
-    width:35px;
-    height:35px;
-    border:0;
-    border-radius:50%;
-    background:rgba(255,255,255,.95);
-    cursor:pointer;
-    font-size:17px;
-    z-index:2;
+
+.card-body{
+    padding:12px;
 }
-.save.saved{
-    color:#315efb;
-}
-.movie-info{
-    padding:13px;
-}
+
 .movie-title{
-    font-weight:850;
-    line-height:1.3;
     font-size:15px;
+    font-weight:850;
+    line-height:1.35;
+    min-height:41px;
 }
+
 .movie-meta{
-    color:#7c8698;
-    margin-top:6px;
-    font-size:13px;
-}
-.genre{
-    color:#315efb;
-    margin-top:7px;
+    display:flex;
+    justify-content:space-between;
+    gap:5px;
+    color:#7a8292;
     font-size:12px;
-    font-weight:700;
+    margin-top:8px;
 }
-/* EMPTY */
+
+.movie-genre{
+    margin-top:7px;
+    color:#625bf6;
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.loading{
+    grid-column:1/-1;
+    padding:60px 20px;
+    text-align:center;
+    background:white;
+    border-radius:18px;
+    color:#6c63ff;
+    font-weight:800;
+}
+
 .empty{
     grid-column:1/-1;
+    background:white;
+    border-radius:20px;
+    padding:50px 20px;
     text-align:center;
-    padding:70px 15px;
-    color:#778197;
+    color:#727b8d;
 }
+
 .empty-icon{
-    font-size:48px;
+    font-size:45px;
     margin-bottom:10px;
 }
-/* MODAL */
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:25px 0;
+}
+
+.page-btn{
+    border:0;
+    background:white;
+    padding:10px 15px;
+    border-radius:11px;
+    font-weight:800;
+    color:#5b55d9;
+    box-shadow:0 5px 15px rgba(40,50,80,.08);
+}
+
+.page-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.page-number{
+    padding:10px 14px;
+    background:#6c63ff;
+    color:white;
+    border-radius:11px;
+    font-weight:800;
+}
+
 .modal{
-    display:none;
     position:fixed;
     inset:0;
-    background:rgba(20,28,45,.55);
-    z-index:100;
+    background:rgba(24,29,48,.58);
+    display:none;
     align-items:center;
     justify-content:center;
-    padding:18px;
+    padding:15px;
+    z-index:1000;
 }
+
 .modal.show{
     display:flex;
 }
-.modal-card{
+
+.modal-box{
     width:min(900px,100%);
     max-height:92vh;
     overflow:auto;
     background:white;
-    border-radius:24px;
-    position:relative;
-    padding:26px;
+    border-radius:25px;
+    box-shadow:0 30px 90px rgba(0,0,0,.28);
 }
+
+.modal-head{
+    display:flex;
+    justify-content:flex-end;
+    padding:11px;
+}
+
 .close{
-    position:absolute;
-    right:17px;
-    top:17px;
+    border:0;
     width:40px;
     height:40px;
-    border:0;
     border-radius:50%;
-    background:#eef2f8;
-    font-size:22px;
-    cursor:pointer;
+    background:#f0f2f7;
+    font-size:23px;
 }
+
 .detail{
     display:grid;
-    grid-template-columns:250px 1fr;
-    gap:28px;
-    padding-top:5px;
+    grid-template-columns:245px 1fr;
+    gap:25px;
+    padding:0 25px 30px;
 }
+
 .detail-poster{
     width:100%;
     border-radius:16px;
     display:block;
 }
+
 .detail h2{
-    font-size:31px;
-    margin:5px 50px 8px 0;
+    font-size:30px;
+    margin:0 0 5px;
 }
-.detail-meta{
-    color:#6e7890;
+
+.original-title{
+    color:#81899a;
     font-size:14px;
 }
-.tags{
+
+.tag-list{
     display:flex;
     flex-wrap:wrap;
     gap:7px;
-    margin:16px 0;
+    margin:15px 0;
 }
+
 .tag{
+    background:#eeedff;
+    color:#584fe0;
     padding:7px 10px;
-    background:#edf2ff;
-    color:#315efb;
-    border-radius:9px;
+    border-radius:20px;
     font-size:12px;
     font-weight:800;
 }
-.detail h3{
-    margin:20px 0 7px;
-}
-.detail p{
-    color:#626e82;
+
+.overview{
     line-height:1.7;
-    margin-top:5px;
+    color:#596275;
 }
-.watch-btn{
-    border:0;
-    background:#315efb;
-    color:white;
-    padding:12px 17px;
+
+.detail-info{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    margin-top:17px;
+}
+
+.detail-info div{
+    padding:11px;
+    background:#f7f8fb;
     border-radius:11px;
-    font-weight:800;
-    cursor:pointer;
 }
-.watch-btn.saved{
-    background:#e9efff;
-    color:#315efb;
-}
-/* WATCHLIST */
-.watchlist{
-    display:none;
-}
-.watchlist.show{
+
+.detail-info b{
     display:block;
+    margin-bottom:4px;
 }
-.main-content.hide{
+
+.cast-section{
+    margin-top:20px;
+}
+
+.cast-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.cast{
+    background:#f0f2f7;
+    border-radius:10px;
+    padding:8px 10px;
+    font-size:12px;
+}
+
+.settings{
+    position:fixed;
+    inset:0;
+    background:rgba(24,29,48,.5);
     display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    z-index:1100;
 }
-footer{
+
+.settings.show{
+    display:flex;
+}
+
+.settings-box{
+    background:white;
+    width:min(520px,100%);
+    border-radius:23px;
+    padding:22px;
+}
+
+.settings-box h2{
+    margin-top:0;
+}
+
+.settings-box label{
+    display:block;
+    font-weight:800;
+    margin:14px 0 7px;
+}
+
+.key-input{
+    width:100%;
+    padding:13px;
+    border:2px solid #e3e6ef;
+    border-radius:12px;
+    outline:none;
+}
+
+.key-input:focus{
+    border-color:#6c63ff;
+}
+
+.setting-actions{
+    display:flex;
+    gap:9px;
+    margin-top:17px;
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:12px 17px;
+    font-weight:800;
+}
+
+.btn-primary{
+    background:#6c63ff;
+    color:white;
+}
+
+.btn-secondary{
+    background:#eef0f6;
+    color:#30374a;
+}
+
+.btn-danger{
+    background:#ef4444;
+    color:white;
+}
+
+.note{
+    margin-top:13px;
+    font-size:12px;
+    line-height:1.6;
+    color:#777f91;
+}
+
+.footer{
     text-align:center;
-    padding:30px;
-    color:#8a94a7;
-    font-size:13px;
+    color:#858c9c;
+    font-size:12px;
+    padding:25px 10px;
 }
-/* MOBILE */
-@media(max-width:650px){
-    header{
-        padding-top:20px;
+
+@media(max-width:1000px){
+    .movie-grid{
+        grid-template-columns:repeat(4,1fr);
     }
-    .nav{
-        align-items:flex-start;
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding-bottom:65px;
     }
-    .logo{
+
+    .container{
+        width:94%;
+    }
+
+    .movie-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+
+    .detail{
+        grid-template-columns:140px 1fr;
+        gap:15px;
+        padding:0 17px 25px;
+    }
+
+    .detail h2{
         font-size:21px;
     }
-    .nav-btn{
-        padding:9px 10px;
-        font-size:12px;
+
+    .detail-info{
+        grid-template-columns:1fr;
     }
+}
+
+@media(max-width:430px){
+
     .hero{
-        margin-top:35px;
+        margin-top:30px;
     }
+
     .hero h1{
-        letter-spacing:-1px;
+        font-size:34px;
     }
-    .search-box{
-        flex-direction:column;
-    }
-    .search-btn{
-        padding:14px;
-    }
-    .movies{
-        grid-template-columns:repeat(2,1fr);
-        gap:13px;
-    }
-    .movie-info{
-        padding:10px;
-    }
-    .movie-title{
-        font-size:14px;
-    }
+
     .detail{
         grid-template-columns:1fr;
     }
+
     .detail-poster{
-        width:190px;
+        width:170px;
         margin:auto;
     }
-    .detail h2{
-        font-size:25px;
+
+    .modal{
+        padding:8px;
+    }
+
+    .modal-box{
+        border-radius:20px;
     }
 }
 </style>
 </head>
+
 <body>
-<header>
-    <div class="nav">
-        <div class="logo">
-            🎬 Movie Finder
-        </div>
-        <div class="nav-right">
-            <button
-                class="nav-btn active"
-                id="homeBtn"
-                onclick="showHome()">
-                🏠 Home
-            </button>
-            <button
-                class="nav-btn"
-                id="watchBtn"
-                onclick="showWatchlist()">
-                ❤️ Watchlist
-            </button>
-        </div>
-    </div>
-    <div class="hero">
-        <h1>
-            Find your next
-            <span>movie.</span>
-        </h1>
-        <p>
-            Cari film favoritmu dari database lokal.
-            Tidak membutuhkan API atau API key.
-        </p>
-        <div class="search-area">
-            <div class="search-box">
-                <input
-                    id="search"
-                    type="search"
-                    placeholder="Cari judul film..."
-                    autocomplete="off">
-                <button
-                    class="search-btn"
-                    onclick="searchMovies()">
-                    🔎 Cari
-                </button>
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="topbar">
+
+            <div class="logo">
+                🎬 Movie Finder
             </div>
+
+            <button
+                class="settings-btn"
+                onclick="openSettings()"
+                title="Pengaturan"
+            >
+                ⚙️
+            </button>
+
         </div>
+
+        <div class="hero">
+
+            <h1>Temukan film favoritmu.</h1>
+
+            <p>
+                Cari film secara langsung dengan poster, rating,
+                genre, tahun, sinopsis, pemeran, dan informasi lainnya.
+            </p>
+
+        </div>
+
     </div>
+
 </header>
-<div class="container">
-    <div class="main-content" id="mainContent">
-        <div class="filters">
-            <select id="genreFilter" onchange="applyFilters()">
-                <option value="all">Semua Genre</option>
-            </select>
-            <select id="yearFilter" onchange="applyFilters()">
-                <option value="all">Semua Tahun</option>
-            </select>
-            <select id="ratingFilter" onchange="applyFilters()">
-                <option value="all">Semua Rating</option>
-                <option value="9">9+</option>
-                <option value="8">8+</option>
-                <option value="7">7+</option>
-                <option value="6">6+</option>
-            </select>
-            <select id="sortFilter" onchange="applyFilters()">
-                <option value="popular">Terpopuler</option>
-                <option value="rating">Rating Tertinggi</option>
-                <option value="newest">Terbaru</option>
-                <option value="oldest">Terlama</option>
-                <option value="az">A → Z</option>
-            </select>
+
+<main class="container">
+
+    <!-- SEARCH -->
+
+    <section class="search-card">
+
+        <div class="search-box">
+
+            <span class="search-icon">🔎</span>
+
+            <input
+                id="searchInput"
+                class="search-input"
+                type="search"
+                autocomplete="off"
+                placeholder="Cari judul film..."
+            >
+
+            <button
+                id="clearBtn"
+                class="clear-btn"
+                onclick="clearSearch()"
+            >
+                ×
+            </button>
+
         </div>
-        <div class="result-info">
+
+        <div
+            id="searchStatus"
+            class="search-status"
+        ></div>
+
+        <div
+            id="preview"
+            class="preview"
+        >
+
+            <div class="preview-title">
+                Hasil pencarian
+            </div>
+
+            <div
+                id="previewList"
+                class="preview-list"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MOVIES -->
+
+    <section class="content-section">
+
+        <div class="section-head">
+
             <h2 id="sectionTitle">
-                🎬 Koleksi Film
+                🔥 Film Populer
             </h2>
-            <div
-                class="count"
-                id="count">
-                0 film
-            </div>
+
+            <span id="resultCount"></span>
+
         </div>
+
+
+        <div class="filters">
+
+            <select
+                id="genreFilter"
+                class="filter"
+                onchange="applyFilters()"
+            >
+                <option value="">
+                    Semua Genre
+                </option>
+            </select>
+
+            <select
+                id="yearFilter"
+                class="filter"
+                onchange="applyFilters()"
+            >
+                <option value="">
+                    Semua Tahun
+                </option>
+            </select>
+
+            <select
+                id="sortFilter"
+                class="filter"
+                onchange="applyFilters()"
+            >
+                <option value="popularity">
+                    Terpopuler
+                </option>
+
+                <option value="rating">
+                    Rating Tertinggi
+                </option>
+
+                <option value="newest">
+                    Terbaru
+                </option>
+
+                <option value="oldest">
+                    Terlama
+                </option>
+
+                <option value="title">
+                    Judul A-Z
+                </option>
+
+            </select>
+
+        </div>
+
+
         <div
-            class="movies"
-            id="movies">
+            id="movieGrid"
+            class="movie-grid"
+        ></div>
+
+
+        <div class="pagination">
+
+            <button
+                id="prevBtn"
+                class="page-btn"
+                onclick="changePage(-1)"
+            >
+                ← Sebelumnya
+            </button>
+
+            <span
+                id="pageNumber"
+                class="page-number"
+            >
+                1
+            </span>
+
+            <button
+                id="nextBtn"
+                class="page-btn"
+                onclick="changePage(1)"
+            >
+                Berikutnya →
+            </button>
+
         </div>
-    </div>
-    <div
-        class="watchlist"
-        id="watchlist">
-        <div class="result-info">
-            <h2>
-                ❤️ Watchlist Saya
-            </h2>
-            <div
-                class="count"
-                id="watchCount">
-                0 film
-            </div>
-        </div>
-        <div
-            class="movies"
-            id="watchMovies">
-        </div>
-    </div>
-</div>
-<footer>
-    Movie Finder • Local Database • No API Required
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+    Movie Finder menggunakan data dan gambar dari TMDB.
 </footer>
+
+
+<!-- DETAIL MODAL -->
+
 <div
+    id="movieModal"
     class="modal"
-    id="modal"
-    onclick="closeOutside(event)">
-    <div class="modal-card">
-        <button
-            class="close"
-            onclick="closeModal()">
-            ×
-        </button>
-        <div id="detail"></div>
+    onclick="closeModalOutside(event)"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <button
+                class="close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div id="detailContent"></div>
+
     </div>
+
 </div>
+
+
+<!-- SETTINGS -->
+
+<div
+    id="settingsModal"
+    class="settings"
+    onclick="closeSettingsOutside(event)"
+>
+
+    <div class="settings-box">
+
+        <h2>⚙️ Pengaturan</h2>
+
+        <p>
+            API key/token hanya disimpan di browser perangkat ini.
+        </p>
+
+        <label for="keyInput">
+            TMDB API Key / Read Access Token
+        </label>
+
+        <input
+            id="keyInput"
+            class="key-input"
+            type="password"
+            autocomplete="off"
+            placeholder="Masukkan API key atau token..."
+        >
+
+        <div class="setting-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="saveAPIKey()"
+            >
+                Simpan
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeSettings()"
+            >
+                Batal
+            </button>
+
+            <button
+                class="btn btn-danger"
+                onclick="deleteAPIKey()"
+            >
+                Hapus
+            </button>
+
+        </div>
+
+        <div class="note">
+
+            Jika kamu menghapus API key, Movie Finder akan meminta
+            key kembali ketika digunakan berikutnya.
+
+            Jangan memasukkan API key ke file index.html atau
+            meng-upload key ke repository publik.
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
+
 /* =========================================================
-   LOCAL MOVIE DATABASE
-   Tidak menggunakan API.
-   ========================================================= */
-const movies = [
-{
-id:1,
-title:"Inception",
-year:2010,
-genre:["Sci-Fi","Thriller","Action"],
-rating:8.8,
-duration:"148 menit",
-director:"Christopher Nolan",
-cast:"Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page",
-description:"Seorang pencuri profesional memasuki mimpi manusia untuk mengambil informasi rahasia. Sebuah misi baru membuat batas antara mimpi dan kenyataan semakin sulit dibedakan."
-},
-{
-id:2,
-title:"Interstellar",
-year:2014,
-genre:["Sci-Fi","Drama","Adventure"],
-rating:8.7,
-duration:"169 menit",
-director:"Christopher Nolan",
-cast:"Matthew McConaughey, Anne Hathaway, Jessica Chastain",
-description:"Sekelompok penjelajah melakukan perjalanan melalui ruang angkasa untuk mencari kemungkinan tempat tinggal baru bagi manusia."
-},
-{
-id:3,
-title:"The Dark Knight",
-year:2008,
-genre:["Action","Crime","Drama"],
-rating:9.0,
-duration:"152 menit",
-director:"Christopher Nolan",
-cast:"Christian Bale, Heath Ledger, Aaron Eckhart",
-description:"Batman menghadapi ancaman kriminal yang membuat keamanan Gotham berada dalam kekacauan."
-},
-{
-id:4,
-title:"Avatar",
-year:2009,
-genre:["Sci-Fi","Adventure","Fantasy"],
-rating:7.9,
-duration:"162 menit",
-director:"James Cameron",
-cast:"Sam Worthington, Zoe Saldana, Sigourney Weaver",
-description:"Seorang manusia memasuki dunia asing melalui tubuh avatar dan mulai memahami masyarakat serta lingkungan planet tersebut."
-},
-{
-id:5,
-title:"Titanic",
-year:1997,
-genre:["Romance","Drama"],
-rating:7.9,
-duration:"194 menit",
-director:"James Cameron",
-cast:"Leonardo DiCaprio, Kate Winslet",
-description:"Dua orang dari latar belakang berbeda bertemu dalam perjalanan kapal besar yang kemudian menghadapi bencana."
-},
-{
-id:6,
-title:"The Matrix",
-year:1999,
-genre:["Sci-Fi","Action"],
-rating:8.7,
-duration:"136 menit",
-director:"The Wachowskis",
-cast:"Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
-description:"Seorang programmer menemukan bahwa dunia yang dikenalnya ternyata menyimpan rahasia besar tentang realitas."
-},
-{
-id:7,
-title:"Avengers: Endgame",
-year:2019,
-genre:["Action","Adventure","Sci-Fi"],
-rating:8.4,
-duration:"181 menit",
-director:"Anthony Russo, Joe Russo",
-cast:"Robert Downey Jr., Chris Evans, Scarlett Johansson",
-description:"Para pahlawan yang tersisa berusaha membalikkan akibat dari peristiwa besar yang mengubah kehidupan mereka."
-},
-{
-id:8,
-title:"Avengers: Infinity War",
-year:2018,
-genre:["Action","Adventure","Sci-Fi"],
-rating:8.4,
-duration:"149 menit",
-director:"Anthony Russo, Joe Russo",
-cast:"Robert Downey Jr., Chris Hemsworth, Mark Ruffalo",
-description:"Para pahlawan dari berbagai kelompok harus menghadapi musuh yang mengumpulkan artefak berkekuatan luar biasa."
-},
-{
-id:9,
-title:"Spider-Man: No Way Home",
-year:2021,
-genre:["Action","Adventure","Fantasy"],
-rating:8.2,
-duration:"148 menit",
-director:"Jon Watts",
-cast:"Tom Holland, Zendaya, Benedict Cumberbatch",
-description:"Peter Parker menghadapi konsekuensi setelah identitasnya diketahui publik dan sebuah peristiwa membuka kemungkinan dunia yang berbeda."
-},
-{
-id:10,
-title:"Black Panther",
-year:2018,
-genre:["Action","Adventure","Sci-Fi"],
-rating:7.3,
-duration:"134 menit",
-director:"Ryan Coogler",
-cast:"Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o",
-description:"Seorang pewaris kerajaan teknologi tinggi harus menghadapi tantangan terhadap kepemimpinannya."
-},
-{
-id:11,
-title:"Iron Man",
-year:2008,
-genre:["Action","Sci-Fi"],
-rating:7.9,
-duration:"126 menit",
-director:"Jon Favreau",
-cast:"Robert Downey Jr., Gwyneth Paltrow, Jeff Bridges",
-description:"Seorang pengusaha dan penemu mengembangkan teknologi baru yang mengubah hidupnya dan membawanya menjadi pahlawan."
-},
-{
-id:12,
-title:"Guardians of the Galaxy",
-year:2014,
-genre:["Action","Adventure","Comedy"],
-rating:8.0,
-duration:"121 menit",
-director:"James Gunn",
-cast:"Chris Pratt, Zoe Saldana, Dave Bautista",
-description:"Sekelompok individu dengan kepribadian berbeda terpaksa bekerja sama untuk menghadapi ancaman besar."
-},
-{
-id:13,
-title:"Doctor Strange",
-year:2016,
-genre:["Action","Fantasy","Adventure"],
-rating:7.5,
-duration:"115 menit",
-director:"Scott Derrickson",
-cast:"Benedict Cumberbatch, Rachel McAdams, Chiwetel Ejiofor",
-description:"Seorang ahli bedah mempelajari seni mistis setelah kehidupannya berubah secara drastis."
-},
-{
-id:14,
-title:"Thor: Ragnarok",
-year:2017,
-genre:["Action","Adventure","Comedy"],
-rating:7.9,
-duration:"130 menit",
-director:"Taika Waititi",
-cast:"Chris Hemsworth, Tom Hiddleston, Cate Blanchett",
-description:"Thor berusaha menyelamatkan Asgard ketika ancaman baru muncul dan kekuatannya menghadapi ujian besar."
-},
-{
-id:15,
-title:"Captain America: Civil War",
-year:2016,
-genre:["Action","Adventure","Sci-Fi"],
-rating:7.8,
-duration:"147 menit",
-director:"Anthony Russo, Joe Russo",
-cast:"Chris Evans, Robert Downey Jr., Scarlett Johansson",
-description:"Perbedaan pandangan mengenai pengawasan para pahlawan memecah kelompok Avengers."
-},
-{
-id:16,
-title:"The Batman",
-year:2022,
-genre:["Action","Crime","Mystery"],
-rating:7.8,
-duration:"176 menit",
-director:"Matt Reeves",
-cast:"Robert Pattinson, Zoë Kravitz, Paul Dano",
-description:"Batman menyelidiki serangkaian kejahatan misterius yang mengungkap rahasia gelap Gotham."
-},
-{
-id:17,
-title:"Joker",
-year:2019,
-genre:["Crime","Drama","Thriller"],
-rating:8.4,
-duration:"122 menit",
-director:"Todd Phillips",
-cast:"Joaquin Phoenix, Robert De Niro",
-description:"Seorang pria yang hidup dalam tekanan sosial mengalami perubahan besar yang membawanya ke jalan yang semakin gelap."
-},
-{
-id:18,
-title:"The Lord of the Rings: The Fellowship of the Ring",
-year:2001,
-genre:["Fantasy","Adventure","Drama"],
-rating:8.8,
-duration:"178 menit",
-director:"Peter Jackson",
-cast:"Elijah Wood, Ian McKellen, Viggo Mortensen",
-description:"Sebuah kelompok kecil memulai perjalanan berbahaya untuk membawa artefak berbahaya menjauh dari kekuatan jahat."
-},
-{
-id:19,
-title:"The Lord of the Rings: The Two Towers",
-year:2002,
-genre:["Fantasy","Adventure","Drama"],
-rating:8.8,
-duration:"179 menit",
-director:"Peter Jackson",
-cast:"Elijah Wood, Ian McKellen, Viggo Mortensen",
-description:"Para anggota kelompok yang terpisah menghadapi perjalanan dan pertempuran berbeda dalam perang besar."
-},
-{
-id:20,
-title:"The Lord of the Rings: The Return of the King",
-year:2003,
-genre:["Fantasy","Adventure","Drama"],
-rating:9.0,
-duration:"201 menit",
-director:"Peter Jackson",
-cast:"Elijah Wood, Ian McKellen, Viggo Mortensen",
-description:"Pertempuran terakhir semakin dekat ketika para pahlawan berusaha menyelesaikan perjalanan mereka."
-},
-{
-id:21,
-title:"Harry Potter and the Sorcerer's Stone",
-year:2001,
-genre:["Fantasy","Adventure","Family"],
-rating:7.6,
-duration:"152 menit",
-director:"Chris Columbus",
-cast:"Daniel Radcliffe, Emma Watson, Rupert Grint",
-description:"Seorang anak mengetahui bahwa dirinya memiliki hubungan dengan dunia sihir dan memulai pendidikan di sekolah khusus."
-},
-{
-id:22,
-title:"Harry Potter and the Prisoner of Azkaban",
-year:2004,
-genre:["Fantasy","Adventure","Mystery"],
-rating:7.9,
-duration:"142 menit",
-director:"Alfonso Cuarón",
-cast:"Daniel Radcliffe, Emma Watson, Rupert Grint",
-description:"Tahun sekolah baru membawa misteri tentang seorang tahanan yang melarikan diri dan memiliki kaitan dengan masa lalu Harry."
-},
-{
-id:23,
-title:"Harry Potter and the Goblet of Fire",
-year:2005,
-genre:["Fantasy","Adventure"],
-rating:7.7,
-duration:"157 menit",
-director:"Mike Newell",
-cast:"Daniel Radcliffe, Emma Watson, Rupert Grint",
-description:"Harry terlibat dalam kompetisi sihir berbahaya bersama peserta dari beberapa sekolah."
-},
-{
-id:24,
-title:"Frozen",
-year:2013,
-genre:["Animation","Adventure","Family"],
-rating:7.4,
-duration:"102 menit",
-director:"Chris Buck, Jennifer Lee",
-cast:"Kristen Bell, Idina Menzel, Jonathan Groff",
-description:"Dua saudari harus menghadapi kekuatan khusus dan perjalanan yang menguji hubungan mereka."
-},
-{
-id:25,
-title:"Toy Story",
-year:1995,
-genre:["Animation","Comedy","Family"],
-rating:8.3,
-duration:"81 menit",
-director:"John Lasseter",
-cast:"Tom Hanks, Tim Allen",
-description:"Sekelompok mainan memiliki kehidupan rahasia ketika manusia tidak melihat mereka."
-},
-{
-id:26,
-title:"Toy Story 3",
-year:2010,
-genre:["Animation","Comedy","Family"],
-rating:8.3,
-duration:"103 menit",
-director:"Lee Unkrich",
-cast:"Tom Hanks, Tim Allen",
-description:"Para mainan menghadapi perubahan besar ketika pemilik mereka mulai meninggalkan masa kanak-kanak."
-},
-{
-id:27,
-title:"Finding Nemo",
-year:2003,
-genre:["Animation","Adventure","Family"],
-rating:8.2,
-duration:"100 menit",
-director:"Andrew Stanton",
-cast:"Albert Brooks, Ellen DeGeneres",
-description:"Seekor ikan melakukan perjalanan panjang untuk mencari anaknya yang terpisah dari keluarga."
-},
-{
-id:28,
-title:"The Incredibles",
-year:2004,
-genre:["Animation","Action","Family"],
-rating:8.0,
-duration:"115 menit",
-director:"Brad Bird",
-cast:"Craig T. Nelson, Holly Hunter, Samuel L. Jackson",
-description:"Sebuah keluarga dengan kemampuan khusus harus kembali bekerja sama menghadapi ancaman baru."
-},
-{
-id:29,
-title:"Coco",
-year:2017,
-genre:["Animation","Fantasy","Family"],
-rating:8.4,
-duration:"105 menit",
-director:"Lee Unkrich, Adrian Molina",
-cast:"Anthony Gonzalez, Gael García Bernal",
-description:"Seorang anak menemukan hubungan mengejutkan antara keluarganya, musik, dan dunia leluhur."
-},
-{
-id:30,
-title:"Up",
-year:2009,
-genre:["Animation","Adventure","Family"],
-rating:8.3,
-duration:"96 menit",
-director:"Pete Docter",
-cast:"Ed Asner, Christopher Plummer",
-description:"Seorang pria lanjut usia melakukan perjalanan tak biasa untuk memenuhi janji dari masa lalunya."
-},
-{
-id:31,
-title:"Inside Out",
-year:2015,
-genre:["Animation","Comedy","Family"],
-rating:8.1,
-duration:"95 menit",
-director:"Pete Docter",
-cast:"Amy Poehler, Phyllis Smith",
-description:"Emosi dalam pikiran seorang anak berusaha bekerja sama ketika kehidupannya mengalami perubahan besar."
-},
-{
-id:32,
-title:"Moana",
-year:2016,
-genre:["Animation","Adventure","Fantasy"],
-rating:7.6,
-duration:"107 menit",
-director:"Ron Clements, John Musker",
-cast:"Auli'i Cravalho, Dwayne Johnson",
-description:"Seorang gadis pemberani berlayar melewati lautan untuk menyelesaikan misi yang berkaitan dengan masa depan pulaunya."
-},
-{
-id:33,
-title:"Ratatouille",
-year:2007,
-genre:["Animation","Comedy","Family"],
-rating:8.1,
-duration:"111 menit",
-director:"Brad Bird",
-cast:"Patton Oswalt, Ian Holm",
-description:"Seekor tikus dengan bakat memasak bekerja sama dengan seorang pemuda untuk mengejar impian di dapur restoran."
-},
-{
-id:34,
-title:"Shrek",
-year:2001,
-genre:["Animation","Comedy","Fantasy"],
-rating:7.9,
-duration:"90 menit",
-director:"Andrew Adamson, Vicky Jenson",
-cast:"Mike Myers, Eddie Murphy, Cameron Diaz",
-description:"Seorang ogre yang ingin hidup tenang harus melakukan perjalanan untuk menyelamatkan rumahnya."
-},
-{
-id:35,
-title:"Kung Fu Panda",
-year:2008,
-genre:["Animation","Action","Comedy"],
-rating:7.6,
-duration:"92 menit",
-director:"Mark Osborne, John Stevenson",
-cast:"Jack Black, Dustin Hoffman, Angelina Jolie",
-description:"Seekor panda biasa mendapat kesempatan untuk belajar menjadi seorang ahli bela diri."
-},
-{
-id:36,
-title:"The Lion King",
-year:1994,
-genre:["Animation","Adventure","Drama"],
-rating:8.5,
-duration:"88 menit",
-director:"Roger Allers, Rob Minkoff",
-cast:"Matthew Broderick, Jeremy Irons",
-description:"Seekor singa muda harus memahami tanggung jawabnya terhadap keluarganya dan wilayah yang kelak menjadi tanggung jawabnya."
-},
-{
-id:37,
-title:"Jurassic Park",
-year:1993,
-genre:["Adventure","Sci-Fi","Thriller"],
-rating:8.2,
-duration:"127 menit",
-director:"Steven Spielberg",
-cast:"Sam Neill, Laura Dern, Jeff Goldblum",
-description:"Sebuah taman hiburan berisi dinosaurus hasil rekayasa genetik mengalami situasi berbahaya."
-},
-{
-id:38,
-title:"Jurassic World",
-year:2015,
-genre:["Action","Adventure","Sci-Fi"],
-rating:6.9,
-duration:"124 menit",
-director:"Colin Trevorrow",
-cast:"Chris Pratt, Bryce Dallas Howard",
-description:"Taman dinosaurus modern menghadapi ancaman ketika seekor makhluk hasil eksperimen menjadi sulit dikendalikan."
-},
-{
-id:39,
-title:"Top Gun: Maverick",
-year:2022,
-genre:["Action","Drama"],
-rating:8.2,
-duration:"131 menit",
-director:"Joseph Kosinski",
-cast:"Tom Cruise, Miles Teller, Jennifer Connelly",
-description:"Seorang pilot berpengalaman kembali melatih generasi baru untuk sebuah misi penerbangan berisiko tinggi."
-},
-{
-id:40,
-title:"Mission: Impossible - Fallout",
-year:2018,
-genre:["Action","Thriller","Adventure"],
-rating:7.7,
-duration:"147 menit",
-director:"Christopher McQuarrie",
-cast:"Tom Cruise, Henry Cavill, Ving Rhames",
-description:"Sebuah misi rahasia berubah menjadi perlombaan melawan waktu untuk mencegah bencana besar."
-},
-{
-id:41,
-title:"John Wick",
-year:2014,
-genre:["Action","Thriller","Crime"],
-rating:7.4,
-duration:"101 menit",
-director:"Chad Stahelski",
-cast:"Keanu Reeves, Michael Nyqvist",
-description:"Seorang mantan pembunuh bayaran kembali menghadapi dunia lamanya setelah sebuah peristiwa mengubah hidupnya."
-},
-{
-id:42,
-title:"John Wick: Chapter 4",
-year:2023,
-genre:["Action","Thriller","Crime"],
-rating:7.6,
-duration:"169 menit",
-director:"Chad Stahelski",
-cast:"Keanu Reeves, Donnie Yen, Bill Skarsgård",
-description:"John Wick berusaha mencari jalan menuju kebebasan sambil menghadapi jaringan musuh yang semakin luas."
-},
-{
-id:43,
-title:"Dune",
-year:2021,
-genre:["Sci-Fi","Adventure","Drama"],
-rating:8.0,
-duration:"155 menit",
-director:"Denis Villeneuve",
-cast:"Timothée Chalamet, Zendaya, Rebecca Ferguson",
-description:"Seorang pewaris muda datang ke planet gurun yang menjadi pusat konflik politik dan sumber daya penting."
-},
-{
-id:44,
-title:"Dune: Part Two",
-year:2024,
-genre:["Sci-Fi","Adventure","Drama"],
-rating:8.6,
-duration:"166 menit",
-director:"Denis Villeneuve",
-cast:"Timothée Chalamet, Zendaya, Rebecca Ferguson",
-description:"Perjalanan Paul berlanjut ketika ia semakin dekat dengan masyarakat gurun dan menghadapi konflik yang lebih besar."
-},
-{
-id:45,
-title:"Oppenheimer",
-year:2023,
-genre:["Drama","History"],
-rating:8.6,
-duration:"180 menit",
-director:"Christopher Nolan",
-cast:"Cillian Murphy, Emily Blunt, Robert Downey Jr.",
-description:"Kisah seorang ilmuwan dan proyek rahasia yang menghasilkan perkembangan teknologi senjata pada masa perang."
-},
-{
-id:46,
-title:"The Prestige",
-year:2006,
-genre:["Drama","Mystery","Thriller"],
-rating:8.5,
-duration:"130 menit",
-director:"Christopher Nolan",
-cast:"Christian Bale, Hugh Jackman, Scarlett Johansson",
-description:"Dua pesulap yang bersaing semakin terobsesi untuk mengalahkan satu sama lain."
-},
-{
-id:47,
-title:"Whiplash",
-year:2014,
-genre:["Drama","Music"],
-rating:8.5,
-duration:"106 menit",
-director:"Damien Chazelle",
-cast:"Miles Teller, J.K. Simmons",
-description:"Seorang pemain drum muda berusaha mencapai standar luar biasa di bawah bimbingan guru yang sangat keras."
-},
-{
-id:48,
-title:"La La Land",
-year:2016,
-genre:["Romance","Drama","Music"],
-rating:8.0,
-duration:"128 menit",
-director:"Damien Chazelle",
-cast:"Ryan Gosling, Emma Stone",
-description:"Dua orang yang mengejar impian karier di Los Angeles menemukan bahwa hubungan dan ambisi mereka tidak selalu mudah berjalan bersama."
-},
-{
-id:49,
-title:"The Social Network",
-year:2010,
-genre:["Drama","History"],
-rating:7.8,
-duration:"120 menit",
-director:"David Fincher",
-cast:"Jesse Eisenberg, Andrew Garfield",
-description:"Drama mengenai lahirnya sebuah perusahaan teknologi besar dan konflik yang muncul di antara para pendirinya."
-},
-{
-id:50,
-title:"The Truman Show",
-year:1998,
-genre:["Drama","Comedy","Sci-Fi"],
-rating:8.2,
-duration:"103 menit",
-director:"Peter Weir",
-cast:"Jim Carrey, Ed Harris",
-description:"Seorang pria perlahan menyadari bahwa kehidupannya mungkin tidak seperti yang selama ini ia bayangkan."
-},
-{
-id:51,
-title:"Forrest Gump",
-year:1994,
-genre:["Drama","Romance"],
-rating:8.8,
-duration:"142 menit",
-director:"Robert Zemeckis",
-cast:"Tom Hanks, Robin Wright",
-description:"Seorang pria menjalani kehidupan penuh kejadian besar sambil tetap memegang nilai-nilai sederhana yang ia percaya."
-},
-{
-id:52,
-title:"The Shawshank Redemption",
-year:1994,
-genre:["Drama"],
-rating:9.3,
-duration:"142 menit",
-director:"Frank Darabont",
-cast:"Tim Robbins, Morgan Freeman",
-description:"Persahabatan berkembang di sebuah penjara ketika seorang narapidana berusaha mempertahankan harapan dan masa depannya."
-},
-{
-id:53,
-title:"The Green Mile",
-year:1999,
-genre:["Drama","Fantasy","Crime"],
-rating:8.6,
-duration:"189 menit",
-director:"Frank Darabont",
-cast:"Tom Hanks, Michael Clarke Duncan",
-description:"Petugas penjara menemukan sesuatu yang tidak biasa pada seorang tahanan baru di blok hukuman mati."
-},
-{
-id:54,
-title:"Good Will Hunting",
-year:1997,
-genre:["Drama"],
-rating:8.3,
-duration:"126 menit",
-director:"Gus Van Sant",
-cast:"Matt Damon, Robin Williams, Ben Affleck",
-description:"Seorang pemuda berbakat matematika harus menghadapi masa lalunya dan menemukan arah hidupnya."
-},
-{
-id:55,
-title:"The Wolf of Wall Street",
-year:2013,
-genre:["Drama","Comedy","Crime"],
-rating:8.2,
-duration:"180 menit",
-director:"Martin Scorsese",
-cast:"Leonardo DiCaprio, Jonah Hill",
-description:"Seorang pialang saham membangun karier yang sangat sukses tetapi kemudian menghadapi konsekuensi dari gaya hidup dan tindakannya."
-},
-{
-id:56,
-title:"Catch Me If You Can",
-year:2002,
-genre:["Crime","Drama","Comedy"],
-rating:8.1,
-duration:"141 menit",
-director:"Steven Spielberg",
-cast:"Leonardo DiCaprio, Tom Hanks",
-description:"Seorang pemuda menjalani kehidupan penuh penyamaran sementara seorang agen berusaha melacaknya."
-},
-{
-id:57,
-title:"The Departed",
-year:2006,
-genre:["Crime","Drama","Thriller"],
-rating:8.5,
-duration:"151 menit",
-director:"Martin Scorsese",
-cast:"Leonardo DiCaprio, Matt Damon, Jack Nicholson",
-description:"Polisi dan kelompok kriminal sama-sama memiliki orang yang menyamar di pihak lawan."
-},
-{
-id:58,
-title:"Parasite",
-year:2019,
-genre:["Drama","Thriller","Comedy"],
-rating:8.5,
-duration:"132 menit",
-director:"Bong Joon Ho",
-cast:"Song Kang-ho, Choi Woo-shik",
-description:"Sebuah keluarga dengan kondisi ekonomi sulit perlahan masuk ke kehidupan keluarga kaya melalui serangkaian pekerjaan."
-},
-{
-id:59,
-title:"Train to Busan",
-year:2016,
-genre:["Action","Horror","Thriller"],
-rating:7.6,
-duration:"118 menit",
-director:"Yeon Sang-ho",
-cast:"Gong Yoo, Jung Yu-mi",
-description:"Para penumpang kereta berusaha bertahan ketika wabah membuat perjalanan mereka berubah menjadi situasi darurat."
-},
-{
-id:60,
-title:"Your Name",
-year:2016,
-genre:["Animation","Romance","Fantasy"],
-rating:8.4,
-duration:"106 menit",
-director:"Makoto Shinkai",
-cast:"Ryunosuke Kamiki, Mone Kamishiraishi",
-description:"Dua remaja yang hidup berjauhan mengalami fenomena aneh yang membuat kehidupan mereka saling terhubung."
-},
-{
-id:61,
-title:"Spirited Away",
-year:2001,
-genre:["Animation","Fantasy","Adventure"],
-rating:8.6,
-duration:"125 menit",
-director:"Hayao Miyazaki",
-cast:"Rumi Hiiragi, Miyu Irino",
-description:"Seorang anak memasuki dunia misterius dan harus menemukan cara untuk menyelamatkan keluarganya."
-},
-{
-id:62,
-title:"Howl's Moving Castle",
-year:2004,
-genre:["Animation","Fantasy","Adventure"],
-rating:8.2,
-duration:"119 menit",
-director:"Hayao Miyazaki",
-cast:"Chieko Baisho, Takuya Kimura",
-description:"Seorang gadis bertemu penyihir dan memasuki sebuah kastel bergerak yang menyimpan banyak rahasia."
-},
-{
-id:63,
-title:"Princess Mononoke",
-year:1997,
-genre:["Animation","Fantasy","Adventure"],
-rating:8.3,
-duration:"134 menit",
-director:"Hayao Miyazaki",
-cast:"Yōji Matsuda, Yuriko Ishida",
-description:"Seorang pemuda terjebak dalam konflik antara manusia dan kekuatan alam."
-},
-{
-id:64,
-title:"The Hunger Games",
-year:2012,
-genre:["Action","Adventure","Sci-Fi"],
-rating:7.2,
-duration:"142 menit",
-director:"Gary Ross",
-cast:"Jennifer Lawrence, Josh Hutcherson",
-description:"Seorang remaja terpilih mengikuti kompetisi berbahaya yang disaksikan oleh masyarakat luas."
-},
-{
-id:65,
-title:"The Maze Runner",
-year:2014,
-genre:["Sci-Fi","Action","Mystery"],
-rating:6.8,
-duration:"113 menit",
-director:"Wes Ball",
-cast:"Dylan O'Brien, Kaya Scodelario",
-description:"Seorang pemuda terbangun di sebuah tempat misterius bersama kelompok anak muda lain dan mencoba memahami labirin di sekitar mereka."
-},
-{
-id:66,
-title:"Ready Player One",
-year:2018,
-genre:["Sci-Fi","Adventure","Action"],
-rating:7.4,
-duration:"140 menit",
-director:"Steven Spielberg",
-cast:"Tye Sheridan, Olivia Cooke",
-description:"Seorang pemain muda mengikuti pencarian digital besar yang tersembunyi di dalam dunia virtual."
-},
-{
-id:67,
-title:"Alita: Battle Angel",
-year:2019,
-genre:["Action","Sci-Fi","Adventure"],
-rating:7.3,
-duration:"122 menit",
-director:"Robert Rodriguez",
-cast:"Rosa Salazar, Christoph Waltz",
-description:"Sebuah cyborg yang ditemukan dalam kondisi tidak lengkap berusaha menemukan identitas dan masa lalunya."
-},
-{
-id:68,
-title:"Pacific Rim",
-year:2013,
-genre:["Action","Sci-Fi","Adventure"],
-rating:6.9,
-duration:"131 menit",
-director:"Guillermo del Toro",
-cast:"Charlie Hunnam, Idris Elba",
-description:"Para pilot mengendalikan robot raksasa untuk melawan makhluk besar yang muncul dari laut."
-},
-{
-id:69,
-title:"Edge of Tomorrow",
-year:2014,
-genre:["Action","Sci-Fi"],
-rating:7.9,
-duration:"113 menit",
-director:"Doug Liman",
-cast:"Tom Cruise, Emily Blunt",
-description:"Seorang prajurit terjebak dalam siklus waktu yang membuatnya mengulang pertempuran dan belajar dari setiap pengalaman."
-},
-{
-id:70,
-title:"Mad Max: Fury Road",
-year:2015,
-genre:["Action","Adventure","Sci-Fi"],
-rating:8.1,
-duration:"120 menit",
-director:"George Miller",
-cast:"Tom Hardy, Charlize Theron",
-description:"Sebuah pelarian melintasi gurun berubah menjadi pengejaran berbahaya melawan penguasa wilayah."
-},
-{
-id:71,
-title:"The Martian",
-year:2015,
-genre:["Sci-Fi","Adventure","Drama"],
-rating:8.0,
-duration:"144 menit",
-director:"Ridley Scott",
-cast:"Matt Damon, Jessica Chastain",
-description:"Seorang astronot terdampar di planet lain dan menggunakan pengetahuan ilmiah untuk bertahan hidup sambil menunggu bantuan."
-},
-{
-id:72,
-title:"Gravity",
-year:2013,
-genre:["Sci-Fi","Thriller","Drama"],
-rating:7.7,
-duration:"91 menit",
-director:"Alfonso Cuarón",
-cast:"Sandra Bullock, George Clooney",
-description:"Dua astronot berusaha kembali ke tempat aman setelah sebuah kejadian membuat mereka kehilangan kendali di luar angkasa."
-},
-{
-id:73,
-title:"Arrival",
-year:2016,
-genre:["Sci-Fi","Drama","Mystery"],
-rating:7.9,
-duration:"116 menit",
-director:"Denis Villeneuve",
-cast:"Amy Adams, Jeremy Renner",
-description:"Seorang ahli bahasa ditugaskan memahami makhluk asing yang tiba di Bumi."
-},
-{
-id:74,
-title:"Blade Runner 2049",
-year:2017,
-genre:["Sci-Fi","Drama","Mystery"],
-rating:8.0,
-duration:"164 menit",
-director:"Denis Villeneuve",
-cast:"Ryan Gosling, Harrison Ford",
-description:"Seorang petugas menemukan petunjuk yang mengarah pada misteri lama dan mulai mempertanyakan batas antara manusia dan mesin."
-},
-{
-id:75,
-title:"A Quiet Place",
-year:2018,
-genre:["Horror","Thriller","Drama"],
-rating:7.5,
-duration:"90 menit",
-director:"John Krasinski",
-cast:"Emily Blunt, John Krasinski",
-description:"Sebuah keluarga hidup dengan aturan ketat untuk menghindari makhluk yang sangat peka terhadap suara."
-},
-{
-id:76,
-title:"Get Out",
-year:2017,
-genre:["Horror","Mystery","Thriller"],
-rating:7.8,
-duration:"104 menit",
-director:"Jordan Peele",
-cast:"Daniel Kaluuya, Allison Williams",
-description:"Sebuah kunjungan ke keluarga pasangan berubah menjadi pengalaman misterius yang semakin mengkhawatirkan."
-},
-{
-id:77,
-title:"It",
-year:2017,
-genre:["Horror","Drama"],
-rating:7.3,
-duration:"135 menit",
-director:"Andy Muschietti",
-cast:"Bill Skarsgård, Jaeden Martell",
-description:"Sekelompok anak menghadapi sosok misterius yang muncul dari ketakutan mereka."
-},
-{
-id:78,
-title:"The Conjuring",
-year:2013,
-genre:["Horror","Mystery","Thriller"],
-rating:7.5,
-duration:"112 menit",
-director:"James Wan",
-cast:"Vera Farmiga, Patrick Wilson",
-description:"Sepasang penyelidik fenomena paranormal membantu sebuah keluarga yang mengalami kejadian aneh di rumah mereka."
-},
-{
-id:79,
-title:"A Beautiful Mind",
-year:2001,
-genre:["Drama","Romance"],
-rating:8.2,
-duration:"135 menit",
-director:"Ron Howard",
-cast:"Russell Crowe, Jennifer Connelly",
-description:"Seorang matematikawan berbakat menghadapi perjalanan hidup yang penuh tantangan sambil terus mengembangkan pekerjaannya."
-},
-{
-id:80,
-title:"The Imitation Game",
-year:2014,
-genre:["Drama","History","Thriller"],
-rating:8.0,
-duration:"114 menit",
-director:"Morten Tyldum",
-cast:"Benedict Cumberbatch, Keira Knightley",
-description:"Sekelompok ahli matematika dan kriptografi bekerja memecahkan sistem komunikasi rahasia pada masa perang."
-},
-{
-id:81,
-title:"Ford v Ferrari",
-year:2019,
-genre:["Drama","Action","History"],
-rating:8.1,
-duration:"152 menit",
-director:"James Mangold",
-cast:"Matt Damon, Christian Bale",
-description:"Seorang perancang mobil dan pembalap bekerja sama membuat kendaraan yang mampu bersaing dalam balapan bergengsi."
-},
-{
-id:82,
-title:"Rush",
-year:2013,
-genre:["Drama","Action","History"],
-rating:8.0,
-duration:"123 menit",
-director:"Ron Howard",
-cast:"Daniel Brühl, Chris Hemsworth",
-description:"Persaingan dua pembalap menjadi pusat cerita dalam dunia balap mobil profesional."
-},
-{
-id:83,
-title:"Creed",
-year:2015,
-genre:["Drama","Sport"],
-rating:7.6,
-duration:"133 menit",
-director:"Ryan Coogler",
-cast:"Michael B. Jordan, Sylvester Stallone",
-description:"Seorang petinju muda mencari pelatih dan membangun jalannya sendiri di dunia tinju."
-},
-{
-id:84,
-title:"Rocky",
-year:1976,
-genre:["Drama","Sport"],
-rating:8.1,
-duration:"119 menit",
-director:"John G. Avildsen",
-cast:"Sylvester Stallone, Talia Shire",
-description:"Seorang petinju kelas bawah mendapat kesempatan langka untuk bertanding dalam pertandingan besar."
-},
-{
-id:85,
-title:"Moneyball",
-year:2011,
-genre:["Drama","Sport"],
-rating:7.6,
-duration:"133 menit",
-director:"Bennett Miller",
-cast:"Brad Pitt, Jonah Hill",
-description:"Sebuah tim bisbol mencoba pendekatan berbasis statistik untuk membangun tim yang kompetitif dengan sumber daya terbatas."
-},
-{
-id:86,
-title:"The Greatest Showman",
-year:2017,
-genre:["Drama","Music"],
-rating:7.5,
-duration:"105 menit",
-director:"Michael Gracey",
-cast:"Hugh Jackman, Zac Efron",
-description:"Seorang pria membangun pertunjukan besar dengan mengumpulkan orang-orang berbakat dari berbagai latar belakang."
-},
-{
-id:87,
-title:"Bohemian Rhapsody",
-year:2018,
-genre:["Drama","Music","History"],
-rating:7.9,
-duration:"134 menit",
-director:"Bryan Singer",
-cast:"Rami Malek, Lucy Boynton",
-description:"Drama musikal mengenai perjalanan sebuah band rock dan vokalisnya menuju kesuksesan dunia."
-},
-{
-id:88,
-title:"Elvis",
-year:2022,
-genre:["Drama","Music","History"],
-rating:7.3,
-duration:"159 menit",
-director:"Baz Luhrmann",
-cast:"Austin Butler, Tom Hanks",
-description:"Kisah perjalanan seorang penyanyi dari awal karier hingga menjadi salah satu figur besar dalam musik."
-},
-{
-id:89,
-title:"The Greatest Beer Run Ever",
-year:2022,
-genre:["Drama","Comedy","History"],
-rating:6.8,
-duration:"126 menit",
-director:"Peter Farrelly",
-cast:"Zac Efron, Russell Crowe",
-description:"Seorang pria melakukan perjalanan tak biasa untuk mengunjungi teman-temannya yang sedang bertugas di zona perang."
-},
-{
-id:90,
-title:"The Grand Budapest Hotel",
-year:2014,
-genre:["Comedy","Drama"],
-rating:8.1,
-duration:"100 menit",
-director:"Wes Anderson",
-cast:"Ralph Fiennes, Tony Revolori",
-description:"Seorang petugas hotel terkenal dan asistennya terlibat dalam masalah warisan dan pencarian sebuah karya seni."
-},
-{
-id:91,
-title:"Knives Out",
-year:2019,
-genre:["Mystery","Comedy","Crime"],
-rating:7.9,
-duration:"130 menit",
-director:"Rian Johnson",
-cast:"Daniel Craig, Chris Evans, Ana de Armas",
-description:"Seorang detektif menyelidiki kematian seorang penulis kaya dan menemukan banyak rahasia keluarga."
-},
-{
-id:92,
-title:"Glass Onion",
-year:2022,
-genre:["Mystery","Comedy","Crime"],
-rating:7.1,
-duration:"139 menit",
-director:"Rian Johnson",
-cast:"Daniel Craig, Edward Norton, Janelle Monáe",
-description:"Sebuah pertemuan eksklusif di pulau pribadi berubah menjadi teka-teki ketika sebuah kejadian tak terduga terjadi."
-},
-{
-id:93,
-title:"The Grandmaster",
-year:2013,
-genre:["Action","Drama","History"],
-rating:6.9,
-duration:"130 menit",
-director:"Wong Kar-wai",
-cast:"Tony Leung, Zhang Ziyi",
-description:"Seorang ahli bela diri menjalani perjalanan hidup dan menghadapi perubahan besar dalam dunia kung fu."
-},
-{
-id:94,
-title:"RRR",
-year:2022,
-genre:["Action","Drama","Adventure"],
-rating:7.8,
-duration:"182 menit",
-director:"S. S. Rajamouli",
-cast:"N. T. Rama Rao Jr., Ram Charan",
-description:"Dua tokoh dengan tujuan berbeda membangun persahabatan kuat sambil menghadapi kekuasaan kolonial."
-},
-{
-id:95,
-title:"3 Idiots",
-year:2009,
-genre:["Comedy","Drama"],
-rating:8.4,
-duration:"170 menit",
-director:"Rajkumar Hirani",
-cast:"Aamir Khan, R. Madhavan, Sharman Joshi",
-description:"Tiga mahasiswa menghadapi tekanan pendidikan, persahabatan, dan harapan keluarga selama masa kuliah."
-},
-{
-id:96,
-title:"PK",
-year:2014,
-genre:["Comedy","Drama","Fantasy"],
-rating:8.1,
-duration:"153 menit",
-director:"Rajkumar Hirani",
-cast:"Aamir Khan, Anushka Sharma",
-description:"Seorang pendatang misterius mempertanyakan berbagai kebiasaan manusia ketika mencoba memahami dunia di sekitarnya."
-},
-{
-id:97,
-title:"The Raid: Redemption",
-year:2011,
-genre:["Action","Crime","Thriller"],
-rating:7.6,
-duration:"101 menit",
-director:"Gareth Evans",
-cast:"Iko Uwais, Joe Taslim",
-description:"Sebuah tim polisi menjalankan operasi berbahaya di sebuah gedung yang dikuasai kelompok kriminal."
-},
-{
-id:98,
-title:"The Raid 2",
-year:2014,
-genre:["Action","Crime","Thriller"],
-rating:7.9,
-duration:"150 menit",
-director:"Gareth Evans",
-cast:"Iko Uwais, Arifin Putra",
-description:"Seorang polisi menyusup lebih dalam ke dunia kriminal untuk mengungkap jaringan yang lebih besar."
-},
-{
-id:99,
-title:"Ngeri-Ngeri Sedap",
-year:2022,
-genre:["Comedy","Drama"],
-rating:8.0,
-duration:"114 menit",
-director:"Bene Dion Rajagukguk",
-cast:"Arswendy Bening Swara, Tika Panggabean",
-description:"Sebuah keluarga mencoba menyelesaikan berbagai masalah hubungan ketika anak-anak mereka mulai menjalani kehidupan masing-masing."
-},
-{
-id:100,
-title:"Keluarga Cemara",
-year:2019,
-genre:["Drama","Family"],
-rating:7.8,
-duration:"110 menit",
-director:"Yandy Laurens",
-cast:"Ringgo Agus Rahman, Nirina Zubir",
-description:"Sebuah keluarga harus beradaptasi dengan kehidupan baru setelah mengalami perubahan ekonomi yang besar."
+   CONFIGURATION
+========================================================= */
+
+const TMDB_API =
+    "https://api.themoviedb.org/3";
+
+const TMDB_IMAGE =
+    "https://image.tmdb.org/t/p/w500";
+
+const STORAGE_KEY =
+    "movie_finder_tmdb_key";
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let movies = [];
+
+let searchResults = [];
+
+let currentPage = 1;
+
+let totalPages = 1;
+
+let currentMode = "popular";
+
+let searchTimer = null;
+
+let genres = [];
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const preview =
+    document.getElementById("preview");
+
+const previewList =
+    document.getElementById("previewList");
+
+const searchStatus =
+    document.getElementById("searchStatus");
+
+const movieGrid =
+    document.getElementById("movieGrid");
+
+
+/* =========================================================
+   API KEY
+========================================================= */
+
+function getAPIKey(){
+
+    return localStorage.getItem(STORAGE_KEY) || "";
+
 }
-];
-/* =========================================================
-   STATE
-   ========================================================= */
-let currentMovies = [...movies];
-let watchlist =
-    JSON.parse(
-        localStorage.getItem("movie_watchlist") || "[]"
-    );
-/* =========================================================
-   INIT
-   ========================================================= */
-function init(){
-    createGenreFilter();
-    createYearFilter();
-    renderMovies(currentMovies);
-    document
-        .getElementById("search")
-        .addEventListener("keydown",function(e){
-            if(e.key === "Enter"){
-                searchMovies();
-            }
-        });
+
+
+function hasAPIKey(){
+
+    return getAPIKey().length > 0;
+
 }
+
+
 /* =========================================================
-   FILTER OPTIONS
-   ========================================================= */
-function createGenreFilter(){
-    const genres = [
-        ...new Set(
-            movies.flatMap(movie => movie.genre)
-        )
-    ].sort();
-    const select =
-        document.getElementById("genreFilter");
-    genres.forEach(genre => {
-        const option =
-            document.createElement("option");
-        option.value = genre;
-        option.textContent = genre;
-        select.appendChild(option);
-    });
+   API REQUEST
+========================================================= */
+
+function getHeaders(){
+
+    const key = getAPIKey();
+
+    if(!key){
+        throw new Error("API_KEY_MISSING");
+    }
+
+    /*
+       Read Access Token TMDB biasanya berbentuk JWT
+       dan dimulai dengan eyJ.
+    */
+
+    if(key.startsWith("eyJ")){
+
+        return {
+            "Authorization":"Bearer " + key,
+            "Content-Type":
+                "application/json;charset=utf-8"
+        };
+
+    }
+
+    return {
+        "Content-Type":
+            "application/json;charset=utf-8"
+    };
+
 }
-function createYearFilter(){
-    const years = [
-        ...new Set(
-            movies.map(movie => movie.year)
-        )
-    ].sort((a,b) => b-a);
-    const select =
-        document.getElementById("yearFilter");
-    years.forEach(year => {
-        const option =
-            document.createElement("option");
-        option.value = year;
-        option.textContent = year;
-        select.appendChild(option);
-    });
-}
-/* =========================================================
-   SEARCH
-   ========================================================= */
-function searchMovies(){
-    applyFilters();
-}
-/* =========================================================
-   FILTER + SORT
-   ========================================================= */
-function applyFilters(){
-    const query =
-        document
-        .getElementById("search")
-        .value
-        .trim()
-        .toLowerCase();
-    const genre =
-        document.getElementById("genreFilter").value;
-    const year =
-        document.getElementById("yearFilter").value;
-    const rating =
-        document.getElementById("ratingFilter").value;
-    const sort =
-        document.getElementById("sortFilter").value;
-    currentMovies =
-        movies.filter(movie => {
-            const matchesSearch =
-                !query ||
-                movie.title
-                    .toLowerCase()
-                    .includes(query) ||
-                movie.genre.some(g =>
-                    g.toLowerCase().includes(query)
-                ) ||
-                movie.cast
-                    .toLowerCase()
-                    .includes(query);
-            const matchesGenre =
-                genre === "all" ||
-                movie.genre.includes(genre);
-            const matchesYear =
-                year === "all" ||
-                String(movie.year) === String(year);
-            const matchesRating =
-                rating === "all" ||
-                movie.rating >= Number(rating);
-            return (
-                matchesSearch &&
-                matchesGenre &&
-                matchesYear &&
-                matchesRating
+
+
+async function tmdb(path,params={}){
+
+    const key = getAPIKey();
+
+    if(!key){
+        throw new Error("API_KEY_MISSING");
+    }
+
+    const url =
+        new URL(TMDB_API + path);
+
+    for(
+        const [name,value]
+        of Object.entries(params)
+    ){
+
+        if(
+            value !== undefined &&
+            value !== null &&
+            value !== ""
+        ){
+
+            url.searchParams.set(
+                name,
+                value
             );
-        });
-    if(sort === "rating"){
-        currentMovies.sort(
-            (a,b) => b.rating - a.rating
-        );
+
+        }
+
     }
-    else if(sort === "newest"){
-        currentMovies.sort(
-            (a,b) => b.year - a.year
+
+
+    /*
+       Jika yang dimasukkan adalah API Key biasa,
+       gunakan query parameter api_key.
+
+       Jika JWT Bearer Token, gunakan Authorization.
+    */
+
+    if(!key.startsWith("eyJ")){
+
+        url.searchParams.set(
+            "api_key",
+            key
         );
+
     }
-    else if(sort === "oldest"){
-        currentMovies.sort(
-            (a,b) => a.year - b.year
+
+
+    const response =
+        await fetch(
+            url.toString(),
+            {
+                method:"GET",
+                headers:getHeaders()
+            }
         );
-    }
-    else if(sort === "az"){
-        currentMovies.sort(
-            (a,b) =>
-                a.title.localeCompare(b.title)
+
+
+    if(!response.ok){
+
+        let message =
+            "TMDB request gagal.";
+
+        try{
+
+            const data =
+                await response.json();
+
+            if(data.status_message){
+                message =
+                    data.status_message;
+            }
+
+        }catch(e){}
+
+        throw new Error(
+            response.status +
+            ": " +
+            message
         );
+
     }
-    else{
-        currentMovies.sort(
-            (a,b) => b.rating - a.rating
-        );
-    }
-    const title =
-        query
-        ? `🔎 Hasil untuk "${escapeHtml(query)}"`
-        : "🎬 Koleksi Film";
-    document
-        .getElementById("sectionTitle")
-        .textContent = title;
-    renderMovies(currentMovies);
+
+
+    return response.json();
+
 }
+
+
 /* =========================================================
-   RENDER MOVIES
-   ========================================================= */
-function renderMovies(list){
-    const box =
-        document.getElementById("movies");
-    box.innerHTML = "";
-    document
-        .getElementById("count")
-        .textContent =
-            list.length + " film";
-    if(list.length === 0){
-        box.innerHTML = `
-            <div class="empty">
-                <div class="empty-icon">🔍</div>
-                <h3>Film tidak ditemukan</h3>
-                <p>
-                    Coba gunakan judul, genre,
-                    atau tahun yang berbeda.
-                </p>
+   INITIALIZATION
+========================================================= */
+
+window.addEventListener(
+    "load",
+    initialize
+);
+
+
+async function initialize(){
+
+    if(!hasAPIKey()){
+
+        showAPIKeyWelcome();
+
+        return;
+
+    }
+
+
+    await loadGenres();
+
+    await loadPopular();
+
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+function showAPIKeyWelcome(){
+
+    movieGrid.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🔑
             </div>
-        `;
+
+            <h3>
+                API key belum disimpan
+            </h3>
+
+            <p>
+                Masukkan API key/token TMDB melalui
+                tombol ⚙️ di bagian atas.
+            </p>
+
+            <button
+                class="btn btn-primary"
+                onclick="openSettings()"
+            >
+                Masukkan API Key
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function openSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.add("show");
+
+    document
+        .getElementById("keyInput")
+        .value =
+        getAPIKey();
+
+}
+
+
+function closeSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.remove("show");
+
+}
+
+
+function closeSettingsOutside(event){
+
+    if(
+        event.target.id ===
+        "settingsModal"
+    ){
+
+        closeSettings();
+
+    }
+
+}
+
+
+async function saveAPIKey(){
+
+    const input =
+        document
+        .getElementById("keyInput");
+
+    const key =
+        input.value.trim();
+
+    if(!key){
+
+        alert(
+            "Masukkan API key/token terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Simpan hanya di browser.
+    */
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        key
+    );
+
+
+    closeSettings();
+
+    showLoading();
+
+
+    try{
+
+        await loadGenres();
+
+        currentPage = 1;
+
+        await loadPopular();
+
+    }catch(error){
+
+        handleError(error);
+
+    }
+
+}
+
+
+function deleteAPIKey(){
+
+    const confirmDelete =
+        confirm(
+            "Hapus API key dari perangkat ini?"
+        );
+
+    if(!confirmDelete){
         return;
     }
-    list.forEach(movie => {
-        box.appendChild(createMovieCard(movie));
-    });
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+    movies = [];
+
+    closeSettings();
+
+    showAPIKeyWelcome();
+
 }
+
+
 /* =========================================================
-   MOVIE CARD
-   ========================================================= */
-function createMovieCard(movie){
-    const card =
-        document.createElement("div");
-    card.className = "movie";
-    const saved =
-        watchlist.includes(movie.id);
-    const poster =
-        getPoster(movie);
-    card.innerHTML = `
-        <div class="poster-wrap">
-            <img
-                class="poster"
-                src="${poster}"
-                alt="${escapeHtml(movie.title)}"
-                loading="lazy">
-            <div class="rating">
-                ⭐ ${movie.rating}
-            </div>
-            <button
-                class="save ${saved ? "saved" : ""}"
-                onclick="toggleWatchlist(event,${movie.id})">
-                ${saved ? "♥" : "♡"}
-            </button>
-        </div>
-        <div class="movie-info">
-            <div class="movie-title">
-                ${escapeHtml(movie.title)}
-            </div>
-            <div class="movie-meta">
-                ${movie.year} • ${movie.duration}
-            </div>
-            <div class="genre">
-                ${movie.genre.slice(0,2).join(" • ")}
-            </div>
-        </div>
-    `;
-    card.onclick = () =>
-        showDetails(movie.id);
-    return card;
+   GENRES
+========================================================= */
+
+async function loadGenres(){
+
+    try{
+
+        const data =
+            await tmdb(
+                "/genre/movie/list",
+                {
+                    language:"id-ID"
+                }
+            );
+
+        genres =
+            data.genres || [];
+
+        const select =
+            document.getElementById(
+                "genreFilter"
+            );
+
+        select.innerHTML =
+            `
+            <option value="">
+                Semua Genre
+            </option>
+            `;
+
+        genres.forEach(genre=>{
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                genre.id;
+
+            option.textContent =
+                genre.name;
+
+            select.appendChild(
+                option
+            );
+
+        });
+
+    }catch(error){
+
+        console.log(
+            "Genre gagal dimuat",
+            error
+        );
+
+    }
+
 }
+
+
 /* =========================================================
-   POSTER
-   =========================================================
-   Karena web ini 100% tanpa API,
-   poster dibuat otomatis dari SVG.
-   Tidak membutuhkan server eksternal.
-   */
-function getPoster(movie){
-    const first =
-        movie.title.charAt(0).toUpperCase();
+   POPULAR
+========================================================= */
+
+async function loadPopular(){
+
+    currentMode =
+        "popular";
+
+    currentPage =
+        Math.max(
+            1,
+            Math.min(
+                currentPage,
+                500
+            )
+        );
+
+    hidePreview();
+
+    showLoading();
+
+
+    try{
+
+        const data =
+            await tmdb(
+                "/movie/popular",
+                {
+                    language:"id-ID",
+                    page:currentPage,
+                    region:"ID"
+                }
+            );
+
+
+        movies =
+            data.results || [];
+
+        totalPages =
+            Math.min(
+                data.total_pages || 1,
+                500
+            );
+
+
+        document
+            .getElementById(
+                "sectionTitle"
+            )
+            .textContent =
+            "🔥 Film Populer";
+
+
+        updatePagination();
+
+        populateYears();
+
+        applyFilters();
+
+
+    }catch(error){
+
+        handleError(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   SEARCH PREVIEW
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    handleSearchInput
+);
+
+
+function handleSearchInput(){
+
+    const query =
+        searchInput.value.trim();
+
+
+    clearBtn.style.display =
+        query
+        ? "block"
+        : "none";
+
+
+    clearTimeout(
+        searchTimer
+    );
+
+
+    if(!query){
+
+        hidePreview();
+
+        searchStatus.textContent = "";
+
+        if(
+            currentMode !== "popular"
+        ){
+
+            currentPage = 1;
+
+            loadPopular();
+
+        }
+
+        return;
+
+    }
+
+
+    searchStatus.textContent =
+        "Mencari film...";
+
+
+    /*
+       Debounce.
+       Tidak mengirim request pada
+       setiap huruf secara langsung.
+    */
+
+    searchTimer =
+        setTimeout(
+            () => searchPreview(query),
+            350
+        );
+
+}
+
+
+async function searchPreview(query){
+
+    if(!hasAPIKey()){
+        return;
+    }
+
+
+    try{
+
+        const data =
+            await tmdb(
+                "/search/movie",
+                {
+                    query:query,
+                    language:"id-ID",
+                    include_adult:false,
+                    page:1,
+                    region:"ID"
+                }
+            );
+
+
+        searchResults =
+            data.results || [];
+
+
+        renderPreview(
+            searchResults.slice(0,8)
+        );
+
+
+        searchStatus.textContent =
+            searchResults.length +
+            " hasil ditemukan";
+
+
+    }catch(error){
+
+        searchStatus.textContent =
+            "Pencarian gagal.";
+
+        console.log(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   PREVIEW RENDER
+========================================================= */
+
+function renderPreview(list){
+
+    if(!list.length){
+
+        previewList.innerHTML = `
+
+            <div
+                style="
+                    padding:25px;
+                    text-align:center;
+                    color:#7b8392;
+                "
+            >
+                😕 Film tidak ditemukan
+            </div>
+
+        `;
+
+        preview.classList.add("show");
+
+        return;
+
+    }
+
+
+    previewList.innerHTML =
+        list.map(movie=>{
+
+            const poster =
+                movie.poster_path
+                ? TMDB_IMAGE +
+                  movie.poster_path
+                : placeholderPoster(
+                    movie.title
+                );
+
+
+            const year =
+                movie.release_date
+                ? movie.release_date
+                    .substring(0,4)
+                : "----";
+
+
+            const rating =
+                Number(
+                    movie.vote_average || 0
+                ).toFixed(1);
+
+
+            return `
+
+                <div
+                    class="preview-item"
+                    onclick="openMovie(${movie.id})"
+                >
+
+                    <img
+                        class="preview-poster"
+                        src="${poster}"
+                        alt=""
+                        loading="lazy"
+                    >
+
+                    <div
+                        class="preview-info"
+                    >
+
+                        <div
+                            class="preview-name"
+                        >
+                            ${escapeHTML(
+                                movie.title ||
+                                "Tanpa judul"
+                            )}
+                        </div>
+
+                        <div
+                            class="preview-meta"
+                        >
+
+                            ${year}
+
+                            &nbsp; • &nbsp;
+
+                            <span
+                                class="preview-rating"
+                            >
+                                ⭐ ${rating}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    preview.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   FULL SEARCH
+========================================================= */
+
+async function performFullSearch(){
+
+    const query =
+        searchInput.value.trim();
+
+    if(!query){
+
+        loadPopular();
+
+        return;
+
+    }
+
+
+    currentMode =
+        "search";
+
+    currentPage = 1;
+
+    showLoading();
+
+    hidePreview();
+
+
+    try{
+
+        const data =
+            await tmdb(
+                "/search/movie",
+                {
+                    query:query,
+                    language:"id-ID",
+                    include_adult:false,
+                    page:1,
+                    region:"ID"
+                }
+            );
+
+
+        movies =
+            data.results || [];
+
+        totalPages =
+            Math.min(
+                data.total_pages || 1,
+                500
+            );
+
+
+        document
+            .getElementById(
+                "sectionTitle"
+            )
+            .textContent =
+            "🔎 " + query;
+
+
+        updatePagination();
+
+        populateYears();
+
+        applyFilters();
+
+    }catch(error){
+
+        handleError(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   SEARCH KEYBOARD
+========================================================= */
+
+searchInput.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            performFullSearch();
+
+        }
+
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            hidePreview();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function applyFilters(){
+
+    let result =
+        [...movies];
+
+
     const genre =
-        movie.genre[0];
+        document
+        .getElementById(
+            "genreFilter"
+        )
+        .value;
+
+
+    const year =
+        document
+        .getElementById(
+            "yearFilter"
+        )
+        .value;
+
+
+    const sort =
+        document
+        .getElementById(
+            "sortFilter"
+        )
+        .value;
+
+
+    if(genre){
+
+        result =
+            result.filter(
+                movie =>
+                    Array.isArray(
+                        movie.genre_ids
+                    ) &&
+                    movie.genre_ids.includes(
+                        Number(genre)
+                    )
+            );
+
+    }
+
+
+    if(year){
+
+        result =
+            result.filter(
+                movie =>
+                    movie.release_date &&
+                    movie.release_date.startsWith(
+                        year
+                    )
+            );
+
+    }
+
+
+    if(sort === "rating"){
+
+        result.sort(
+            (a,b)=>
+                Number(
+                    b.vote_average || 0
+                ) -
+                Number(
+                    a.vote_average || 0
+                )
+        );
+
+    }
+
+
+    if(sort === "newest"){
+
+        result.sort(
+            (a,b)=>
+                new Date(
+                    b.release_date || 0
+                ) -
+                new Date(
+                    a.release_date || 0
+                )
+        );
+
+    }
+
+
+    if(sort === "oldest"){
+
+        result.sort(
+            (a,b)=>
+                new Date(
+                    a.release_date || 0
+                ) -
+                new Date(
+                    b.release_date || 0
+                )
+        );
+
+    }
+
+
+    if(sort === "title"){
+
+        result.sort(
+            (a,b)=>
+                (a.title || "")
+                .localeCompare(
+                    b.title || ""
+                )
+        );
+
+    }
+
+
+    renderMovies(result);
+
+}
+
+
+/* =========================================================
+   YEARS
+========================================================= */
+
+function populateYears(){
+
+    const select =
+        document
+        .getElementById(
+            "yearFilter"
+        );
+
+
+    const selected =
+        select.value;
+
+
+    const years =
+        [
+            ...new Set(
+                movies
+                .map(movie =>
+                    movie.release_date
+                    ? movie.release_date
+                        .substring(0,4)
+                    : null
+                )
+                .filter(Boolean)
+            )
+        ]
+        .sort(
+            (a,b)=>b-a
+        );
+
+
+    select.innerHTML =
+        `
+        <option value="">
+            Semua Tahun
+        </option>
+        `;
+
+
+    years.forEach(year=>{
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            year;
+
+        option.textContent =
+            year;
+
+        if(year === selected){
+            option.selected = true;
+        }
+
+        select.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   MOVIE GRID
+========================================================= */
+
+function renderMovies(list){
+
+    document
+        .getElementById(
+            "resultCount"
+        )
+        .textContent =
+        list.length +
+        " film";
+
+
+    if(!list.length){
+
+        movieGrid.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    😕
+                </div>
+
+                <h3>
+                    Tidak ada film
+                </h3>
+
+                <p>
+                    Coba ubah filter atau kata pencarian.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    movieGrid.innerHTML =
+        list.map(movie=>{
+
+            const poster =
+                movie.poster_path
+                ? TMDB_IMAGE +
+                  movie.poster_path
+                : placeholderPoster(
+                    movie.title
+                );
+
+
+            const year =
+                movie.release_date
+                ? movie.release_date
+                    .substring(0,4)
+                : "----";
+
+
+            const rating =
+                Number(
+                    movie.vote_average || 0
+                ).toFixed(1);
+
+
+            const genreNames =
+                (movie.genre_ids || [])
+                .map(
+                    id =>
+                        genres.find(
+                            g =>
+                                g.id === id
+                        )?.name
+                )
+                .filter(Boolean)
+                .slice(0,3)
+                .join(" • ");
+
+
+            return `
+
+                <article
+                    class="movie-card"
+                    onclick="openMovie(${movie.id})"
+                >
+
+                    <div
+                        class="poster-wrap"
+                    >
+
+                        <img
+                            class="poster"
+                            src="${poster}"
+                            alt="${escapeHTML(
+                                movie.title || ""
+                            )}"
+                            loading="lazy"
+                            onerror="
+                                this.src='${placeholderPoster(
+                                    movie.title
+                                )}'
+                            "
+                        >
+
+                        <div
+                            class="poster-rating"
+                        >
+                            ⭐ ${rating}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="card-body"
+                    >
+
+                        <div
+                            class="movie-title"
+                        >
+                            ${escapeHTML(
+                                movie.title ||
+                                "Tanpa judul"
+                            )}
+                        </div>
+
+                        <div
+                            class="movie-meta"
+                        >
+
+                            <span>
+                                ${year}
+                            </span>
+
+                            <span>
+                                ${movie.original_language
+                                    ? movie.original_language
+                                        .toUpperCase()
+                                    : ""}
+                            </span>
+
+                        </div>
+
+                        <div
+                            class="movie-genre"
+                        >
+                            ${escapeHTML(
+                                genreNames ||
+                                "Film"
+                            )}
+                        </div>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   MOVIE DETAIL
+========================================================= */
+
+async function openMovie(id){
+
+    const modal =
+        document.getElementById(
+            "movieModal"
+        );
+
+    const content =
+        document.getElementById(
+            "detailContent"
+        );
+
+
+    modal.classList.add("show");
+
+
+    content.innerHTML = `
+
+        <div
+            class="loading"
+            style="
+                margin:0 25px 25px;
+                border-radius:15px;
+            "
+        >
+            🎬 Memuat detail film...
+        </div>
+
+    `;
+
+
+    try{
+
+        const movie =
+            await tmdb(
+                "/movie/" + id,
+                {
+                    language:"id-ID",
+                    append_to_response:
+                        "credits,videos"
+                }
+            );
+
+
+        const poster =
+            movie.poster_path
+            ? TMDB_IMAGE +
+              movie.poster_path
+            : placeholderPoster(
+                movie.title
+            );
+
+
+        const year =
+            movie.release_date
+            ? movie.release_date
+                .substring(0,4)
+            : "-";
+
+
+        const rating =
+            Number(
+                movie.vote_average || 0
+            ).toFixed(1);
+
+
+        const runtime =
+            movie.runtime
+            ? movie.runtime +
+              " menit"
+            : "-";
+
+
+        const genreHTML =
+            (movie.genres || [])
+            .map(
+                genre =>
+                    `
+                    <span class="tag">
+                        ${escapeHTML(
+                            genre.name
+                        )}
+                    </span>
+                    `
+            )
+            .join("");
+
+
+        const castHTML =
+            (movie.credits?.cast || [])
+            .slice(0,12)
+            .map(
+                person =>
+                    `
+                    <span class="cast">
+                        ${escapeHTML(
+                            person.name
+                        )}
+                    </span>
+                    `
+            )
+            .join("");
+
+
+        const director =
+            (
+                movie.credits?.crew || []
+            ).find(
+                person =>
+                    person.job ===
+                    "Director"
+            );
+
+
+        content.innerHTML = `
+
+            <div class="detail">
+
+                <div>
+
+                    <img
+                        class="detail-poster"
+                        src="${poster}"
+                        alt="${escapeHTML(
+                            movie.title || ""
+                        )}"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        ${escapeHTML(
+                            movie.title ||
+                            "Tanpa Judul"
+                        )}
+                    </h2>
+
+                    <div
+                        class="original-title"
+                    >
+                        ${escapeHTML(
+                            movie.original_title ||
+                            ""
+                        )}
+                    </div>
+
+
+                    <div class="tag-list">
+                        ${genreHTML}
+                    </div>
+
+
+                    <p class="overview">
+
+                        ${
+                            movie.overview
+                            ? escapeHTML(
+                                movie.overview
+                            )
+                            : "Sinopsis tidak tersedia."
+                        }
+
+                    </p>
+
+
+                    <div
+                        class="detail-info"
+                    >
+
+                        <div>
+
+                            <b>⭐ Rating</b>
+
+                            ${rating}/10
+
+                        </div>
+
+
+                        <div>
+
+                            <b>📅 Tahun</b>
+
+                            ${year}
+
+                        </div>
+
+
+                        <div>
+
+                            <b>⏱️ Durasi</b>
+
+                            ${runtime}
+
+                        </div>
+
+
+                        <div>
+
+                            <b>🗳️ Vote</b>
+
+                            ${movie.vote_count || 0}
+
+                        </div>
+
+
+                        <div>
+
+                            <b>🎬 Sutradara</b>
+
+                            ${
+                                director
+                                ? escapeHTML(
+                                    director.name
+                                )
+                                : "-"
+                            }
+
+                        </div>
+
+
+                        <div>
+
+                            <b>🌍 Bahasa</b>
+
+                            ${escapeHTML(
+                                (
+                                    movie.original_language ||
+                                    "-"
+                                ).toUpperCase()
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="cast-section"
+                    >
+
+                        <h3>
+                            👥 Pemeran
+                        </h3>
+
+                        <div
+                            class="cast-list"
+                        >
+                            ${
+                                castHTML ||
+                                "<span>Tidak tersedia</span>"
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+    }catch(error){
+
+        content.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Gagal memuat detail
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "movieModal"
+        )
+        .classList.remove("show");
+
+}
+
+
+function closeModalOutside(event){
+
+    if(
+        event.target.id ===
+        "movieModal"
+    ){
+
+        closeModal();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closeModal();
+
+            hidePreview();
+
+            closeSettings();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH CLEAR
+========================================================= */
+
+function clearSearch(){
+
+    searchInput.value = "";
+
+    clearBtn.style.display =
+        "none";
+
+    hidePreview();
+
+    searchStatus.textContent = "";
+
+    currentPage = 1;
+
+    loadPopular();
+
+}
+
+
+function hidePreview(){
+
+    preview.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+function changePage(direction){
+
+    const newPage =
+        currentPage +
+        direction;
+
+
+    if(
+        newPage < 1 ||
+        newPage > totalPages
+    ){
+
+        return;
+
+    }
+
+
+    currentPage =
+        newPage;
+
+
+    if(
+        currentMode ===
+        "search"
+    ){
+
+        performPageSearch();
+
+    }else{
+
+        loadPopular();
+
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+async function performPageSearch(){
+
+    const query =
+        searchInput.value.trim();
+
+    if(!query){
+        return;
+    }
+
+
+    showLoading();
+
+
+    try{
+
+        const data =
+            await tmdb(
+                "/search/movie",
+                {
+                    query:query,
+                    language:"id-ID",
+                    include_adult:false,
+                    page:currentPage,
+                    region:"ID"
+                }
+            );
+
+
+        movies =
+            data.results || [];
+
+        totalPages =
+            Math.min(
+                data.total_pages || 1,
+                500
+            );
+
+
+        populateYears();
+
+        applyFilters();
+
+        updatePagination();
+
+    }catch(error){
+
+        handleError(error);
+
+    }
+
+}
+
+
+function updatePagination(){
+
+    document
+        .getElementById(
+            "pageNumber"
+        )
+        .textContent =
+        currentPage;
+
+
+    document
+        .getElementById(
+            "prevBtn"
+        )
+        .disabled =
+        currentPage <= 1;
+
+
+    document
+        .getElementById(
+            "nextBtn"
+        )
+        .disabled =
+        currentPage >= totalPages;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading(){
+
+    movieGrid.innerHTML = `
+
+        <div
+            class="loading"
+        >
+            🎬 Mengambil data dari TMDB...
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function handleError(error){
+
+    console.error(error);
+
+
+    if(
+        error.message ===
+        "API_KEY_MISSING"
+    ){
+
+        showAPIKeyWelcome();
+
+        return;
+
+    }
+
+
+    movieGrid.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Terjadi masalah
+            </h3>
+
+            <p>
+                ${escapeHTML(
+                    error.message
+                )}
+            </p>
+
+            <button
+                class="btn btn-primary"
+                onclick="openSettings()"
+            >
+                ⚙️ Periksa API Key
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   PLACEHOLDER POSTER
+========================================================= */
+
+function placeholderPoster(title){
+
+    const safe =
+        String(
+            title || "Movie"
+        )
+        .substring(0,26)
+        .replace(
+            /[<>&"]/g,
+            ""
+        );
+
+
     const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="500"
-             height="750">
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="500"
+            height="750"
+        >
+
             <defs>
+
                 <linearGradient
                     id="g"
                     x1="0"
                     y1="0"
                     x2="1"
-                    y2="1">
+                    y2="1"
+                >
+
                     <stop
                         offset="0%"
-                        stop-color="#315efb"/>
+                        stop-color="#625bf6"
+                    />
+
                     <stop
                         offset="100%"
-                        stop-color="#7c4dff"/>
+                        stop-color="#ec63a8"
+                    />
+
                 </linearGradient>
+
             </defs>
+
+
             <rect
                 width="500"
                 height="750"
-                fill="url(#g)"/>
+                fill="url(#g)"
+            />
+
+
             <circle
-                cx="410"
-                cy="100"
-                r="130"
-                fill="#ffffff"
-                opacity=".10"/>
-            <circle
-                cx="80"
-                cy="650"
-                r="180"
-                fill="#ffffff"
-                opacity=".08"/>
+                cx="250"
+                cy="270"
+                r="100"
+                fill="rgba(255,255,255,.18)"
+            />
+
+
             <text
                 x="250"
-                y="315"
+                y="410"
                 text-anchor="middle"
-                font-family="Arial"
-                font-size="180"
-                font-weight="900"
                 fill="white"
-                opacity=".95">
-                ${first}
-            </text>
-            <text
-                x="250"
-                y="500"
-                text-anchor="middle"
                 font-family="Arial"
-                font-size="28"
+                font-size="30"
                 font-weight="bold"
-                fill="white">
-                ${escapeXml(movie.title)}
+            >
+                ${safe}
             </text>
+
+
             <text
                 x="250"
-                y="550"
+                y="455"
                 text-anchor="middle"
-                font-family="Arial"
-                font-size="20"
                 fill="white"
-                opacity=".85">
-                ${escapeXml(genre)} • ${movie.year}
-            </text>
-            <text
-                x="250"
-                y="690"
-                text-anchor="middle"
                 font-family="Arial"
-                font-size="18"
-                fill="white"
-                opacity=".7">
-                MOVIE FINDER
+                font-size="21"
+            >
+                MOVIE
             </text>
+
         </svg>
+
     `;
+
+
     return (
         "data:image/svg+xml;charset=UTF-8," +
         encodeURIComponent(svg)
     );
+
 }
+
+
 /* =========================================================
-   DETAILS
-   ========================================================= */
-function showDetails(id){
-    const movie =
-        movies.find(m => m.id === id);
-    if(!movie) return;
-    const saved =
-        watchlist.includes(movie.id);
-    const detail =
-        document.getElementById("detail");
-    detail.innerHTML = `
-        <div class="detail">
-            <div>
-                <img
-                    class="detail-poster"
-                    src="${getPoster(movie)}"
-                    alt="${escapeHtml(movie.title)}">
-            </div>
-            <div>
-                <h2>
-                    ${escapeHtml(movie.title)}
-                </h2>
-                <div class="detail-meta">
-                    ${movie.year}
-                    • ${movie.duration}
-                    • ⭐ ${movie.rating}
-                </div>
-                <div class="tags">
-                    ${movie.genre.map(g => `
-                        <span class="tag">
-                            ${escapeHtml(g)}
-                        </span>
-                    `).join("")}
-                </div>
-                <h3>Sinopsis</h3>
-                <p>
-                    ${escapeHtml(movie.description)}
-                </p>
-                <h3>Sutradara</h3>
-                <p>
-                    ${escapeHtml(movie.director)}
-                </p>
-                <h3>Pemeran</h3>
-                <p>
-                    ${escapeHtml(movie.cast)}
-                </p>
-                <button
-                    class="watch-btn ${saved ? "saved" : ""}"
-                    onclick="toggleWatchlist(null,${movie.id});refreshDetail(${movie.id})">
-                    ${saved
-                        ? "♥ Hapus dari Watchlist"
-                        : "♡ Tambah ke Watchlist"}
-                </button>
-            </div>
-        </div>
-    `;
-    document
-        .getElementById("modal")
-        .classList.add("show");
-}
-/* =========================================================
-   REFRESH DETAIL
-   ========================================================= */
-function refreshDetail(id){
-    showDetails(id);
-}
-/* =========================================================
-   MODAL
-   ========================================================= */
-function closeModal(){
-    document
-        .getElementById("modal")
-        .classList.remove("show");
-}
-function closeOutside(event){
-    if(event.target.id === "modal"){
-        closeModal();
-    }
-}
-/* =========================================================
-   WATCHLIST
-   ========================================================= */
-function toggleWatchlist(event,id){
-    if(event){
-        event.stopPropagation();
-    }
-    if(watchlist.includes(id)){
-        watchlist =
-            watchlist.filter(
-                movieId => movieId !== id
-            );
-    }else{
-        watchlist.push(id);
-    }
-    localStorage.setItem(
-        "movie_watchlist",
-        JSON.stringify(watchlist)
+   SECURITY / HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
     );
-    renderMovies(currentMovies);
-    renderWatchlist();
+
 }
-/* =========================================================
-   WATCHLIST PAGE
-   ========================================================= */
-function showWatchlist(){
-    document
-        .getElementById("mainContent")
-        .classList.add("hide");
-    document
-        .getElementById("watchlist")
-        .classList.add("show");
-    document
-        .getElementById("homeBtn")
-        .classList.remove("active");
-    document
-        .getElementById("watchBtn")
-        .classList.add("active");
-    renderWatchlist();
-}
-function showHome(){
-    document
-        .getElementById("mainContent")
-        .classList.remove("hide");
-    document
-        .getElementById("watchlist")
-        .classList.remove("show");
-    document
-        .getElementById("homeBtn")
-        .classList.add("active");
-    document
-        .getElementById("watchBtn")
-        .classList.remove("active");
-}
-function renderWatchlist(){
-    const box =
-        document.getElementById("watchMovies");
-    const savedMovies =
-        movies.filter(movie =>
-            watchlist.includes(movie.id)
-        );
-    document
-        .getElementById("watchCount")
-        .textContent =
-            savedMovies.length + " film";
-    box.innerHTML = "";
-    if(savedMovies.length === 0){
-        box.innerHTML = `
-            <div class="empty">
-                <div class="empty-icon">❤️</div>
-                <h3>Watchlist masih kosong</h3>
-                <p>
-                    Tekan ♡ pada film untuk
-                    menyimpannya di sini.
-                </p>
-            </div>
-        `;
-        return;
-    }
-    savedMovies.forEach(movie => {
-        box.appendChild(
-            createMovieCard(movie)
-        );
-    });
-}
-/* =========================================================
-   ESCAPE
-   ========================================================= */
-function escapeHtml(text){
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-function escapeXml(text){
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&apos;");
-}
-/* =========================================================
-   START
-   ========================================================= */
-init();
+
 </script>
+
 </body>
 </html>
