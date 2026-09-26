@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Saved Movies</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,Helvetica,sans-serif;
+ background:#f4f7ff;color:#172033
+}
+header{
+ position:sticky;top:0;z-index:20;background:white;
+ border-bottom:1px solid #e2e6ee
+}
+.nav{
+ max-width:1200px;margin:auto;padding:13px 16px;
+ display:flex;justify-content:space-between;align-items:center
+}
+.logo{font-size:20px;font-weight:800}
+.nav a{
+ text-decoration:none;background:#eeeeff;color:#554bd9;
+ padding:9px 13px;border-radius:10px;font-weight:700
+}
+main{max-width:1200px;margin:auto;padding:25px 15px 60px}
+h1{margin:0}
+.tabs{
+ display:flex;gap:8px;overflow:auto;margin:20px 0
+}
+.tab{
+ white-space:nowrap;border:0;background:white;border:1px solid #dfe4ed;
+ padding:11px 15px;border-radius:11px;font-weight:700;color:#626b7d
+}
+.tab.active{background:#655cf6;color:white;border-color:#655cf6}
+.tools{
+ display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px
+}
+.tools input{
+ flex:1;min-width:180px;border:1px solid #dce2ec;
+ border-radius:11px;padding:11px;outline:0
+}
+.tools button{
+ border:0;border-radius:11px;padding:11px 14px;
+ background:#eeeeff;color:#554bd9;font-weight:700
+}
+.grid{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:16px
+}
+.card{
+ background:white;border:1px solid #e1e5ed;border-radius:16px;
+ overflow:hidden;box-shadow:0 7px 20px #2430520b
+}
+.poster{
+ aspect-ratio:2/3;position:relative;background:#e8ebf2
+}
+.poster img{width:100%;height:100%;object-fit:cover}
+.info{padding:10px}
+.title{font-weight:800;line-height:1.35;min-height:40px}
+.meta{font-size:12px;color:#788193;margin-top:5px}
+.actions{display:flex;gap:5px;margin-top:9px}
+.actions button{
+ flex:1;border:0;border-radius:8px;padding:7px 3px;
+ background:#f0f2f7;font-size:11px
+}
+.actions button:hover{background:#eeeeff;color:#554bd9}
+.empty{
+ background:white;border-radius:17px;padding:60px 20px;
+ text-align:center;color:#737d90
+}
+.stats{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:10px;margin:20px 0
+}
+.stat{
+ background:white;border:1px solid #e1e5ed;
+ border-radius:15px;padding:17px
+}
+.stat b{font-size:25px;display:block;margin-top:5px}
+.modal{
+ position:fixed;inset:0;background:#17203988;
+ display:none;align-items:center;justify-content:center;
+ padding:15px;z-index:100
+}
+.modal.show{display:flex}
+.box{
+ width:min(550px,100%);max-height:90vh;overflow:auto;
+ background:white;border-radius:20px;padding:22px;position:relative
+}
+.close{
+ position:absolute;right:12px;top:12px;
+ border:0;background:#f0f2f6;width:37px;height:37px;border-radius:10px
+}
+.box textarea,.box select,.box input{
+ width:100%;padding:11px;border:1px solid #dce2eb;
+ border-radius:10px;margin:7px 0;outline:0
+}
+.save{
+ border:0;background:#655cf6;color:white;
+ padding:11px 15px;border-radius:10px;font-weight:700
+}
+.toast{
+ position:fixed;bottom:20px;left:50%;z-index:200;
+ transform:translate(-50%,100px);opacity:0;
+ background:#172033;color:white;padding:12px 17px;
+ border-radius:11px;transition:.25s
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1000px){
+ .grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:650px){
+ .grid{grid-template-columns:repeat(2,1fr);gap:11px}
+ .stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+ <div class="logo">🎬 Movie Finder</div>
+ <a href="index.html">← Home</a>
+</div>
+</header>
+
+<main>
+
+<h1>❤️ My Movies</h1>
+<p style="color:#737d90">
+Kelola film favorit, watchlist, dan riwayat tontonanmu.
+</p>
+
+<div class="stats">
+ <div class="stat">❤️ Favorites<b id="favCount">0</b></div>
+ <div class="stat">📌 Watchlist<b id="watchCount">0</b></div>
+ <div class="stat">👀 History<b id="historyCount">0</b></div>
+ <div class="stat">🎬 Total<b id="totalCount">0</b></div>
+</div>
+
+<div class="tabs">
+ <button class="tab active" onclick="setTab('favorites',this)">❤️ Favorites</button>
+ <button class="tab" onclick="setTab('watchlist',this)">📌 Watchlist</button>
+ <button class="tab" onclick="setTab('history',this)">👀 History</button>
+</div>
+
+<div class="tools">
+ <input id="search" placeholder="Cari di daftar...">
+ <button onclick="exportData()">📤 Export</button>
+ <button onclick="importFile()">📥 Import</button>
+ <button onclick="clearCurrent()">🗑️ Hapus</button>
+ <input id="file" type="file" accept=".json" style="display:none">
+</div>
+
+<div id="grid" class="grid"></div>
+
+</main>
+
+<div id="modal" class="modal">
+<div class="box">
+<button class="close" onclick="closeModal()">✕</button>
+<h2 id="modalTitle">📝 Catatan</h2>
+
+<label>⭐ Rating pribadi</label>
+<select id="personalRating">
+ <option value="">Belum dinilai</option>
+ <option value="1">⭐</option>
+ <option value="2">⭐⭐</option>
+ <option value="3">⭐⭐⭐</option>
+ <option value="4">⭐⭐⭐⭐</option>
+ <option value="5">⭐⭐⭐⭐⭐</option>
+</select>
+
+<label>📝 Catatan</label>
+<textarea id="note" rows="6" placeholder="Tulis catatan..."></textarea>
+
+<button class="save" onclick="savePersonal()">Simpan</button>
+</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const IMAGE="https://image.tmdb.org/t/p/w500";
+
+let currentTab="favorites";
+let currentMovie=null;
+
+function getData(name){
+ try{return JSON.parse(localStorage.getItem(name)||"[]")}catch{return[]}
+}
+function setData(name,data){
+ localStorage.setItem(name,JSON.stringify(data))
+}
+
+function esc(x){
+ return String(x||"").replace(/[&<>"']/g,m=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#039;"
+ }[m]));
+}
+
+function poster(path){
+ return path?IMAGE+path:
+ "data:image/svg+xml;charset=UTF-8,"+
+ encodeURIComponent(`
+ <svg xmlns="http://www.w3.org/2000/svg" width="500" height="750">
+ <rect width="100%" height="100%" fill="#e8ebf2"/>
+ <text x="50%" y="50%" text-anchor="middle" font-size="60">🎬</text>
+ </svg>`);
+}
+
+function toast(t){
+ $("toast").textContent=t;
+ $("toast").classList.add("show");
+ clearTimeout(window.timer);
+ window.timer=setTimeout(()=>$("toast").classList.remove("show"),2500);
+}
+
+function setTab(tab,button){
+ currentTab=tab;
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+ button.classList.add("active");
+ render();
+}
+
+function render(){
+
+ let data=getData(currentTab);
+ let q=$("search").value.trim().toLowerCase();
+
+ if(q){
+  data=data.filter(m=>
+   String(m.title||"").toLowerCase().includes(q)
+  );
+ }
+
+ updateStats();
+
+ if(!data.length){
+  $("grid").innerHTML=`
+   <div class="empty" style="grid-column:1/-1">
+    <div style="font-size:45px">
+     ${currentTab==="favorites"?"❤️":
+       currentTab==="watchlist"?"📌":"👀"}
+    </div>
+    <h2>Belum ada film</h2>
+    <p>Film yang kamu simpan akan muncul di sini.</p>
+    <a href="index.html">← Cari film</a>
+   </div>`;
+  return;
+ }
+
+ $("grid").innerHTML="";
+
+ data.forEach(m=>{
+
+  let personal=
+   JSON.parse(localStorage.getItem("personal_"+m.id)||"{}");
+
+  let card=document.createElement("div");
+  card.className="card";
+
+  card.innerHTML=`
+   <div class="poster">
+    <img src="${poster(m.poster_path)}"
+         loading="lazy"
+         alt="${esc(m.title)}">
+   </div>
+
+   <div class="info">
+
+    <div class="title">${esc(m.title)}</div>
+
+    <div class="meta">
+     ${m.release_date?.slice(0,4)||"—"}
+     • ⭐ ${(m.vote_average||0).toFixed(1)}
+    </div>
+
+    ${
+     personal.rating
+      ? `<div style="margin-top:6px">
+          Rating saya: ${"⭐".repeat(Number(personal.rating))}
+         </div>`
+      :""
+    }
+
+    <div class="actions">
+
+     <button onclick="openMovie(${m.id})">
+      🎬 Detail
+     </button>
+
+     <button onclick="openNote(${m.id})">
+      📝 Catatan
+     </button>
+
+     <button onclick="removeMovie(${m.id})">
+      🗑️
+     </button>
+
+    </div>
+
+   </div>
+  `;
+
+  $("grid").appendChild(card);
+
+ });
+
+}
+
+function updateStats(){
+ let f=getData("favorites");
+ let w=getData("watchlist");
+ let h=getData("history");
+
+ $("favCount").textContent=f.length;
+ $("watchCount").textContent=w.length;
+ $("historyCount").textContent=h.length;
+
+ let ids=new Set([
+  ...f.map(x=>x.id),
+  ...w.map(x=>x.id)
+ ]);
+
+ $("totalCount").textContent=ids.size;
+}
+
+function removeMovie(id){
+
+ let data=getData(currentTab)
+  .filter(x=>x.id!==id);
+
+ setData(currentTab,data);
+
+ render();
+
+ toast("Film dihapus.");
+
+}
+
+function openNote(id){
+
+ let all=[
+  ...getData("favorites"),
+  ...getData("watchlist"),
+  ...getData("history")
+ ];
+
+ currentMovie=all.find(x=>x.id===id);
+
+ if(!currentMovie)return;
+
+ let data=
+  JSON.parse(
+   localStorage.getItem(
+    "personal_"+id
+   )||"{}"
+  );
+
+ $("personalRating").value=
+  data.rating||"";
+
+ $("note").value=
+  data.note||"";
+
+ $("modal").classList.add("show");
+
+}
+
+function savePersonal(){
+
+ if(!currentMovie)return;
+
+ let data={
+  rating:$("personalRating").value,
+  note:$("note").value,
+  updatedAt:Date.now()
+ };
+
+ localStorage.setItem(
+  "personal_"+currentMovie.id,
+  JSON.stringify(data)
+ );
+
+ closeModal();
+ render();
+
+ toast("⭐ Data pribadi disimpan.");
+
+}
+
+function closeModal(){
+ $("modal").classList.remove("show");
+}
+
+function openMovie(id){
+
+ location.href=
+  "index.html?movie="+id;
+
+}
+
+function exportData(){
+
+ let data={
+
+  favorites:getData("favorites"),
+
+  watchlist:getData("watchlist"),
+
+  history:getData("history"),
+
+  personal:{}
+
+ };
+
+ [
+  ...data.favorites,
+  ...data.watchlist,
+  ...data.history
+ ].forEach(m=>{
+
+  let p=
+   localStorage.getItem(
+    "personal_"+m.id
+   );
+
+  if(p)data.personal[m.id]=JSON.parse(p);
+
+ });
+
+ let blob=
+  new Blob(
+   [JSON.stringify(data,null,2)],
+   {type:"application/json"}
+  );
+
+ let url=
+  URL.createObjectURL(blob);
+
+ let a=
+  document.createElement("a");
+
+ a.href=url;
+ a.download="movie-finder-backup.json";
+ a.click();
+
+ URL.revokeObjectURL(url);
+
+ toast("📤 Data berhasil diekspor.");
+
+}
+
+function importFile(){
+
+ $("file").click();
+
+}
+
+$("file").addEventListener(
+ "change",
+ async e=>{
+
+  let file=e.target.files[0];
+
+  if(!file)return;
+
+  try{
+
+   let data=
+    JSON.parse(
+     await file.text()
+    );
+
+   if(data.favorites)
+    setData("favorites",data.favorites);
+
+   if(data.watchlist)
+    setData("watchlist",data.watchlist);
+
+   if(data.history)
+    setData("history",data.history);
+
+   if(data.personal){
+
+    Object.entries(
+     data.personal
+    ).forEach(([id,value])=>{
+
+     localStorage.setItem(
+      "personal_"+id,
+      JSON.stringify(value)
+     );
+
+    });
+
+   }
+
+   render();
+
+   toast("📥 Data berhasil diimpor.");
+
+  }catch{
+
+   toast("File backup tidak valid.");
+
+  }
+
+ });
+
+}
+
+function clearCurrent(){
+
+ if(!confirm(
+  "Hapus semua data pada bagian ini?"
+ ))return;
+
+ getData(currentTab).forEach(m=>{
+  localStorage.removeItem(
+   "personal_"+m.id
+  );
+ });
+
+ localStorage.removeItem(
+  currentTab
+ );
+
+ render();
+
+ toast("Data dihapus.");
+
+}
+
+$("search").addEventListener(
+ "input",
+ render
+);
+
+render();
+</script>
+
+</body>
+</html>
